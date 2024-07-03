@@ -33,7 +33,9 @@ export default function Home() {
 
 	return (
 		<>
-			<StickyCursor />
+			<div className="hidden md:block">
+				<StickyCursor />
+			</div>
 			<Header />
 		</>
 	);
