@@ -4,26 +4,15 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import TypingAnimation from "./magicui/typing-animation";
-import WordPullUp from "./magicui/word-pull-up";
 import BoxReveal from "./magicui/box-reveal";
 import {
 	Carousel,
 	CarouselContent,
 	CarouselItem,
-	CarouselNext,
-	CarouselPrevious,
 } from "@/components/ui/carousel";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import Autoplay from "embla-carousel-autoplay";
 import { BorderBeam } from "./magicui/border-beam";
-import { Sigma } from "lucide-react";
 import { LinkPreview } from "./link-preview";
 import GradualSpacing from "./magicui/gradual-spacing";
 
@@ -33,11 +22,16 @@ export default function Header() {
 	const wordPullUpRef = useRef(null);
 	const gradualSpaceRef = useRef(null);
 	const biodata = [
-		<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" />,
+		<img
+			src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg"
+			alt="TypeScript Logo"
+			key="typescript-logo"
+		/>,
 		<img
 			src="https://upload.wikimedia.org/wikipedia/commons/9/95/UTHM_Logo.png"
 			alt="UTHM Logo"
 			className="h-full w-full"
+			key="uthm-logo"
 		/>,
 	];
 	useEffect(() => {
@@ -139,15 +133,13 @@ export default function Header() {
 						>
 							<CarouselContent>
 								{biodata.map((item, index) => (
-									<CarouselItem>
-										<CarouselItem key={index}>
-											<Card className="relative bg-tranparent">
-												<CardContent className="py-2.5 flex items-center justify-center">
-													{item}
-												</CardContent>
-												<BorderBeam size={1000} duration={5} delay={1} />
-											</Card>
-										</CarouselItem>
+									<CarouselItem key={index}>
+										<Card className="relative bg-tranparent">
+											<CardContent className="py-2.5 flex items-center justify-center">
+												{item}
+											</CardContent>
+											<BorderBeam size={1000} duration={5} delay={1} />
+										</Card>
 									</CarouselItem>
 								))}
 							</CarouselContent>
