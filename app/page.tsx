@@ -5,6 +5,8 @@ import StickyCursor from "@/components/StickyCursor";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
+import Project from "@/components/Project";
+import Experience from "@/components/Experience";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -37,6 +39,8 @@ export default function Home() {
 				<StickyCursor />
 			</div>
 			<Header />
+			<Experience />
+			<Project />
 		</>
 	);
 }
