@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import Project from "@/components/Project";
 import Experience from "@/components/Experience";
+import Education from "@/components/Education";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -40,6 +41,7 @@ export default function Home() {
 			</div>
 			<Header />
 			<Experience />
+			<Education />
 			<Project />
 		</>
 	);

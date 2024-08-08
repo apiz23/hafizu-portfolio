@@ -30,7 +30,7 @@ export default function Project() {
 			<section className="min-h-screen bg-orange-100 pt-[70%] md:pt-[15%]">
 				<div className="text-center" ref={gradualSpaceRef}>
 					<TypingAnimation
-						className="scroll-m-20 text-6xl uppercase font-extrabold tracking-tight md:text-[14vh]"
+						className="scroll-m-20 text-6xl uppercase font-extrabold tracking-tight md:text-[12vh]"
 						text="Project Showcase"
 					/>
 				</div>
