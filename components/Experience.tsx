@@ -66,13 +66,18 @@ export default function Experience() {
 									<AccordionContent className="text-justify font-thin">
 										Starting At 14 August 2023 until 26 January 2024. Working as Software
 										Developer Intern doing maintenance related a QR code system named
-										"Tokopak". Analyse and Designing and also Develop new functionality
-										and feature from the existing system.
+										&quot;Tokopak&quot;. Analyse and Designing and also Develop new
+										functionality and feature from the existing system.
 									</AccordionContent>
 								</AccordionItem>
 							</Accordion>
 						</div>
 					</div>
+					<img
+						src="https://i.pinimg.com/736x/c5/1e/d5/c51ed53972f630d7cce14296f3d758d2.jpg"
+						alt="img"
+						className="py-20"
+					/>
 				</div>
 			</section>
 		</>

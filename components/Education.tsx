@@ -27,7 +27,6 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 
-// Define the possible values for education level
 type EducationLevel = "diploma" | "degree" | "secondary";
 
 export default function Education() {
