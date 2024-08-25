@@ -15,10 +15,6 @@ export default function Home() {
 	useEffect(() => {
 		const lenis = new Lenis();
 
-		lenis.on("scroll", (e: any) => {
-			console.log(e);
-		});
-
 		lenis.on("scroll", ScrollTrigger.update);
 
 		gsap.ticker.add((time) => {

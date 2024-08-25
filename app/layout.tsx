@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import ReactQueryProvider from "@/lib/react-query";
 
 const poppins = Poppins({ weight: "400", subsets: ["latin"] });
 
@@ -29,7 +30,7 @@ export default function RootLayout({
 				<div className="min-h-screen bg-orange-100">
 					<div className="max-w-4xl md:mx-auto">
 						<Navbar />
-						{children}
+						<ReactQueryProvider>{children}</ReactQueryProvider>
 					</div>
 				</div>
 			</body>

@@ -74,7 +74,7 @@ export default function Experience() {
 						</div>
 					</div>
 					<img
-						src="https://i.pinimg.com/736x/c5/1e/d5/c51ed53972f630d7cce14296f3d758d2.jpg"
+						src="https://media.licdn.com/dms/image/v2/D5622AQE_N1LabsmyZA/feedshare-shrink_800/feedshare-shrink_800/0/1704794422531?e=1726099200&v=beta&t=moQuGjPBo2aoUL5otSY-XL88AWhVyw3hAN2Ts5TDUyA"
 						alt="img"
 						className="py-20"
 					/>

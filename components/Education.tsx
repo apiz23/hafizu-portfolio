@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import TypingAnimation from "./magicui/typing-animation";
 import gsap from "gsap";
 import {
@@ -26,14 +26,48 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import {
+	Accordion,
+	AccordionContent,
+	AccordionItem,
+	AccordionTrigger,
+} from "@/components/ui/accordion";
+import supabase from "@/lib/supabase";
+import { useQuery } from "react-query";
 
 type EducationLevel = "diploma" | "degree" | "secondary";
 
-export default function Education() {
-	const gradualSpaceRef = React.useRef(null);
-	const [selectedValue, setSelectedValue] = useState<EducationLevel>("diploma");
+const fetchData = async (selectedValue: EducationLevel) => {
+	const { data, error } = await supabase
+		.from("pointer")
+		.select("*")
+		.eq("education_level", selectedValue);
 
-	React.useEffect(() => {
+	if (error) {
+		throw new Error(`Error fetching data: ${error.message}`);
+	}
+
+	return data.map(({ sem, gpa, cgpa }) => ({
+		sem,
+		GPA: gpa,
+		CPA: cgpa,
+	}));
+};
+
+export default function Education() {
+	const gradualSpaceRef = useRef(null);
+	const [selectedValue, setSelectedValue] = useState<EducationLevel>("diploma");
+	const { data: chartData = [], error } = useQuery(
+		["chartData", selectedValue],
+		() => fetchData(selectedValue),
+		{
+			onError: (error) => {
+				console.error("Error fetching data:", error);
+			},
+		}
+	);
+
+	useEffect(() => {
 		if (gradualSpaceRef.current) {
 			gsap.fromTo(
 				gradualSpaceRef.current,
@@ -52,32 +86,6 @@ export default function Education() {
 			);
 		}
 	}, []);
-
-	const diplomaData = [
-		{ sem: "0", GPA: 3.71, CPA: 3.71 },
-		{ sem: "1", GPA: 3.87, CPA: 3.83 },
-		{ sem: "2", GPA: 3.83, CPA: 3.83 },
-		{ sem: "1", GPA: 3.88, CPA: 3.84 },
-		{ sem: "2", GPA: 3.68, CPA: 3.81 },
-	];
-
-	const degreeData = [{ sem: "2", GPA: 3.82, CPA: 3.82 }];
-
-	const secondarySchoolData = [
-		{ sem: "1", GPA: 3.42, CPA: 3.42 },
-		{ sem: "2", GPA: 3.53, CPA: 3.47 },
-		{ sem: "3", GPA: 3.77, CPA: 3.57 },
-		{ sem: "4", GPA: 3.59, CPA: 3.58 },
-	];
-
-	const chartDataMap: Record<
-		EducationLevel,
-		{ sem: string; GPA: number; CPA: number }[]
-	> = {
-		diploma: diplomaData,
-		degree: degreeData,
-		secondary: secondarySchoolData,
-	};
 
 	const chartConfig = {
 		GPA: {
@@ -100,7 +108,7 @@ export default function Education() {
 					/>
 				</div>
 				<div className="max-w-3xl mx-auto mt-10 md:px-0 px-2">
-					<div className="grid grid-cols-2 gap-6">
+					<div className="grid grid-cols-2 gap-6 mb-5">
 						<Card className="bg-yellow-50 border-neutral-500 border-b-4 border-x-0 border-t-0 shadow-md">
 							<CardContent className="p-4">
 								<img
@@ -141,64 +149,75 @@ export default function Education() {
 							</CardContent>
 						</Card>
 					</div>
-					<Card className="col-span-2 bg-amber-50 border-neutral-500 border-b-4 border-x-0 border-t-0 shadow-md mt-10">
-						<CardHeader>
-							<div className="flex justify-between">
-								<CardTitle>Diploma Chart</CardTitle>
-								<Select
-									onValueChange={(value) => setSelectedValue(value as EducationLevel)}
-								>
-									<SelectTrigger className="w-[180px]">
-										<SelectValue placeholder="Diploma" />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectItem value="degree">Degree</SelectItem>
-										<SelectItem value="diploma">Diploma</SelectItem>
-										<SelectItem value="secondary">Secondary School</SelectItem>
-									</SelectContent>
-								</Select>
-							</div>
-						</CardHeader>
-						<CardContent>
-							<ChartContainer config={chartConfig}>
-								<LineChart
-									accessibilityLayer
-									data={chartDataMap[selectedValue]}
-									margin={{
-										top: 20,
-										left: 12,
-										right: 12,
-									}}
-								>
-									<CartesianGrid vertical={false} />
-									<XAxis
-										dataKey="sem"
-										tickLine={false}
-										axisLine={false}
-										tickMargin={8}
-										tickFormatter={(value) => `Sem ${value}`}
-									/>
-									<YAxis domain={[3.5, 4]} />
-									<Tooltip />
-									<Legend />
-									<Line
-										dataKey="GPA"
-										type="monotone"
-										stroke="var(--color-GPA)"
-										strokeWidth={2}
-										dot={{ r: 4 }}
-									/>
-									<Line
-										dataKey="CPA"
-										type="monotone"
-										stroke="var(--color-CPA)"
-										strokeWidth={2}
-										dot={{ r: 4 }}
-									/>
-								</LineChart>
-							</ChartContainer>
-						</CardContent>
-					</Card>
+					<Accordion type="single" collapsible className="w-full">
+						<AccordionItem value="chart">
+							<AccordionTrigger className="flex justify-between border-2 border-neutral-500 rounded-t-md p-4">
+								Pointer Chart
+							</AccordionTrigger>
+							<AccordionContent className="bg-orange-300 bg-opacity-50 px-4 rounded-b-md">
+								<Card className="col-span-2 bg-amber-50 border-neutral-500 border-b-4 border-x-0 border-t-0 shadow-md mt-10">
+									<CardHeader>
+										<div className="flex justify-between">
+											<CardTitle>{`${
+												selectedValue.charAt(0).toUpperCase() + selectedValue.slice(1)
+											} Chart`}</CardTitle>
+											<Select
+												onValueChange={(value) => setSelectedValue(value as EducationLevel)}
+											>
+												<SelectTrigger className="w-[180px]">
+													<SelectValue placeholder="Diploma" />
+												</SelectTrigger>
+												<SelectContent>
+													<SelectItem value="degree">Degree</SelectItem>
+													<SelectItem value="diploma">Diploma</SelectItem>
+													<SelectItem value="secondary">Secondary School</SelectItem>
+												</SelectContent>
+											</Select>
+										</div>
+									</CardHeader>
+									<CardContent>
+										<ChartContainer config={chartConfig}>
+											<LineChart
+												accessibilityLayer
+												data={chartData}
+												margin={{
+													top: 20,
+													left: 12,
+													right: 12,
+												}}
+											>
+												<CartesianGrid vertical={false} />
+												<XAxis
+													dataKey="sem"
+													tickLine={false}
+													axisLine={false}
+													tickMargin={8}
+													tickFormatter={(value) => `Sem ${value}`}
+												/>
+												<YAxis domain={[3.5, 4]} />
+												<Tooltip />
+												<Legend />
+												<Line
+													dataKey="GPA"
+													type="monotone"
+													stroke="var(--color-GPA)"
+													strokeWidth={2}
+													dot={{ r: 4 }}
+												/>
+												<Line
+													dataKey="CPA"
+													type="monotone"
+													stroke="var(--color-CPA)"
+													strokeWidth={2}
+													dot={{ r: 4 }}
+												/>
+											</LineChart>
+										</ChartContainer>
+									</CardContent>
+								</Card>{" "}
+							</AccordionContent>
+						</AccordionItem>
+					</Accordion>
 				</div>
 			</section>
 		</>
