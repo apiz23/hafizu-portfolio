@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/accordion";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { LoaderIcon } from "lucide-react";
+import intern1 from "@/public/img/intern1.jpeg";
 
 export default function Experience() {
 	const gradualSpaceRef = React.useRef(null);
@@ -74,7 +75,7 @@ export default function Experience() {
 						</div>
 					</div>
 					<img
-						src="https://media.licdn.com/dms/image/v2/D5622AQE_N1LabsmyZA/feedshare-shrink_800/feedshare-shrink_800/0/1704794422531?e=1726099200&v=beta&t=moQuGjPBo2aoUL5otSY-XL88AWhVyw3hAN2Ts5TDUyA"
+						src={intern1.src}
 						alt="img"
 						className="py-20"
 					/>
