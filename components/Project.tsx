@@ -106,14 +106,14 @@ export default function Project() {
 								{project.title}
 							</h3>
 							<p className="mt-2 text-gray-700 text-justify">{project.description}</p>
-							<div className="flex justify-evenly md:justify-end gap-2 py-5">
-								<Link href={project.githubLink} target="_blank">
-									<Button variant="outline" className="md:w-fit w-full">
+							<div className="flex justify-between md:justify-end gap-2 py-5">
+								<Link href={project.githubLink} target="_blank" className="flex-1">
+									<Button variant="outline" className="w-full">
 										GitHub
 									</Button>
 								</Link>
-								<Link href={project.visitLink} target="_blank">
-									<Button variant="outline" className="md:w-fit w-full">
+								<Link href={project.visitLink} target="_blank" className="flex-1">
+									<Button variant="outline" className="w-full">
 										Visit
 									</Button>
 								</Link>

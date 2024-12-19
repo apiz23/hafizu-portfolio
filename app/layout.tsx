@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import ReactQueryProvider from "@/lib/react-query";
 
-const poppins = Poppins({ weight: "400", subsets: ["latin"] });
+const poppins = Montserrat({ weight: "400", subsets: ["latin"] });
 
 export const metadata: Metadata = {
 	title: "Hafizu Portfolio",
