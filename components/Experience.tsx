@@ -1,5 +1,4 @@
 import React from "react";
-import TypingAnimation from "./magicui/typing-animation";
 import gsap from "gsap";
 import {
 	Accordion,
@@ -10,39 +9,23 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { LoaderIcon } from "lucide-react";
 import intern1 from "@/public/img/intern1.jpeg";
+import Image from "next/image";
+import { TextAnimate } from "./ui/text-animate";
 
 export default function Experience() {
-	const gradualSpaceRef = React.useRef(null);
-
-	React.useEffect(() => {
-		if (gradualSpaceRef.current) {
-			gsap.fromTo(
-				gradualSpaceRef.current,
-				{ opacity: 0, y: 100 },
-				{
-					opacity: 1,
-					y: 0,
-					duration: 3.5,
-					ease: "power4.out",
-					scrollTrigger: {
-						trigger: gradualSpaceRef.current,
-						start: "top 80%",
-						toggleActions: "play none none none",
-					},
-				}
-			);
-		}
-	}, []);
 	return (
 		<>
 			<section className="pt-[70%] md:pt-[15%]">
-				<div className="text-center" ref={gradualSpaceRef}>
-					<TypingAnimation
-						className="scroll-m-20 text-6xl uppercase font-extrabold tracking-tight md:text-[12vh]"
-						text="Working Experience"
-					/>
+				<div className="text-center">
+					<TextAnimate
+						animation="slideUp"
+						by="word"
+						className="scroll-m-20 text-5xl uppercase font-extrabold tracking-tight md:text-[12vh]"
+					>
+						Working Experience
+					</TextAnimate>
 				</div>
-				<div className="max-w-2xl mx-auto p-4 mt-10">
+				<div className="max-w-3xl mx-auto p-4 mt-10">
 					<div className="grid grid-cols-7">
 						<div className="col-span-1">
 							<Avatar className="h-10 md:h-14 w-10 md:w-14 md:mt-0 mt-3.5">
@@ -74,10 +57,12 @@ export default function Experience() {
 							</Accordion>
 						</div>
 					</div>
-					<img
+					<Image
 						src={intern1.src}
 						alt="img"
-						className="py-20"
+						width={5000}
+						height={5000}
+						className="py-12"
 					/>
 				</div>
 			</section>

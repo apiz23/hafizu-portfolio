@@ -6,30 +6,9 @@ import { Badge } from "./ui/badge";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { TextAnimate } from "./ui/text-animate";
 
 export default function Project() {
-	const gradualSpaceRef = useRef(null);
-
-	useEffect(() => {
-		if (gradualSpaceRef.current) {
-			gsap.fromTo(
-				gradualSpaceRef.current,
-				{ opacity: 0, y: 100 },
-				{
-					opacity: 1,
-					y: 0,
-					duration: 3.5,
-					ease: "power4.out",
-					scrollTrigger: {
-						trigger: gradualSpaceRef.current,
-						start: "top 80%",
-						toggleActions: "play none none none",
-					},
-				}
-			);
-		}
-	}, []);
-
 	const projects = [
 		{
 			title: "Hafizu Blog",
@@ -78,21 +57,24 @@ export default function Project() {
 
 	return (
 		<>
-			<section className="pt-[70%] md:pt-[15%] mb-10">
-				<div className="text-center" ref={gradualSpaceRef}>
-					<TypingAnimation
-						className="scroll-m-20 text-6xl uppercase font-extrabold tracking-tight md:text-[12vh]"
-						text="Project Showcase"
-					/>
+			<section className="pt-[70%] md:pt-[20%] mb-10">
+				<div className="text-center">
+					<TextAnimate
+						animation="slideUp"
+						by="word"
+						className="scroll-m-20 text-5xl uppercase font-extrabold tracking-tight md:text-[12vh]"
+					>
+						Project Showcase
+					</TextAnimate>
 				</div>
 			</section>
-			<div className="min-h-screen pt-[10%] pb-20">
+			<div className="min-h-screen pb-20">
 				{projects.map((project, index) => (
 					<div key={index} className="block max-w-3xl mx-auto p-2 md:p-0 mt-10">
 						<Image
 							alt={project.title}
 							src={project.imageSrc}
-							className="w-full object-cover"
+							className="w-full object-cover rounded-lg"
 							width={2000}
 							height={2000}
 						/>
@@ -108,12 +90,12 @@ export default function Project() {
 							<p className="mt-2 text-gray-700 text-justify">{project.description}</p>
 							<div className="flex justify-between md:justify-end gap-2 py-5">
 								<Link href={project.githubLink} target="_blank" className="flex-1">
-									<Button variant="outline" className="w-full">
+									<Button variant="default" className="w-full">
 										GitHub
 									</Button>
 								</Link>
 								<Link href={project.visitLink} target="_blank" className="flex-1">
-									<Button variant="outline" className="w-full">
+									<Button variant="default" className="w-full">
 										Visit
 									</Button>
 								</Link>

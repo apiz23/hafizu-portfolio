@@ -3,36 +3,14 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import TypingAnimation from "./magicui/typing-animation";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { LoaderIcon } from "lucide-react";
 import profile from "@/public/img/profile.jpg";
+import { TextAnimate } from "./ui/text-animate";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Header() {
-	const wordPullUpRef = useRef(null);
-
-	useEffect(() => {
-		if (wordPullUpRef.current) {
-			gsap.fromTo(
-				wordPullUpRef.current,
-				{ opacity: 0, y: 100 },
-				{
-					opacity: 1,
-					y: 0,
-					duration: 1.5,
-					ease: "power3.out",
-					scrollTrigger: {
-						trigger: wordPullUpRef.current,
-						start: "top 80%",
-						toggleActions: "play none none none",
-					},
-				}
-			);
-		}
-	}, []);
-
 	return (
 		<>
 			<section className="mb-0 md:mb-20 h-fit ">
@@ -46,10 +24,13 @@ export default function Header() {
 						</Avatar>
 					</div>
 					<div className="col-span-1 pt-10">
-						<TypingAnimation
-							className="scroll-m-20 font-extrabold text-4xl md:text-8xl"
-							text="Hafizuddin Hamid"
-						/>
+						<TextAnimate
+							animation="slideUp"
+							by="word"
+							className="scroll-m-20 font-extrabold text-4xl md:text-8xl text-center"
+						>
+							Hafizuddin Hamid
+						</TextAnimate>
 						<h4 className="scroll-m-20 text-xl flex justify-center font-semibold tracking-tight capitalize my-5">
 							software engineering student
 						</h4>

@@ -36,7 +36,7 @@ export default function StickyCursor({ stickyElement }: any) {
 					left: smoothMouse.x,
 					top: smoothMouse.y,
 				}}
-				className="fixed z-10 w-[25px] h-[25px] bg-red-500 rounded-full pointer-events-none"
+				className="fixed z-10 w-[25px] h-[25px] bg-slate-700 rounded-full pointer-events-none"
 			/>
 		</div>
 	);

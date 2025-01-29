@@ -8,6 +8,7 @@ import Lenis from "lenis";
 import Project from "@/components/Project";
 import Experience from "@/components/Experience";
 import Education from "@/components/Education";
+import Footer from "@/components/Footer";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -39,6 +40,7 @@ export default function Home() {
 			<Experience />
 			<Education />
 			<Project />
+			<Footer />
 		</>
 	);
 }

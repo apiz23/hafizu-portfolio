@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/tooltip";
 
 const dockIcons = [
-	{ icon: <Home className="size-6" />, href: "/", tooltip: "Home" },
 	{
 		icon: <RiBloggerLine className="size-6" />,
 		href: "https://hafizu-blog.vercel.app/",
@@ -23,12 +22,12 @@ const dockIcons = [
 
 const dockIconsSocial = [
 	{
-		icon: <RiGithubFill className="size-7" />,
+		icon: <RiGithubFill className="size-6" />,
 		href: "https://github.com/apiz23",
 		tooltip: "GitHub",
 	},
 	{
-		icon: <Linkedin className="size-7" />,
+		icon: <Linkedin className="size-6" />,
 		href: "https://www.linkedin.com/in/muh-hafizuddin",
 		tooltip: "LinkedIn",
 	},
@@ -45,7 +44,10 @@ export default function Navbar() {
 			<div className="fixed bottom-5 left-0 right-0 z-50">
 				<div className="relative flex justify-center">
 					<TooltipProvider>
-						<Dock direction="middle" className="border-neutral-200 bg-zinc-800 text-white">
+						<Dock
+							direction="middle"
+							className="border-neutral-200 bg-zinc-800 text-white"
+						>
 							{dockIcons.map((item, index) => (
 								<DockIcon key={index}>
 									<Tooltip>

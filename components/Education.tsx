@@ -34,6 +34,7 @@ import {
 } from "@/components/ui/accordion";
 import supabase from "@/lib/supabase";
 import { useQuery } from "react-query";
+import { TextAnimate } from "./ui/text-animate";
 
 type EducationLevel = "diploma" | "degree" | "secondary";
 
@@ -55,7 +56,6 @@ const fetchData = async (selectedValue: EducationLevel) => {
 };
 
 export default function Education() {
-	const gradualSpaceRef = useRef(null);
 	const [selectedValue, setSelectedValue] = useState<EducationLevel>("diploma");
 	const { data: chartData = [], error } = useQuery(
 		["chartData", selectedValue],
@@ -66,26 +66,6 @@ export default function Education() {
 			},
 		}
 	);
-
-	useEffect(() => {
-		if (gradualSpaceRef.current) {
-			gsap.fromTo(
-				gradualSpaceRef.current,
-				{ opacity: 0, y: 100 },
-				{
-					opacity: 1,
-					y: 0,
-					duration: 3.5,
-					ease: "power4.out",
-					scrollTrigger: {
-						trigger: gradualSpaceRef.current,
-						start: "top 80%",
-						toggleActions: "play none none none",
-					},
-				}
-			);
-		}
-	}, []);
 
 	const chartConfig = {
 		GPA: {
@@ -101,11 +81,14 @@ export default function Education() {
 	return (
 		<>
 			<section className="pt-[70%] md:pt-[15%]">
-				<div className="text-center" ref={gradualSpaceRef}>
-					<TypingAnimation
-						className="scroll-m-20 text-6xl uppercase font-extrabold tracking-tight md:text-[12vh]"
-						text="Education"
-					/>
+				<div className="text-center">
+					<TextAnimate
+						animation="slideUp"
+						by="word"
+						className="scroll-m-20 text-5xl uppercase font-extrabold tracking-tight md:text-[12vh]"
+					>
+						Education
+					</TextAnimate>
 				</div>
 				<div className="max-w-3xl mx-auto mt-10 md:px-0 px-2">
 					<div className="grid grid-cols-2 gap-6 mb-5">
@@ -149,75 +132,66 @@ export default function Education() {
 							</CardContent>
 						</Card>
 					</div>
-					<Accordion type="single" collapsible className="w-full">
-						<AccordionItem value="chart">
-							<AccordionTrigger className="flex justify-between border-2 border-neutral-500 rounded-t-md p-4">
-								Pointer Chart
-							</AccordionTrigger>
-							<AccordionContent className="bg-orange-300 bg-opacity-50 px-4 rounded-b-md">
-								<Card className="col-span-2 bg-amber-50 border-neutral-500 border-b-4 border-x-0 border-t-0 shadow-md mt-10">
-									<CardHeader>
-										<div className="flex justify-between">
-											<CardTitle>{`${
-												selectedValue.charAt(0).toUpperCase() + selectedValue.slice(1)
-											} Chart`}</CardTitle>
-											<Select
-												onValueChange={(value) => setSelectedValue(value as EducationLevel)}
-											>
-												<SelectTrigger className="w-[180px]">
-													<SelectValue placeholder="Diploma" />
-												</SelectTrigger>
-												<SelectContent>
-													<SelectItem value="degree">Degree</SelectItem>
-													<SelectItem value="diploma">Diploma</SelectItem>
-													<SelectItem value="secondary">Secondary School</SelectItem>
-												</SelectContent>
-											</Select>
-										</div>
-									</CardHeader>
-									<CardContent>
-										<ChartContainer config={chartConfig}>
-											<LineChart
-												accessibilityLayer
-												data={chartData}
-												margin={{
-													top: 20,
-													left: 12,
-													right: 12,
-												}}
-											>
-												<CartesianGrid vertical={false} />
-												<XAxis
-													dataKey="sem"
-													tickLine={false}
-													axisLine={false}
-													tickMargin={8}
-													tickFormatter={(value) => `Sem ${value}`}
-												/>
-												<YAxis domain={[3.5, 4]} />
-												<Tooltip />
-												<Legend />
-												<Line
-													dataKey="GPA"
-													type="monotone"
-													stroke="var(--color-GPA)"
-													strokeWidth={2}
-													dot={{ r: 4 }}
-												/>
-												<Line
-													dataKey="CPA"
-													type="monotone"
-													stroke="var(--color-CPA)"
-													strokeWidth={2}
-													dot={{ r: 4 }}
-												/>
-											</LineChart>
-										</ChartContainer>
-									</CardContent>
-								</Card>{" "}
-							</AccordionContent>
-						</AccordionItem>
-					</Accordion>
+					<Card className="col-span-2 bg-amber-50 border-neutral-500 border-b-4 border-x-0 border-t-0 shadow-md mt-10">
+						<CardHeader>
+							<div className="flex justify-between">
+								<CardTitle>{`${
+									selectedValue.charAt(0).toUpperCase() + selectedValue.slice(1)
+								} Chart`}</CardTitle>
+								<Select
+									onValueChange={(value) => setSelectedValue(value as EducationLevel)}
+								>
+									<SelectTrigger className="w-[180px]">
+										<SelectValue placeholder="Diploma" />
+									</SelectTrigger>
+									<SelectContent>
+										<SelectItem value="degree">Degree</SelectItem>
+										<SelectItem value="diploma">Diploma</SelectItem>
+										<SelectItem value="secondary">Secondary School</SelectItem>
+									</SelectContent>
+								</Select>
+							</div>
+						</CardHeader>
+						<CardContent>
+							<ChartContainer config={chartConfig}>
+								<LineChart
+									accessibilityLayer
+									data={chartData}
+									margin={{
+										top: 20,
+										left: 12,
+										right: 12,
+									}}
+								>
+									<CartesianGrid vertical={false} />
+									<XAxis
+										dataKey="sem"
+										tickLine={false}
+										axisLine={false}
+										tickMargin={8}
+										tickFormatter={(value) => `Sem ${value}`}
+									/>
+									<YAxis domain={[3.5, 4]} />
+									<Tooltip />
+									<Legend />
+									<Line
+										dataKey="GPA"
+										type="monotone"
+										stroke="var(--color-GPA)"
+										strokeWidth={2}
+										dot={{ r: 4 }}
+									/>
+									<Line
+										dataKey="CPA"
+										type="monotone"
+										stroke="var(--color-CPA)"
+										strokeWidth={2}
+										dot={{ r: 4 }}
+									/>
+								</LineChart>
+							</ChartContainer>
+						</CardContent>
+					</Card>
 				</div>
 			</section>
 		</>
