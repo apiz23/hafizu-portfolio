@@ -1,15 +1,21 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import ReactQueryProvider from "@/lib/react-query";
-import { ScrollProgress } from "@/components/ui/scroll-progress";
+import { Sora, Inter } from "next/font/google";
+import Squares from "@/components/light-rays";
 
-const poppins = Montserrat({ weight: "400", subsets: ["latin"] });
+const sora = Sora({
+	subsets: ["latin"],
+	variable: "--font-heading",
+	weight: ["500", "600", "700"],
+});
+const inter = Inter({
+	subsets: ["latin"],
+	variable: "--font-body",
+});
 
 export const metadata: Metadata = {
-	title: "Hafizu Portfolio",
-	description: "Personal Portfolio by Hafizu",
+	title: "Hafizu | Portfolio",
+	description: "Personal Portfolio by Hafizu - Software Developer",
 	icons: {
 		icon: [
 			{
@@ -17,6 +23,11 @@ export const metadata: Metadata = {
 				href: "/logo.png",
 			},
 		],
+	},
+	openGraph: {
+		title: "Hafizu | Portfolio",
+		description: "Personal Portfolio by Hafizu - Software Developer",
+		type: "website",
 	},
 };
 
@@ -26,14 +37,32 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
-			<body className={poppins.className}>
-				<div className="min-h-screen bg-gradient-to-b from-yellow-100 via-white to-yellow-100">
-					<div className="max-w-4xl md:mx-auto">
-						<ScrollProgress />
+		<html lang="en" suppressHydrationWarning>
+			<head>
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				<link rel="icon" href="/logo.png" />
+			</head>
+			<body
+				className={`${sora.className} ${inter.className} font-sans bg-gradient-to-br from-gray-50 to-white`}
+			>
+				<div className="fixed inset-0 opacity-30">
+					<Squares
+						speed={1}
+						squareSize={50}
+						direction="diagonal"
+						borderColor="#000000"
+						hoverFillColor="#f0f0f0"
+					/>
+				</div>
 
-						<Navbar />
-						<ReactQueryProvider>{children}</ReactQueryProvider>
+				<div className="fixed inset-0 bg-gradient-to-br from-white/50 via-transparent to-white/30 pointer-events-none" />
+
+				<div className="relative min-h-screen">
+					<div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+						{/* Subtle Shadow and Clean White Background */}
+						<div className="relative bg-white/50 backdrop-blur-sm rounded-2xl shadow-xl">
+							{children}
+						</div>
 					</div>
 				</div>
 			</body>

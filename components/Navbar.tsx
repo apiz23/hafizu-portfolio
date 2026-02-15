@@ -1,6 +1,6 @@
 "use client";
 
-import { Home, Linkedin } from "lucide-react";
+import { Linkedin } from "lucide-react";
 import Link from "next/link";
 import { Dock, DockIcon } from "./magicui/dock";
 import { RiTwitterXFill, RiGithubFill, RiBloggerLine } from "react-icons/ri";
