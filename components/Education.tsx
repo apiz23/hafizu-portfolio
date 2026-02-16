@@ -41,21 +41,27 @@ import {
 	SelectValue,
 } from "./ui/select";
 
+type Pointer = { sem: number; GPA: number; CPA: number };
+
 type EducationLevel = "diploma" | "bachelor" | "secondary";
 
-const fetchData = async (selectedValue: EducationLevel) => {
+type EducationResponse = {
+	chart: Pointer[];
+	latestCGPA: number | null;
+};
+
+const fetchData = async (
+	selectedValue: EducationLevel,
+): Promise<EducationResponse> => {
 	const res = await fetch(`/api/education?level=${selectedValue}`);
-
-	if (!res.ok) {
-		throw new Error("Failed to fetch data");
-	}
-
+	if (!res.ok) throw new Error("Failed to fetch data");
 	return res.json();
 };
 
 export default function Education() {
 	const [selectedValue, setSelectedValue] = useState<EducationLevel>("diploma");
-	const [chartData, setChartData] = useState<any[]>([]);
+	const [latestCGPA, setLatestCGPA] = useState<number | null>(null);
+	const [chartData, setChartData] = useState<Pointer[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 	const [trend, setTrend] = useState<{
@@ -72,20 +78,20 @@ export default function Education() {
 				setIsLoading(true);
 				setError(null);
 
-				const data = await fetchData(selectedValue);
-				setChartData(data);
+				const res = await fetchData(selectedValue);
+				setChartData(res.chart);
+				setLatestCGPA(res.latestCGPA);
 
-				// Calculate trend
-				if (data.length >= 2) {
-					const lastTwo = data.slice(-2);
+				if (res.chart.length >= 2) {
+					const lastTwo = res.chart.slice(-2);
 					const diff = lastTwo[1].GPA - lastTwo[0].GPA;
-					const percentChange = ((diff / lastTwo[0].GPA) * 100).toFixed(1);
+					const percent = ((diff / lastTwo[0].GPA) * 100).toFixed(1);
 					setTrend({
-						value: `${Math.abs(Number(percentChange))}%`,
+						value: `${Math.abs(Number(percent))}%`,
 						direction: diff >= 0 ? "up" : "down",
 					});
 				}
-			} catch (err: any) {
+			} catch (err) {
 				console.error(err);
 				setError("Failed to load data");
 			} finally {
@@ -97,15 +103,11 @@ export default function Education() {
 	}, [selectedValue]);
 
 	const chartConfig = {
-		GPA: {
-			label: "GPA",
-			color: "var(--chart-1)",
-		},
-		CPA: {
-			label: "CPA",
-			color: "var(--chart-2)",
-		},
+		GPA: { label: "GPA", color: "var(--chart-1)" },
+		CPA: { label: "CPA", color: "var(--chart-2)" },
 	} satisfies ChartConfig;
+
+	/* -------------------- Dynamic Education Cards -------------------- */
 
 	const educationDetails = [
 		{
@@ -113,16 +115,14 @@ export default function Education() {
 			title: "Diploma In Information Technology",
 			institution: "Universiti Tun Hussein Onn Malaysia",
 			period: "2021-2023",
-			achievement: "CGPA: 3.92",
+			achievement:
+				selectedValue === "diploma" && latestCGPA
+					? `Final CGPA: ${latestCGPA.toFixed(2)}`
+					: "CGPA recorded in database",
 			logo:
 				"https://images.seeklogo.com/logo-png/14/1/universiti-tun-hussein-onn-malaysia-logo-png_seeklogo-145927.png",
-			description:
-				"Foundation in IT with focus on software development and database management",
-			highlights: [
-				"Software Development",
-				"Database Management",
-				"Web Technologies",
-			],
+			description: "Foundation in IT with focus on software development",
+			highlights: ["Software Development", "Database", "Web Tech"],
 			color: "from-blue-500/20 to-cyan-500/20",
 			icon: <Brain className="h-5 w-5" />,
 		},
@@ -131,53 +131,55 @@ export default function Education() {
 			title: "Bachelor of Computer Science - Software Engineering",
 			institution: "Universiti Tun Hussein Onn Malaysia",
 			period: "2024-2026",
-			achievement: "Current CGPA: 3.84",
+			achievement:
+				selectedValue === "bachelor" && latestCGPA
+					? `Current CGPA: ${latestCGPA.toFixed(2)}`
+					: "CGPA tracked live",
 			logo:
 				"https://images.seeklogo.com/logo-png/14/1/universiti-tun-hussein-onn-malaysia-logo-png_seeklogo-145927.png",
-			description:
-				"Advanced software engineering principles, agile methodologies, and system architecture",
-			highlights: [
-				"Software Architecture",
-				"Agile Methodologies",
-				"System Design",
-			],
+			description: "Advanced software engineering and architecture",
+			highlights: ["Architecture", "Agile", "System Design"],
 			color: "from-purple-500/20 to-pink-500/20",
 			icon: <Rocket className="h-5 w-5" />,
 		},
 		{
 			level: "Secondary",
-			title: "Mara Junior Science College Tun Ghafar Baba",
+			title: "Mara Junior Science College",
 			institution: "Science Stream",
 			period: "2017-2018",
-			achievement: "SPM: 8A",
+			achievement: "SPM: 7A 2B",
 			logo:
 				"https://upload.wikimedia.org/wikipedia/commons/6/6f/Logo_Maktab_Rendah_Sains_MARA.png",
-			description:
-				"Pure science with mathematics, physics, chemistry, and biology",
-			highlights: ["Pure Science", "Mathematics", "Physics", "Chemistry"],
+			description: "Pure science stream with mathematics & physics",
+			highlights: ["Math", "Physics", "Chemistry"],
 			color: "from-green-500/20 to-emerald-500/20",
 			icon: <Target className="h-5 w-5" />,
 		},
 	];
 
+	/* -------------------- Dynamic Stats -------------------- */
+
 	const stats = [
 		{
-			value: "3.92",
-			label: "Diploma CGPA",
+			value: latestCGPA ? latestCGPA.toFixed(2) : "--",
+			label: `${selectedValue.toUpperCase()} CGPA`,
 			icon: <Star className="h-4 w-4" />,
-			color: "text-blue-500",
+			color: "text-primary",
 		},
 		{
-			value: "3.84",
-			label: "Bachelor CGPA",
-			icon: <Star className="h-4 w-4" />,
-			color: "text-purple-500",
+			value: chartData.length,
+			label: "Semesters Recorded",
+			icon: <Calendar className="h-4 w-4" />,
+			color: "text-secondary",
 		},
 		{
-			value: "8A",
-			label: "SPM Achievement",
-			icon: <Award className="h-4 w-4" />,
-			color: "text-green-500",
+			value:
+				chartData.length > 0
+					? Math.max(...chartData.map((d) => d.GPA)).toFixed(2)
+					: "--",
+			label: "Highest GPA",
+			icon: <TrendingUp className="h-4 w-4" />,
+			color: "text-accent",
 		},
 	];
 
@@ -442,11 +444,16 @@ export default function Education() {
 													tickLine={false}
 													axisLine={false}
 													tickMargin={8}
+													label={{
+														value: "Semester",
+														position: "insideBottom",
+														offset: -10,
+													}}
 													tickFormatter={(value) => `Sem ${value}`}
 												/>
 												<YAxis
 													dataKey="GPA"
-													domain={[3.0, 4.0]}
+													domain={["dataMin - 0.05", "dataMax + 0.05"]}
 													tickLine={false}
 													axisLine={false}
 													tickMargin={8}

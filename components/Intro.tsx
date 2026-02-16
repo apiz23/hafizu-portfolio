@@ -20,6 +20,15 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { Badge } from "./ui/badge";
 import { motion } from "framer-motion";
+import LogoLoop from "./LogoLoop";
+import {
+	SiReact,
+	SiNextdotjs,
+	SiTypescript,
+	SiTailwindcss,
+	SiNodedotjs,
+	SiPostgresql,
+} from "react-icons/si";
 
 export default function Intro() {
 	const [isMounted, setIsMounted] = useState(false);
@@ -44,6 +53,28 @@ export default function Intro() {
 		"Node.js",
 		"PostgreSQL",
 		"TailwindCSS",
+	];
+
+	// Tech logos for the loop
+	const techLogos = [
+		{ node: <SiReact />, title: "React", href: "https://react.dev" },
+		{ node: <SiNextdotjs />, title: "Next.js", href: "https://nextjs.org" },
+		{
+			node: <SiTypescript />,
+			title: "TypeScript",
+			href: "https://www.typescriptlang.org",
+		},
+		{
+			node: <SiTailwindcss />,
+			title: "Tailwind CSS",
+			href: "https://tailwindcss.com",
+		},
+		{ node: <SiNodedotjs />, title: "Node.js", href: "https://nodejs.org" },
+		{
+			node: <SiPostgresql />,
+			title: "PostgreSQL",
+			href: "https://www.postgresql.org",
+		},
 	];
 
 	// Responsive sizing
@@ -157,11 +188,6 @@ export default function Intro() {
 									<div className="animate-pulse bg-muted h-full w-full" />
 								</AvatarFallback>
 							</Avatar>
-
-							{/* Status indicator - static */}
-							<div className="absolute bottom-2 right-2 h-4 w-4 rounded-full bg-green-500 border-2 border-background">
-								<span className="absolute inset-0 rounded-full bg-green-500 animate-ping opacity-75" />
-							</div>
 						</div>
 					</motion.div>
 
@@ -185,7 +211,7 @@ export default function Intro() {
 								by="word"
 								className="scroll-m-20 text-4xl md:text-6xl lg:text-7xl font-black uppercase tracking-tighter"
 							>
-								MUHD HAFIZUDDIN 
+								MUHD HAFIZUDDIN
 							</TextAnimate>
 						</motion.div>
 
@@ -237,26 +263,22 @@ export default function Intro() {
 							</div>
 						</motion.div>
 
-						{/* Skills Pills - improved design */}
-						<motion.div
-							variants={itemVariants}
-							className="flex flex-wrap justify-center gap-2 mt-8"
-						>
-							{skills.map((skill, index) => (
-								<motion.div
-									key={skill}
-									whileHover={{ y: -2, scale: 1.02 }}
-									transition={{ type: "spring", stiffness: 400, damping: 17 }}
-								>
-									<Badge
-										variant="outline"
-										className="px-3 py-1.5 bg-secondary/5 border-secondary/20 text-secondary-foreground hover:bg-secondary/10 hover:border-secondary/30 transition-all duration-300 cursor-default text-sm font-medium tracking-wide group"
-									>
-										<Code2 className="h-3 w-3 mr-1.5 group-hover:rotate-3 transition-transform" />
-										{skill}
-									</Badge>
-								</motion.div>
-							))}
+						{/* Logo Loop Section - NEW */}
+						<motion.div variants={itemVariants} className="mt-10 w-full">
+							<div className="relative h-24 md:h-28 w-full overflow-hidden">
+								<LogoLoop
+									logos={techLogos}
+									speed={100}
+									direction="left"
+									logoHeight={60}
+									gap={60}
+									hoverSpeed={0}
+									scaleOnHover
+									fadeOut
+									fadeOutColor="#ffffff"
+									ariaLabel="Technology partners"
+								/>
+							</div>
 						</motion.div>
 
 						{/* CTA Buttons - improved design */}
@@ -266,7 +288,7 @@ export default function Intro() {
 						>
 							<Button
 								size="lg"
-								className="w-full sm:w-auto group relative overflow-hidden bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-xl px-8"
+								className="w-full sm:w-auto group border-2 border-border hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 px-8"
 								asChild
 							>
 								<Link href="#projects" scroll={false} onClick={scrollToProjects}>

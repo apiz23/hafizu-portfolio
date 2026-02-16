@@ -33,6 +33,9 @@ import { TextAnimate } from "./ui/text-animate";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import intern1 from "@/public/img/intern1.jpeg";
+import intern2 from "@/public/img/intern2.jpg";
+import intern4 from "@/public/img/intern4.jpg";
+import intern5 from "@/public/img/intern5.jpg";
 import { Card, CardContent } from "./ui/card";
 
 export default function Experience() {
@@ -89,11 +92,12 @@ export default function Experience() {
 	const memoryImages = [
 		{
 			src: intern1,
-			caption: "Team meeting at Xeersoft",
-			location: "Kuala Lumpur",
+			caption: "Annual Grand meeting at Xeersoft",
+			location: "Bukit Indah, Johor Bahru",
 		},
-		{ src: intern1, caption: "Code review session", location: "Remote" },
-		{ src: intern1, caption: "Project presentation", location: "Virtual" },
+		{ src: intern2, caption: "Christmas celebration", location: "Bukit Indah, Johor Bahru", },
+		{ src: intern4, caption: "Project presentation", location: "Virtual" },
+		{ src: intern5, caption: "Project presentation", location: "Virtual" },
 	];
 
 	return (
@@ -285,7 +289,7 @@ export default function Experience() {
 															<div>
 																<h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
 																	<span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-																	<span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+																	<span className="bg-gradient-to-r from-primary to-secondary bg-clip-text">
 																		Key Achievements
 																	</span>
 																</h4>
@@ -311,7 +315,7 @@ export default function Experience() {
 															<div>
 																<h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
 																	<span className="h-2 w-2 rounded-full bg-secondary animate-pulse delay-300" />
-																	<span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">
+																	<span className="bg-gradient-to-r from-secondary to-accent bg-clip-text">
 																		Technologies Used
 																	</span>
 																</h4>
@@ -369,7 +373,7 @@ export default function Experience() {
 									<span className="text-sm">Captured Moments</span>
 								</Badge>
 							</motion.div>
-							<h3 className="text-2xl md:text-3xl font-bold mb-3 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+							<h3 className="text-2xl md:text-3xl font-bold mb-3 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text">
 								Internship Memories
 							</h3>
 							<p className="text-muted-foreground">
@@ -377,7 +381,7 @@ export default function Experience() {
 							</p>
 						</div>
 
-						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+						<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 							{memoryImages.map((img, idx) => (
 								<motion.div
 									key={idx}
@@ -435,7 +439,7 @@ export default function Experience() {
 										</div>
 										<div>
 											<p className="text-sm text-muted-foreground">Total Experience</p>
-											<p className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+											<p className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text">
 												{experiences[0].duration}
 											</p>
 										</div>
@@ -449,7 +453,7 @@ export default function Experience() {
 										</div>
 										<div>
 											<p className="text-sm text-muted-foreground">Technologies Used</p>
-											<p className="text-2xl font-bold bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">
+											<p className="text-2xl font-bold bg-gradient-to-r from-secondary to-accent bg-clip-text">
 												{experiences[0].technologies.length}+
 											</p>
 										</div>
@@ -463,7 +467,7 @@ export default function Experience() {
 										</div>
 										<div>
 											<p className="text-sm text-muted-foreground">Achievements</p>
-											<p className="text-2xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
+											<p className="text-2xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text">
 												{experiences[0].achievements.length}
 											</p>
 										</div>

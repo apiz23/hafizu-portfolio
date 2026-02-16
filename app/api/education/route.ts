@@ -8,27 +8,30 @@ export async function GET(req: Request) {
 	if (!level) {
 		return NextResponse.json(
 			{ error: "Education level is required" },
-			{ status: 400 }
+			{ status: 400 },
 		);
 	}
 
 	const { data, error } = await supabase
 		.from("pointer")
-		.select("*")
-		.eq("education_level", level);
+		.select("sem, gpa, cgpa, education_level")
+		.eq("education_level", level)
+		.order("sem", { ascending: true });
 
 	if (error) {
-		return NextResponse.json(
-			{ error: error.message },
-			{ status: 500 }
-		);
+		return NextResponse.json({ error: error.message }, { status: 500 });
 	}
 
-	const formatted = data.map(({ sem, gpa, cgpa }) => ({
-		sem,
-		GPA: gpa,
-		CPA: cgpa,
+	const formatted = data.map((row) => ({
+		sem: Number(row.sem),
+		GPA: Number(row.gpa),
+		CPA: Number(row.cgpa),
 	}));
 
-	return NextResponse.json(formatted);
+	const latest = formatted.at(-1);
+
+	return NextResponse.json({
+		chart: formatted,
+		latestCGPA: latest?.CPA ?? null,
+	});
 }

@@ -16,8 +16,8 @@ import {
 	Rocket,
 	Sparkles,
 	Calendar,
-	TrendingUp,
 	Layers,
+	ArrowRight,
 } from "lucide-react";
 import { Card, CardDescription, CardTitle } from "./ui/card";
 import { useState } from "react";
@@ -26,6 +26,24 @@ export default function Project() {
 	const [filter, setFilter] = useState<string>("all");
 
 	const projects = [
+		{
+			title: "CuraSync",
+			description:
+				"A next-generation healthcare platform designed for real-time patient data synchronization and AI-powered clinical insights. Features a secure, cloud-native architecture with HIPAA-compliant security standards.",
+			imageSrc: "/img/curasync.png",
+			badges: [
+				"Next.js",
+				"TypeScript",
+				"TailwindCSS",
+				"AI Integration",
+				"Cloud Native",
+			],
+			githubLink: "https://github.com/apiz23/cura-sync",
+			visitLink: "https://cura-sync-app.vercel.app/home",
+			featured: true,
+			category: "webapp",
+			year: "2025",
+		},
 		{
 			title: "Hafizu Blog",
 			description:
@@ -43,8 +61,37 @@ export default function Project() {
 			visitLink: "https://hafizu-blog.vercel.app/",
 			featured: true,
 			category: "fullstack",
-			stats: { stars: 12, forks: 3, views: 1200 },
 			year: "2024",
+		},
+		{
+			title: "Live Mark",
+			description:
+				"A high-performance, real-time Markdown editor providing an instant side-by-side preview. Designed for efficiency with syntax highlighting, dark/light mode support, and seamless HTML export capabilities.",
+			imageSrc: "/img/live-mark.png",
+			badges: ["Next.js", "TypeScript", "TailwindCSS", "Markdown-it", "Prism.js"],
+			githubLink: "https://github.com/apiz23/live-mark",
+			visitLink: "https://live-mark-editor.vercel.app/",
+			featured: false,
+			category: "webapp",
+			year: "2025",
+		},
+		{
+			title: "DINS 2025 Website",
+			description:
+				"Official landing page for the Digital Innovathon Symposium 2025 at UTHM. Featuring a modern UI with a countdown timer, event schedules, and integrated registration system for participants.",
+			imageSrc: "/img/dins-2025.png",
+			badges: [
+				"Next.js",
+				"TypeScript",
+				"TailwindCSS",
+				"Framer Motion",
+				"Lucide React",
+			],
+			githubLink: "https://github.com/apiz23/dins-2025",
+			visitLink: "https://dins.uthm.edu.my/",
+			featured: true,
+			category: "webapp",
+			year: "2025",
 		},
 		{
 			title: "Your FSKTM Candidates",
@@ -62,21 +109,19 @@ export default function Project() {
 			visitLink: "https://your-fsktm-candidates.vercel.app/",
 			featured: false,
 			category: "webapp",
-			stats: { stars: 8, forks: 2, views: 800 },
 			year: "2024",
 		},
 		{
-			title: "Random Quotes Anime",
+			title: "DevSend",
 			description:
-				"A curated collection of inspirational anime quotes. Features random quote generation, filtering by anime series, and responsive design for all devices.",
-			imageSrc: "/img/random-quotes-anime.png",
-			badges: ["Next.js 14", "TypeScript", "TailwindCSS", "Shadcn UI", "REST API"],
-			githubLink: "https://github.com/apiz23/random-quote-anime",
-			visitLink: "https://random-quote-anime.vercel.app/quotes",
-			featured: false,
-			category: "frontend",
-			stats: { stars: 15, forks: 4, views: 1500 },
-			year: "2023",
+				"A reliable SMTP SaaS API designed for modern applications. Enables developers to send transactional and marketing emails with high performance, featuring a simple 3-line integration and <100ms delivery time.",
+			imageSrc: "/img/dev-send.png",
+			badges: ["Next.js", "TypeScript", "TailwindCSS", "SMTP API", "Node.js"],
+			githubLink: "https://github.com/apiz23/dev-send",
+			visitLink: "https://dev-send.vercel.app/",
+			featured: true,
+			category: "webapp",
+			year: "2025",
 		},
 		{
 			title: "Space & Equipment Booking System",
@@ -86,27 +131,43 @@ export default function Project() {
 			badges: ["React.js", "Bootstrap 5", "Email.js", "SCSS", "Node.js"],
 			githubLink: "https://github.com/apiz23/Fyp-dip",
 			visitLink: "https://space-equipment.vercel.app/home",
-			featured: true,
+			featured: false,
 			category: "fullstack",
-			stats: { stars: 20, forks: 5, views: 2000 },
 			year: "2023",
+		},
+		{
+			title: "StudAI",
+			description:
+				"An AI-powered study assistant that transforms learning materials into actionable insights. Features OCR technology to extract text from images and PDFs, automatically generating structured notes and flashcards to accelerate studying.",
+			imageSrc: "/img/stud-ai.png",
+			badges: [
+				"Next.js",
+				"TypeScript",
+				"TailwindCSS",
+				"JamAiBase API",
+				"Tesseract.js",
+			],
+			githubLink: "https://github.com/apiz23/StudAI",
+			visitLink: "https://stud-ai-iota.vercel.app/",
+			featured: true,
+			category: "webapp",
+			year: "2025",
 		},
 	];
 
 	const categories = [
-		{ id: "all", label: "All Projects", icon: Sparkles, color: "text-primary" },
-		{
-			id: "fullstack",
-			label: "Full Stack",
-			icon: Layers,
-			color: "text-secondary",
-		},
-		{ id: "frontend", label: "Frontend", icon: Eye, color: "text-accent" },
-		{ id: "webapp", label: "Web Apps", icon: Rocket, color: "text-chart-4" },
+		{ id: "all", label: "All Projects", icon: Sparkles },
+		{ id: "fullstack", label: "Full Stack", icon: Layers },
+		{ id: "webapp", label: "Web Apps", icon: Rocket },
+		{ id: "frontend", label: "Frontend", icon: Eye },
 	];
 
 	const filteredProjects =
 		filter === "all" ? projects : projects.filter((p) => p.category === filter);
+
+	// Split projects into featured and regular
+	const featuredProjects = filteredProjects.filter((p) => p.featured);
+	const regularProjects = filteredProjects.filter((p) => !p.featured);
 
 	// Animation variants
 	const containerVariants = {
@@ -129,21 +190,10 @@ export default function Project() {
 			id="projects"
 			className="py-20 md:py-32 relative overflow-hidden bg-background"
 		>
-			{/* Background decorations with more color */}
+			{/* Simple background */}
 			<div className="absolute inset-0 -z-10">
-				<div className="absolute top-20 right-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" />
-				<div className="absolute bottom-20 left-20 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-pulse delay-700" />
-				<div className="absolute top-1/3 left-1/3 w-64 h-64 bg-accent/10 rounded-full blur-3xl animate-pulse delay-1000" />
-
-				{/* Grid pattern */}
-				<div
-					className="absolute inset-0"
-					style={{
-						backgroundImage: `radial-gradient(circle at 1px 1px, var(--border) 1px, transparent 0)`,
-						backgroundSize: "40px 40px",
-						opacity: 0.05,
-					}}
-				/>
+				<div className="absolute top-20 right-20 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+				<div className="absolute bottom-20 left-20 w-96 h-96 bg-secondary/5 rounded-full blur-3xl" />
 			</div>
 
 			<div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -153,9 +203,8 @@ export default function Project() {
 						initial={{ opacity: 0, y: 20 }}
 						whileInView={{ opacity: 1, y: 0 }}
 						viewport={{ once: true }}
-						transition={{ duration: 0.5 }}
 					>
-						<div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-6 border border-primary/20 backdrop-blur-sm">
+						<div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-6">
 							<Rocket className="h-4 w-4" />
 							<span className="text-sm font-medium">My Work</span>
 						</div>
@@ -164,54 +213,42 @@ export default function Project() {
 					<TextAnimate
 						animation="slideUp"
 						by="word"
-						className="scroll-m-20 text-4xl md:text-6xl lg:text-7xl font-black uppercase tracking-tighter text-foreground"
+						className="text-4xl md:text-6xl font-bold text-foreground mb-6"
 					>
-						Project Showcase
+						Featured Projects
 					</TextAnimate>
 
 					<motion.p
 						initial={{ opacity: 0, y: 20 }}
 						whileInView={{ opacity: 1, y: 0 }}
 						viewport={{ once: true }}
-						transition={{ delay: 0.2, duration: 0.5 }}
-						className="text-muted-foreground mt-6 text-lg max-w-2xl mx-auto"
+						transition={{ delay: 0.2 }}
+						className="text-muted-foreground text-lg max-w-2xl mx-auto"
 					>
-						A collection of my best work, side projects, and{" "}
-						<span className="text-primary font-semibold">
-							open source contributions
-						</span>
+						A collection of my best work and open source contributions
 					</motion.p>
 				</div>
 
-				{/* Category Filter - Improved with colored icons */}
+				{/* Category Filter */}
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					whileInView={{ opacity: 1, y: 0 }}
 					viewport={{ once: true }}
 					transition={{ delay: 0.3 }}
-					className="flex flex-wrap justify-center gap-3 mb-12"
+					className="flex flex-wrap justify-center gap-2 mb-12"
 				>
 					{categories.map((cat) => {
 						const Icon = cat.icon;
 						return (
 							<Button
 								key={cat.id}
-								variant={filter === cat.id ? "default" : "outline"}
+								variant={filter === cat.id ? "default" : "ghost"}
 								size="sm"
 								onClick={() => setFilter(cat.id)}
-								className={`rounded-full transition-all duration-300 group ${
-									filter === cat.id
-										? "bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/25"
-										: "border-border/50 hover:border-primary/50 hover:bg-primary/5 text-foreground"
-								}`}
+								className="rounded-full"
 							>
-								<Icon
-									className={`h-4 w-4 mr-2 ${filter === cat.id ? "text-primary-foreground" : cat.color}`}
-								/>
+								<Icon className="h-4 w-4 mr-2" />
 								{cat.label}
-								{filter === cat.id && (
-									<span className="ml-2 h-2 w-2 rounded-full bg-primary-foreground animate-pulse" />
-								)}
 							</Button>
 						);
 					})}
@@ -219,185 +256,165 @@ export default function Project() {
 
 				{/* Projects Grid */}
 				<div className="max-w-6xl mx-auto">
-					<motion.div
-						variants={containerVariants}
-						initial="hidden"
-						whileInView="visible"
-						viewport={{ once: true }}
-						className="grid grid-cols-1 lg:grid-cols-2 gap-8"
-					>
-						{filteredProjects.map((project, index) => (
+					{/* Featured Projects - Horizontal Layout */}
+					{featuredProjects.length > 0 && (
+						<motion.div
+							variants={containerVariants}
+							initial="hidden"
+							whileInView="visible"
+							viewport={{ once: true }}
+							className="grid grid-cols-1 gap-8 mb-12"
+						>
+							{featuredProjects.map((project) => (
+								<motion.div key={project.title} variants={itemVariants}>
+									<Card className="group overflow-hidden bg-card border-border hover:border-primary/30 transition-all duration-300">
+										<div className="grid md:grid-cols-2 gap-6">
+											{/* Image */}
+											<div className="relative h-64 md:h-full overflow-hidden">
+												<Image
+													alt={project.title}
+													src={project.imageSrc}
+													width={2000}
+													height={2000}
+													className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+												/>
+												<Badge className="absolute top-4 left-4 bg-primary text-primary-foreground">
+													Featured
+												</Badge>
+											</div>
+
+											{/* Content */}
+											<div className="p-6 flex flex-col">
+												<div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
+													<Calendar className="h-4 w-4" />
+													<span>{project.year}</span>
+													<span className="w-1 h-1 rounded-full bg-muted-foreground" />
+													<span className="capitalize">{project.category}</span>
+												</div>
+
+												<CardTitle className="text-2xl font-bold mb-3">
+													{project.title}
+												</CardTitle>
+
+												<CardDescription className="text-muted-foreground mb-4">
+													{project.description}
+												</CardDescription>
+
+												{/* Tech badges */}
+												<div className="flex flex-wrap gap-2 mb-6">
+													{project.badges.slice(0, 5).map((badge, i) => (
+														<Badge key={i} variant="secondary" className="text-xs">
+															<Code2 className="h-3 w-3 mr-1" />
+															{badge}
+														</Badge>
+													))}
+												</div>
+
+												{/* Actions */}
+												<div className="flex gap-3 mt-auto">
+													<Button className="flex-1" asChild>
+														<Link href={project.visitLink} target="_blank">
+															<ExternalLink className="h-4 w-4 mr-2" />
+															Live Demo
+														</Link>
+													</Button>
+													<Button variant="outline" className="flex-1" asChild>
+														<Link href={project.githubLink} target="_blank">
+															<Github className="h-4 w-4 mr-2" />
+															Source Code
+														</Link>
+													</Button>
+												</div>
+											</div>
+										</div>
+									</Card>
+								</motion.div>
+							))}
+						</motion.div>
+					)}
+
+					{/* Regular Projects - Grid Layout */}
+					{regularProjects.length > 0 && (
+						<>
+							<h3 className="text-2xl font-semibold mb-6">More Projects</h3>
 							<motion.div
-								key={project.title}
-								variants={itemVariants}
-								className={project.featured ? "lg:col-span-2" : ""}
+								variants={containerVariants}
+								initial="hidden"
+								whileInView="visible"
+								viewport={{ once: true }}
+								className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
 							>
-								<Card
-									className={`group relative h-full bg-card border border-border hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 overflow-hidden ${
-										project.featured ? "lg:flex" : ""
-									}`}
-								>
-									{/* Gradient overlay on hover */}
-									<div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-									{/* Featured ribbon - FIXED: Now properly contained */}
-									{project.featured && (
-										<div className="absolute top-4 right-4 z-20 max-w-[calc(100%-2rem)]">
-											<div className="relative">
-												<div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary blur-md opacity-70" />
-												<Badge className="relative bg-gradient-to-r from-primary to-secondary text-white border-none px-4 py-1.5 shadow-lg flex items-center gap-1 whitespace-nowrap">
-													<Star className="h-3 w-3 fill-current flex-shrink-0" />
-													<span className="truncate">Featured Project</span>
-												</Badge>
-											</div>
-										</div>
-									)}
-
-									{/* Image section */}
-									<div
-										className={`relative overflow-hidden ${
-											project.featured ? "lg:w-1/2" : "w-full"
-										}`}
-									>
-										{/* Image overlay gradient */}
-										<div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60 z-10" />
-
-										{/* Category badge */}
-										<div className="absolute top-4 left-4 z-20 max-w-[calc(100%-2rem)]">
-											<Badge
-												variant="outline"
-												className="bg-card/90 backdrop-blur-sm border-primary/30 text-foreground shadow-sm flex items-center"
-											>
-												{project.category === "fullstack" && (
-													<Layers className="h-3 w-3 mr-1 text-primary flex-shrink-0" />
-												)}
-												{project.category === "frontend" && (
-													<Eye className="h-3 w-3 mr-1 text-accent flex-shrink-0" />
-												)}
-												{project.category === "webapp" && (
-													<Rocket className="h-3 w-3 mr-1 text-secondary flex-shrink-0" />
-												)}
-												<span className="truncate">
-													{project.category.charAt(0).toUpperCase() +
-														project.category.slice(1)}
-												</span>
-											</Badge>
-										</div>
-
-										{/* Year badge */}
-										<div className="absolute bottom-4 left-4 z-20 max-w-[calc(100%-2rem)]">
-											<div className="flex items-center gap-1 bg-card/90 backdrop-blur-sm px-3 py-1.5 rounded-full border border-border/50 shadow-sm">
-												<Calendar className="h-3 w-3 text-primary flex-shrink-0" />
-												<span className="text-xs font-medium text-foreground">
-													{project.year}
-												</span>
-											</div>
-										</div>
-
-										<Image
-											alt={project.title}
-											src={project.imageSrc}
-											width={2000}
-											height={2000}
-											className="w-full h-64 lg:h-full object-cover transition-transform duration-700 group-hover:scale-110"
-										/>
-									</div>
-
-									{/* Content section */}
-									<div
-										className={`p-6 lg:p-8 relative z-10 ${project.featured ? "lg:w-1/2" : "w-full"}`}
-									>
-										{/* Tech badges - Improved with colored backgrounds */}
-										<div className="flex flex-wrap gap-2 mb-4">
-											{project.badges.slice(0, 4).map((badge, badgeIndex) => {
-												const colors = [
-													"bg-primary/10 text-primary border-primary/20 hover:bg-primary/20",
-													"bg-secondary/10 text-secondary border-secondary/20 hover:bg-secondary/20",
-													"bg-accent/10 text-accent border-accent/20 hover:bg-accent/20",
-													"bg-chart-4/10 text-chart-4 border-chart-4/20 hover:bg-chart-4/20",
-												];
-												return (
+								{regularProjects.map((project) => (
+									<motion.div key={project.title} variants={itemVariants}>
+										<Card className="group h-full bg-card border-border hover:border-primary/30 transition-all duration-300 overflow-hidden">
+											{/* Image */}
+											<div className="relative h-48 overflow-hidden">
+												<Image
+													alt={project.title}
+													src={project.imageSrc}
+													width={2000}
+													height={2000}
+													className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+												/>
+												<div className="absolute top-3 right-3">
 													<Badge
-														key={badgeIndex}
-														variant="outline"
-														className={`${colors[badgeIndex % colors.length]} transition-all duration-300 hover:scale-105`}
+														variant="secondary"
+														className="bg-background/80 backdrop-blur-sm"
 													>
-														<Code2 className="h-3 w-3 mr-1 flex-shrink-0" />
-														<span className="truncate">{badge}</span>
+														{project.year}
 													</Badge>
-												);
-											})}
-											{project.badges.length > 4 && (
-												<Badge
-													variant="outline"
-													className="border-border/50 bg-card hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
-												>
-													+{project.badges.length - 4}
-												</Badge>
-											)}
-										</div>
-
-										{/* Title */}
-										<CardTitle className="text-xl md:text-2xl font-bold mb-3 group-hover:text-primary transition-colors line-clamp-2">
-											{project.title}
-										</CardTitle>
-
-										{/* Description */}
-										<CardDescription className="text-muted-foreground text-sm md:text-base leading-relaxed mb-4 line-clamp-3">
-											{project.description}
-										</CardDescription>
-
-										{/* Project stats - Improved with colored icons */}
-										<div className="flex items-center gap-4 mb-6">
-											<div className="flex items-center gap-1.5 bg-primary/5 px-3 py-1.5 rounded-full border border-primary/10">
-												<Star className="h-4 w-4 text-primary fill-primary/20 flex-shrink-0" />
-												<span className="text-sm font-medium text-foreground">
-													{project.stats.stars}
-												</span>
+												</div>
 											</div>
-											<div className="flex items-center gap-1.5 bg-secondary/5 px-3 py-1.5 rounded-full border border-secondary/10">
-												<GitFork className="h-4 w-4 text-secondary flex-shrink-0" />
-												<span className="text-sm font-medium text-foreground">
-													{project.stats.forks}
-												</span>
-											</div>
-											<div className="flex items-center gap-1.5 bg-accent/5 px-3 py-1.5 rounded-full border border-accent/10">
-												<Eye className="h-4 w-4 text-accent flex-shrink-0" />
-												<span className="text-sm font-medium text-foreground">
-													{project.stats.views}
-												</span>
-											</div>
-										</div>
 
-										{/* Action buttons - Improved */}
-										<div className="flex gap-3">
-											<Button
-												className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/25 hover:shadow-xl transition-all duration-300 group/btn"
-												asChild
-											>
-												<Link href={project.visitLink} target="_blank">
-													<ExternalLink className="mr-2 h-4 w-4 transition-all group-hover/btn:scale-110 group-hover/btn:rotate-12 flex-shrink-0" />
-													<span className="truncate">Live Demo</span>
-												</Link>
-											</Button>
-											<Button
-												variant="outline"
-												className="flex-1 border-2 border-border hover:border-secondary hover:bg-secondary/5 hover:text-secondary transition-all duration-300 group/btn"
-												asChild
-											>
-												<Link href={project.githubLink} target="_blank">
-													<Github className="mr-2 h-4 w-4 transition-all group-hover/btn:scale-110 group-hover/btn:rotate-12 flex-shrink-0" />
-													<span className="truncate">Source Code</span>
-												</Link>
-											</Button>
-										</div>
-									</div>
-								</Card>
+											{/* Content */}
+											<div className="p-5">
+												<div className="flex items-center justify-between mb-2">
+													<Badge variant="outline" className="capitalize">
+														{project.category}
+													</Badge>
+												</div>
+
+												<CardTitle className="text-lg font-semibold mb-2 line-clamp-1">
+													{project.title}
+												</CardTitle>
+
+												<CardDescription className="text-sm text-muted-foreground mb-3 line-clamp-2">
+													{project.description}
+												</CardDescription>
+
+												{/* Tech badges */}
+												<div className="flex flex-wrap gap-1 mb-4">
+													{project.badges.slice(0, 3).map((badge, i) => (
+														<Badge key={i} variant="outline" className="text-xs">
+															{badge}
+														</Badge>
+													))}
+												</div>
+
+												{/* Actions */}
+												<div className="flex gap-2">
+													<Button size="sm" className="flex-1" asChild>
+														<Link href={project.visitLink} target="_blank">
+															<ExternalLink className="h-3 w-3 mr-1" />
+															Demo
+														</Link>
+													</Button>
+													<Button size="sm" variant="outline" className="flex-1" asChild>
+														<Link href={project.githubLink} target="_blank">
+															<Github className="h-3 w-3 mr-1" />
+															Code
+														</Link>
+													</Button>
+												</div>
+											</div>
+										</Card>
+									</motion.div>
+								))}
 							</motion.div>
-						))}
-					</motion.div>
+						</>
+					)}
 
-					{/* View all projects link */}
+					{/* View all link */}
 					{filteredProjects.length > 0 && (
 						<motion.div
 							initial={{ opacity: 0, y: 20 }}
@@ -406,21 +423,13 @@ export default function Project() {
 							transition={{ delay: 0.5 }}
 							className="text-center mt-16"
 						>
-							<div className="relative inline-block">
-								<div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary blur-lg opacity-30" />
-								<Button
-									variant="outline"
-									size="lg"
-									className="relative rounded-full border-2 border-border hover:border-primary hover:bg-primary/5 hover:text-primary transition-all duration-300 group px-8"
-									asChild
-								>
-									<Link href="https://github.com/apiz23" target="_blank">
-										<span className="mr-2">View all on GitHub</span>
-										<Github className="h-4 w-4 transition-all group-hover:rotate-12 group-hover:scale-110 flex-shrink-0" />
-										<TrendingUp className="h-4 w-4 ml-2 text-primary opacity-0 group-hover:opacity-100 transition-all flex-shrink-0" />
-									</Link>
-								</Button>
-							</div>
+							<Button variant="outline" size="lg" className="rounded-full" asChild>
+								<Link href="https://github.com/apiz23" target="_blank">
+									<span className="mr-2">View all on GitHub</span>
+									<Github className="h-4 w-4" />
+									<ArrowRight className="h-4 w-4 ml-2" />
+								</Link>
+							</Button>
 						</motion.div>
 					)}
 				</div>

@@ -11,8 +11,8 @@ export default function Home() {
 		<main>
 			<div className="relative z-0">
 				<Intro />
-				<Experience />
 				<Education />
+				<Experience />
 				<Project />
 				<Contact />
 			</div>
