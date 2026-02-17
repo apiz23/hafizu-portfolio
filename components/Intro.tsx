@@ -14,7 +14,7 @@ import {
 	Sparkles,
 	GraduationCap,
 } from "lucide-react";
-import profile from "@/public/img/profile.jpg";
+import profile from "@/public/img/profile2.jpg";
 import { TextAnimate } from "./ui/text-animate";
 import { Button } from "./ui/button";
 import Link from "next/link";

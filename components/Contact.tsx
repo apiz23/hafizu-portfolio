@@ -4,7 +4,6 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Card, CardContent } from "./ui/card";
-import { Badge } from "./ui/badge";
 import { motion } from "framer-motion";
 import {
 	Mail,
@@ -34,19 +33,16 @@ export default function Contact() {
 			icon: Mail,
 			label: "Email",
 			value: "piz230601@gmail.com",
-			href: "mailto:piz230601@gmail.com",
 		},
 		{
 			icon: Phone,
 			label: "Phone",
 			value: "+60 1111263463",
-			href: "tel:+0601111263463",
 		},
 		{
 			icon: MapPin,
 			label: "Location",
-			value: "Kuala Lumpur, Malaysia",
-			href: "https://maps.google.com/?q=Kuala+Lumpur+Malaysia",
+			value: "Johor, Malaysia",
 		},
 	];
 
@@ -70,21 +66,6 @@ export default function Contact() {
 			username: "@hafizu_2",
 		},
 	];
-
-	const containerVariants = {
-		hidden: { opacity: 0 },
-		visible: {
-			opacity: 1,
-			transition: {
-				staggerChildren: 0.1,
-			},
-		},
-	};
-
-	const itemVariants = {
-		hidden: { opacity: 0, y: 20 },
-		visible: { opacity: 1, y: 0 },
-	};
 
 	const fireConfetti = () => {
 		confetti({
@@ -138,7 +119,7 @@ export default function Contact() {
 	return (
 		<section
 			id="contact"
-			className="relative py-20 md:py-32 overflow-hidden bg-background"
+			className="relative py-16 md:py-32 overflow-hidden bg-background"
 		>
 			{/* Simple background */}
 			<div className="absolute inset-0 -z-10">
@@ -147,22 +128,22 @@ export default function Contact() {
 			</div>
 
 			<div className="container mx-auto px-4 sm:px-6 lg:px-8">
-				{/* Section Header */}
+				{/* Section Header - Mobile optimized */}
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					whileInView={{ opacity: 1, y: 0 }}
 					viewport={{ once: true }}
-					className="text-center mb-16"
+					className="text-center mb-12 md:mb-16"
 				>
-					<div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-6">
-						<Sparkles className="h-4 w-4" />
-						<span className="text-sm font-medium">Get In Touch</span>
+					<div className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-primary/10 text-primary mb-4 md:mb-6">
+						<Sparkles className="h-3.5 w-3.5 md:h-4 md:w-4" />
+						<span className="text-xs md:text-sm font-medium">Get In Touch</span>
 					</div>
 
 					<TextAnimate
 						animation="slideUp"
 						by="word"
-						className="text-4xl md:text-6xl font-bold text-foreground mb-6"
+						className="text-3xl md:text-4xl lg:text-6xl font-bold text-foreground mb-4 md:mb-6 px-2"
 					>
 						Let's Connect
 					</TextAnimate>
@@ -172,57 +153,54 @@ export default function Contact() {
 						whileInView={{ opacity: 1, y: 0 }}
 						viewport={{ once: true }}
 						transition={{ delay: 0.2 }}
-						className="text-muted-foreground text-lg max-w-2xl mx-auto"
+						className="text-sm md:text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto px-4"
 					>
 						Have a question or want to work together? I'd love to hear from you!
 					</motion.p>
 				</motion.div>
 
-				{/* Main Content */}
-				<motion.div
-					variants={containerVariants}
-					initial="hidden"
-					whileInView="visible"
-					viewport={{ once: true }}
-					className="max-w-6xl mx-auto"
-				>
-					<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-						{/* Contact Information */}
-						<motion.div variants={itemVariants} className="space-y-8">
+				{/* Main Content - Mobile first grid */}
+				<div className="max-w-6xl mx-auto">
+					<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12">
+						{/* Contact Information - Reordered for mobile */}
+						<div className="order-2 lg:order-1 space-y-6 md:space-y-8">
+							{/* Contact Info Cards */}
 							<div>
-								<h3 className="text-2xl font-semibold mb-6">Contact Information</h3>
-								<div className="space-y-4">
+								<h3 className="text-xl md:text-2xl font-semibold mb-4 md:mb-6 px-1">
+									Contact Information
+								</h3>
+								<div className="space-y-3 md:space-y-4">
 									{contactInfo.map((info) => {
 										const Icon = info.icon;
 										return (
-											<Link
-												key={info.label}
-												href={info.href}
-												target={info.label === "Location" ? "_blank" : undefined}
-												className="block group"
-											>
+											<div key={info.label} className="block group">
 												<Card className="hover:shadow-md transition-shadow">
-													<CardContent className="p-5 flex items-center gap-4">
-														<div className="p-3 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-															<Icon className="h-5 w-5 text-primary" />
+													<CardContent className="p-3 md:p-5 flex items-center gap-3 md:gap-4">
+														<div className="p-2 md:p-3 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors flex-shrink-0">
+															<Icon className="h-4 w-4 md:h-5 md:w-5 text-primary" />
 														</div>
-														<div>
-															<p className="text-sm text-muted-foreground">{info.label}</p>
-															<p className="text-foreground font-medium group-hover:text-primary transition-colors">
+														<div className="min-w-0 flex-1">
+															<p className="text-xs md:text-sm text-muted-foreground">
+																{info.label}
+															</p>
+															<p className="text-sm md:text-base text-foreground font-medium group-hover:text-primary transition-colors truncate">
 																{info.value}
 															</p>
 														</div>
 													</CardContent>
 												</Card>
-											</Link>
+											</div>
 										);
 									})}
 								</div>
 							</div>
 
+							{/* Social Links - Better grid for mobile */}
 							<div>
-								<h3 className="text-2xl font-semibold mb-6">Social Media</h3>
-								<div className="grid grid-cols-3 gap-4">
+								<h3 className="text-xl md:text-2xl font-semibold mb-4 md:mb-6 px-1">
+									Social Media
+								</h3>
+								<div className="grid grid-cols-3 gap-2 md:gap-4">
 									{socialLinks.map((social) => {
 										const Icon = social.icon;
 										return (
@@ -232,15 +210,15 @@ export default function Contact() {
 												target="_blank"
 												className="group"
 											>
-												<Card className="hover:shadow-md transition-shadow">
-													<CardContent className="p-4 text-center">
-														<div className="w-12 h-12 mx-auto mb-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors flex items-center justify-center">
-															<Icon className="h-6 w-6 text-primary" />
+												<Card className="hover:shadow-md transition-shadow h-full">
+													<CardContent className="p-3 md:p-4 text-center">
+														<div className="w-8 h-8 md:w-12 md:h-12 mx-auto mb-1.5 md:mb-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors flex items-center justify-center">
+															<Icon className="h-4 w-4 md:h-6 md:w-6 text-primary" />
 														</div>
-														<p className="text-sm font-medium text-foreground">
+														<p className="text-xs md:text-sm font-medium text-foreground truncate">
 															{social.label}
 														</p>
-														<p className="text-xs text-muted-foreground mt-1">
+														<p className="text-[10px] md:text-xs text-muted-foreground mt-0.5 md:mt-1 truncate">
 															{social.username}
 														</p>
 													</CardContent>
@@ -250,34 +228,42 @@ export default function Contact() {
 									})}
 								</div>
 							</div>
-						</motion.div>
+						</div>
 
-						{/* Contact Form */}
-						<motion.div variants={itemVariants}>
+						{/* Contact Form - Order first on mobile */}
+						<div className="order-1 lg:order-2">
 							<Card className="shadow-lg">
-								<CardContent className="p-6 md:p-8">
-									<div className="flex items-center gap-3 mb-6">
-										<div className="p-3 rounded-lg bg-primary/10">
-											<MessageCircle className="h-5 w-5 text-primary" />
+								<CardContent className="p-4 md:p-6 lg:p-8">
+									<div className="flex items-center gap-2 md:gap-3 mb-4 md:mb-6">
+										<div className="p-2 md:p-3 rounded-lg bg-primary/10 flex-shrink-0">
+											<MessageCircle className="h-4 w-4 md:h-5 md:w-5 text-primary" />
 										</div>
 										<div>
-											<h3 className="text-2xl font-semibold">Send a Message</h3>
-											<p className="text-sm text-muted-foreground">
-												I'll get back to you within 24 hours
+											<h3 className="text-lg md:text-xl lg:text-2xl font-semibold">
+												Send a Message
+											</h3>
+											<p className="text-xs md:text-sm text-muted-foreground">
+												I'll get back within 24h
 											</p>
 										</div>
 									</div>
 
-									<form onSubmit={handleSubmit} className="space-y-5">
-										<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+									<form onSubmit={handleSubmit} className="space-y-4 md:space-y-5">
+										<div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
 											<div>
-												<label className="text-sm text-muted-foreground mb-2 block">
+												<label className="text-xs md:text-sm text-muted-foreground mb-1.5 md:mb-2 block">
 													Name
 												</label>
-												<Input type="text" name="name" placeholder="John Doe" required />
+												<Input
+													type="text"
+													name="name"
+													placeholder="John Doe"
+													required
+													className="h-9 md:h-10 text-sm"
+												/>
 											</div>
 											<div>
-												<label className="text-sm text-muted-foreground mb-2 block">
+												<label className="text-xs md:text-sm text-muted-foreground mb-1.5 md:mb-2 block">
 													Email
 												</label>
 												<Input
@@ -285,12 +271,13 @@ export default function Contact() {
 													name="email"
 													placeholder="john@example.com"
 													required
+													className="h-9 md:h-10 text-sm"
 												/>
 											</div>
 										</div>
 
 										<div>
-											<label className="text-sm text-muted-foreground mb-2 block">
+											<label className="text-xs md:text-sm text-muted-foreground mb-1.5 md:mb-2 block">
 												Subject
 											</label>
 											<Input
@@ -298,11 +285,12 @@ export default function Contact() {
 												name="subject"
 												placeholder="What's this about?"
 												required
+												className="h-9 md:h-10 text-sm"
 											/>
 										</div>
 
 										<div>
-											<label className="text-sm text-muted-foreground mb-2 block">
+											<label className="text-xs md:text-sm text-muted-foreground mb-1.5 md:mb-2 block">
 												Message
 											</label>
 											<Textarea
@@ -310,77 +298,89 @@ export default function Contact() {
 												rows={4}
 												name="message"
 												required
+												className="text-sm resize-none"
 											/>
 										</div>
 
 										<Button
 											type="submit"
 											disabled={formStatus !== "idle"}
-											className="w-full h-12 text-base"
+											className="w-full h-10 md:h-12 text-sm md:text-base"
+											variant="outline"
 										>
 											{formStatus === "idle" && (
 												<>
 													Send Message
-													<Send className="ml-2 h-4 w-4" />
+													<Send className="ml-2 h-3.5 w-3.5 md:h-4 md:w-4" />
 												</>
 											)}
 											{formStatus === "sending" && (
 												<>
 													Sending...
-													<div className="ml-2 h-4 w-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
+													<div className="ml-2 h-3.5 w-3.5 md:h-4 md:w-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
 												</>
 											)}
 											{formStatus === "sent" && (
 												<>
 													Message Sent!
-													<CheckCircle2 className="ml-2 h-4 w-4" />
+													<CheckCircle2 className="ml-2 h-3.5 w-3.5 md:h-4 md:w-4" />
 												</>
 											)}
 										</Button>
 									</form>
 
-									<p className="text-center text-sm text-muted-foreground mt-6">
+									<p className="text-center text-xs md:text-sm text-muted-foreground mt-4 md:mt-6">
 										Quick email?{" "}
 										<Link
 											href="mailto:piz230601@gmail.com"
-											className="text-primary hover:underline"
+											className="text-primary hover:underline text-xs md:text-sm"
 										>
 											piz230601@gmail.com
 										</Link>
 									</p>
 								</CardContent>
 							</Card>
-						</motion.div>
+						</div>
 					</div>
-				</motion.div>
+				</div>
 
-				{/* Footer */}
+				{/* Footer - Mobile optimized */}
 				<motion.footer
 					initial={{ opacity: 0, y: 20 }}
 					whileInView={{ opacity: 1, y: 0 }}
 					viewport={{ once: true }}
 					transition={{ delay: 0.3 }}
-					className="mt-20 pt-8 border-t border-border"
+					className="mt-12 md:mt-20 pt-6 md:pt-8 border-t border-border"
 				>
-					<div className="flex flex-col md:flex-row justify-between items-center gap-4">
-						<p className="text-sm text-muted-foreground">
+					<div className="flex flex-col md:flex-row justify-between items-center gap-3 md:gap-4">
+						<p className="text-xs md:text-sm text-muted-foreground text-center md:text-left">
 							© {currentYear} Hafizuddin Hamid. All rights reserved.
 						</p>
 
-						<div className="flex items-center gap-4">
-							<Button variant="ghost" size="sm" asChild>
+						<div className="flex items-center gap-2 md:gap-4">
+							<Button
+								variant="ghost"
+								size="sm"
+								className="h-8 px-2 md:px-3 text-xs md:text-sm"
+								asChild
+							>
 								<Link href="#">Privacy</Link>
 							</Button>
-							<Button variant="ghost" size="sm" asChild>
+							<Button
+								variant="ghost"
+								size="sm"
+								className="h-8 px-2 md:px-3 text-xs md:text-sm"
+								asChild
+							>
 								<Link href="#">Terms</Link>
 							</Button>
 							<Button
 								variant="outline"
 								size="icon"
-								className="rounded-full"
+								className="h-8 w-8 md:h-10 md:w-10 rounded-full"
 								onClick={scrollToTop}
 							>
-								<ArrowUp className="h-4 w-4" />
+								<ArrowUp className="h-3.5 w-3.5 md:h-4 md:w-4" />
 							</Button>
 						</div>
 					</div>
