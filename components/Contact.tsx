@@ -112,14 +112,10 @@ export default function Contact() {
 		});
 	};
 
-	const scrollToTop = () => {
-		window.scrollTo({ top: 0, behavior: "smooth" });
-	};
-
 	return (
 		<section
 			id="contact"
-			className="relative py-16 md:py-32 overflow-hidden bg-background"
+			className="relative pt-16 md:pt-32 pb-4 overflow-hidden bg-background"
 		>
 			{/* Simple background */}
 			<div className="absolute inset-0 -z-10">
@@ -352,37 +348,10 @@ export default function Contact() {
 					transition={{ delay: 0.3 }}
 					className="mt-12 md:mt-20 pt-6 md:pt-8 border-t border-border"
 				>
-					<div className="flex flex-col md:flex-row justify-between items-center gap-3 md:gap-4">
+					<div className="flex flex-col md:flex-row justify-center items-center gap-3 md:gap-4">
 						<p className="text-xs md:text-sm text-muted-foreground text-center md:text-left">
 							© {currentYear} Hafizuddin Hamid. All rights reserved.
 						</p>
-
-						<div className="flex items-center gap-2 md:gap-4">
-							<Button
-								variant="ghost"
-								size="sm"
-								className="h-8 px-2 md:px-3 text-xs md:text-sm"
-								asChild
-							>
-								<Link href="#">Privacy</Link>
-							</Button>
-							<Button
-								variant="ghost"
-								size="sm"
-								className="h-8 px-2 md:px-3 text-xs md:text-sm"
-								asChild
-							>
-								<Link href="#">Terms</Link>
-							</Button>
-							<Button
-								variant="outline"
-								size="icon"
-								className="h-8 w-8 md:h-10 md:w-10 rounded-full"
-								onClick={scrollToTop}
-							>
-								<ArrowUp className="h-3.5 w-3.5 md:h-4 md:w-4" />
-							</Button>
-						</div>
 					</div>
 				</motion.footer>
 			</div>

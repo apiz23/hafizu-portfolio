@@ -3,6 +3,7 @@ import "./globals.css";
 import { Sora, Inter } from "next/font/google";
 import Squares from "@/components/light-rays";
 import { Toaster } from "sonner";
+import ScrollToTop from "@/components/scroll-top";
 
 const sora = Sora({
 	subsets: ["latin"],
@@ -55,18 +56,16 @@ export default function RootLayout({
 						hoverFillColor="#f0f0f0"
 					/>
 				</div>
-
 				<div className="fixed inset-0 bg-gradient-to-br from-white/50 via-transparent to-white/30 pointer-events-none" />
-
 				<div className="relative min-h-screen">
-					<div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-						{/* Subtle Shadow and Clean White Background */}
+					<div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-2 md:py-12">
 						<div className="relative bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-2">
 							{children}
 							<Toaster richColors position="top-center" />
 						</div>
 					</div>
 				</div>
+				<ScrollToTop />
 			</body>
 		</html>
 	);

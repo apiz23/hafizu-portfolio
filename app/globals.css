@@ -186,6 +186,7 @@
 	body {
 		letter-spacing: var(--tracking-normal);
 		@apply bg-background text-foreground;
+		font-size: 12px;
 	}
 
 	@keyframes gradient-x {

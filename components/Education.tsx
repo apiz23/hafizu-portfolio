@@ -59,7 +59,7 @@ const fetchData = async (
 };
 
 export default function Education() {
-	const [selectedValue, setSelectedValue] = useState<EducationLevel>("diploma");
+	const [selectedValue, setSelectedValue] = useState<EducationLevel>("bachelor");
 	const [latestCGPA, setLatestCGPA] = useState<number | null>(null);
 	const [chartData, setChartData] = useState<Pointer[]>([]);
 	const [isLoading, setIsLoading] = useState(true);

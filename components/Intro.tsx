@@ -20,7 +20,6 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { Badge } from "./ui/badge";
 import { motion } from "framer-motion";
-import LogoLoop from "./LogoLoop";
 import {
 	SiReact,
 	SiNextdotjs,
@@ -29,6 +28,10 @@ import {
 	SiNodedotjs,
 	SiPostgresql,
 } from "react-icons/si";
+import {
+	ScrollVelocityContainer,
+	ScrollVelocityRow,
+} from "./ui/scroll-based-velocity";
 
 export default function Intro() {
 	const [isMounted, setIsMounted] = useState(false);
@@ -263,22 +266,27 @@ export default function Intro() {
 							</div>
 						</motion.div>
 
-						{/* Logo Loop Section - NEW */}
-						<motion.div variants={itemVariants} className="mt-10 w-full">
-							<div className="relative h-24 md:h-28 w-full overflow-hidden">
-								<LogoLoop
-									logos={techLogos}
-									speed={100}
-									direction="left"
-									logoHeight={60}
-									gap={60}
-									hoverSpeed={0}
-									scaleOnHover
-									fadeOut
-									fadeOutColor="#ffffff"
-									ariaLabel="Technology partners"
-								/>
-							</div>
+						{/* Logo Loop Section */}
+						<motion.div
+							variants={itemVariants}
+							className="mt-12 w-full overflow-hidden"
+						>
+							<ScrollVelocityContainer className="py-4">
+								<ScrollVelocityRow baseVelocity={20} direction={1}>
+									<div className="flex items-center gap-12 px-4">
+										{techLogos.map((logo, i) => (
+											<Link
+												key={`top-${i}`}
+												href={logo.href}
+												target="_blank"
+												className="text-6xl md:text-7xl text-muted-foreground hover:text-primary transition-colors"
+											>
+												{logo.node}
+											</Link>
+										))}
+									</div>
+								</ScrollVelocityRow>
+							</ScrollVelocityContainer>
 						</motion.div>
 
 						{/* CTA Buttons - improved design */}

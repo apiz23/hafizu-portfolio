@@ -50,7 +50,7 @@ export default function Project() {
 				"A full-stack personal blog platform for sharing study resources and technical articles. Features include user authentication, admin dashboard, and content management system.",
 			imageSrc: "/img/hafizu-blog.png",
 			badges: [
-				"Next.js 14",
+				"Next.js",
 				"TypeScript",
 				"TailwindCSS",
 				"PostgreSQL",
@@ -278,7 +278,7 @@ export default function Project() {
 													height={2000}
 													className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
 												/>
-												<Badge className="absolute top-4 left-4 bg-primary text-primary-foreground">
+												<Badge className="absolute top-4 left-4 bg-primary text-white">
 													Featured
 												</Badge>
 											</div>
@@ -359,7 +359,7 @@ export default function Project() {
 												<div className="absolute top-3 right-3">
 													<Badge
 														variant="secondary"
-														className="bg-background/80 backdrop-blur-sm"
+														className="text-white bg-black"
 													>
 														{project.year}
 													</Badge>

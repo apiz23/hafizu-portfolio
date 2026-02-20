@@ -1,13 +1,11 @@
 "use client";
 
-import React from "react";
 import {
 	Accordion,
 	AccordionContent,
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
 import {
 	CalendarIcon,
@@ -45,7 +43,7 @@ export default function Experience() {
 			position: "Software Developer Intern",
 			period: "2023 - 2024",
 			duration: "6 months",
-			location: "Remote",
+			location: "Office - Bukit Indah, Johor Bahru",
 			logo:
 				"https://media.glassdoor.com/sql/508401/xeersoft-squarelogo-1432219510383.png",
 			description:
@@ -58,9 +56,9 @@ export default function Experience() {
 			],
 			technologies: [
 				"React",
-				"Node.js",
+				"JQuery",
 				"PostgreSQL",
-				"TypeScript",
+				"Laravel",
 				"Git",
 				"Docker",
 				"REST API",
@@ -95,7 +93,11 @@ export default function Experience() {
 			caption: "Annual Grand meeting at Xeersoft",
 			location: "Bukit Indah, Johor Bahru",
 		},
-		{ src: intern2, caption: "Christmas celebration", location: "Bukit Indah, Johor Bahru", },
+		{
+			src: intern2,
+			caption: "Christmas celebration",
+			location: "Bukit Indah, Johor Bahru",
+		},
 		{ src: intern4, caption: "Project presentation", location: "Virtual" },
 		{ src: intern5, caption: "Project presentation", location: "Virtual" },
 	];
