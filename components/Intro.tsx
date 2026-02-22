@@ -32,6 +32,7 @@ import {
 	ScrollVelocityContainer,
 	ScrollVelocityRow,
 } from "./ui/scroll-based-velocity";
+import { RiExternalLinkLine } from "react-icons/ri";
 
 export default function Intro() {
 	const [isMounted, setIsMounted] = useState(false);
@@ -292,29 +293,37 @@ export default function Intro() {
 						{/* CTA Buttons - improved design */}
 						<motion.div
 							variants={itemVariants}
-							className="flex flex-col sm:flex-row justify-center gap-4 mt-10"
+							className="flex flex-col sm:flex-row justify-center gap-4 mt-12"
 						>
 							<Button
 								size="lg"
-								className="w-full sm:w-auto group border-2 border-border hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 px-8"
+								className="group rounded-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-md hover:shadow-lg transition-all duration-300 px-8 py-6"
 								asChild
+								variant="outline"
 							>
 								<Link href="#projects" scroll={false} onClick={scrollToProjects}>
-									<span className="relative z-10 flex items-center justify-center tracking-wide">
+									<span className="flex items-center gap-2">
 										View My Work
-										<ArrowDown className="ml-2 h-4 w-4 group-hover:translate-y-1 transition-transform" />
+										<ArrowDown className="h-4 w-4 group-hover:translate-y-1 transition-transform duration-300" />
 									</span>
-									<div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/20 to-primary/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
 								</Link>
 							</Button>
 
 							<Button
 								size="lg"
 								variant="outline"
-								className="w-full sm:w-auto group border-2 border-border hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 px-8"
+								className="group rounded-full border-2 border-border hover:border-primary hover:bg-primary/5 transition-all duration-300 px-8 py-6"
+								asChild
 							>
-								<Download className="mr-2 h-4 w-4 group-hover:translate-y-0.5 transition-transform" />
-								<span className="tracking-wide">Download Resume</span>
+								<Link
+									href="https://docs.google.com/document/d/1SsIiM2VCZnLpso4zuoE6EraAcZrMW_pmXiKLz_1Go8Y/edit?usp=sharing"
+									target="_blank"
+								>
+									<span className="flex items-center gap-2">
+										<RiExternalLinkLine className="h-4 w-4 group-hover:translate-y-0.5 transition-transform duration-300" />
+										View Resume
+									</span>
+								</Link>
 							</Button>
 						</motion.div>
 
