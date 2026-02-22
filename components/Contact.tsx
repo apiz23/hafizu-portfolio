@@ -115,7 +115,7 @@ export default function Contact() {
 	return (
 		<section
 			id="contact"
-			className="relative pt-16 md:pt-32 pb-4 overflow-hidden bg-background"
+			className="relative pb-4 overflow-hidden bg-background"
 		>
 			{/* Simple background */}
 			<div className="absolute inset-0 -z-10">
@@ -129,7 +129,7 @@ export default function Contact() {
 					initial={{ opacity: 0, y: 20 }}
 					whileInView={{ opacity: 1, y: 0 }}
 					viewport={{ once: true }}
-					className="text-center mb-12 md:mb-16"
+					className="text-center my-8"
 				>
 					<div className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-primary/10 text-primary mb-4 md:mb-6">
 						<Sparkles className="h-3.5 w-3.5 md:h-4 md:w-4" />

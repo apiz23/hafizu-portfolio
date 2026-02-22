@@ -106,6 +106,9 @@ export default function Education() {
 		GPA: { label: "GPA", color: "var(--chart-1)" },
 		CPA: { label: "CPA", color: "var(--chart-2)" },
 	} satisfies ChartConfig;
+	const minGPA =
+		chartData.length > 0 ? Math.min(...chartData.map((d) => d.GPA)) : 0;
+	const yMin = Math.max(0, Math.floor(minGPA * 10) / 10 - 0.1);
 
 	/* -------------------- Dynamic Education Cards -------------------- */
 
@@ -114,7 +117,7 @@ export default function Education() {
 			level: "Diploma",
 			title: "Diploma In Information Technology",
 			institution: "Universiti Tun Hussein Onn Malaysia",
-			period: "2021-2023",
+			period: "2021-2024",
 			achievement:
 				selectedValue === "diploma" && latestCGPA
 					? `Final CGPA: ${latestCGPA.toFixed(2)}`
@@ -130,7 +133,7 @@ export default function Education() {
 			level: "Bachelor",
 			title: "Bachelor of Computer Science - Software Engineering",
 			institution: "Universiti Tun Hussein Onn Malaysia",
-			period: "2024-2026",
+			period: "2024-2026(ongoing)",
 			achievement:
 				selectedValue === "bachelor" && latestCGPA
 					? `Current CGPA: ${latestCGPA.toFixed(2)}`
@@ -138,7 +141,7 @@ export default function Education() {
 			logo:
 				"https://images.seeklogo.com/logo-png/14/1/universiti-tun-hussein-onn-malaysia-logo-png_seeklogo-145927.png",
 			description: "Advanced software engineering and architecture",
-			highlights: ["Architecture", "Agile", "System Design"],
+			highlights: ["Software Engineering Principles", "Software Testing", "System Design"],
 			color: "from-purple-500/20 to-pink-500/20",
 			icon: <Rocket className="h-5 w-5" />,
 		},
@@ -453,7 +456,7 @@ export default function Education() {
 												/>
 												<YAxis
 													dataKey="GPA"
-													domain={["dataMin - 0.05", "dataMax + 0.05"]}
+													domain={[yMin, 4]}
 													tickLine={false}
 													axisLine={false}
 													tickMargin={8}

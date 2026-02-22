@@ -324,21 +324,21 @@ export default function Intro() {
 							className="flex justify-center gap-4 pt-4"
 						>
 							<Link
-								href="https://github.com"
+								href="https://github.com/apiz23"
 								target="_blank"
 								className="p-2 rounded-full bg-card border border-border hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 group"
 							>
 								<Github className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
 							</Link>
 							<Link
-								href="https://linkedin.com"
+								href="https://www.linkedin.com/in/muh-hafizuddin/"
 								target="_blank"
 								className="p-2 rounded-full bg-card border border-border hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 group"
 							>
 								<Linkedin className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
 							</Link>
 							<Link
-								href="mailto:email@example.com"
+								href="#contact"
 								className="p-2 rounded-full bg-card border border-border hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 group"
 							>
 								<Mail className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
