@@ -21,8 +21,8 @@ export const metadata: Metadata = {
 	icons: {
 		icon: [
 			{
-				url: "/logo.png",
-				href: "/logo.png",
+				url: "/favicon.ico",
+				href: "/favicon.ico",
 			},
 		],
 	},
@@ -42,7 +42,7 @@ export default function RootLayout({
 		<html lang="en" suppressHydrationWarning>
 			<head>
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
-				<link rel="icon" href="/logo.png" />
+				<link rel="icon" href="/favicon.ico" />
 			</head>
 			<body
 				className={`${sora.className} ${inter.className} font-sans bg-gradient-to-br from-gray-50 to-white`}

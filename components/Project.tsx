@@ -10,13 +10,11 @@ import {
 	Github,
 	ExternalLink,
 	Code2,
-	Star,
-	GitFork,
-	Eye,
 	Rocket,
 	Sparkles,
 	Calendar,
 	Layers,
+	Eye,
 	ArrowRight,
 } from "lucide-react";
 import { Card, CardDescription, CardTitle } from "./ui/card";
@@ -265,30 +263,31 @@ export default function Project() {
 							viewport={{ once: true }}
 							className="grid grid-cols-1 gap-8 mb-12"
 						>
-							{featuredProjects.map((project) => (
+							{featuredProjects.map((project, index) => (
 								<motion.div key={project.title} variants={itemVariants}>
 									<Card className="group overflow-hidden bg-card border-border hover:border-primary/30 transition-all duration-300">
 										<div className="grid md:grid-cols-2 gap-6">
-											{/* Image */}
-											<div className="relative h-64 md:h-full overflow-hidden">
+											{/* Image - Fixed for mobile */}
+											<div className="relative h-48 md:h-full min-h-[200px] overflow-hidden bg-muted">
 												<Image
 													alt={project.title}
 													src={project.imageSrc}
-													width={2000}
-													height={2000}
-													className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+													fill
+													sizes="(max-width: 768px) 100vw, 50vw"
+													className="object-cover transition-transform duration-500 group-hover:scale-105"
+													priority={index === 0}
 												/>
-												<Badge className="absolute top-4 left-4 bg-primary text-white">
+												<Badge className="absolute top-4 left-4 bg-primary text-white z-10">
 													Featured
 												</Badge>
 											</div>
 
 											{/* Content */}
 											<div className="p-6 flex flex-col">
-												<div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
-													<Calendar className="h-4 w-4" />
+												<div className="flex items-center gap-2 text-sm text-muted-foreground mb-3 flex-wrap">
+													<Calendar className="h-4 w-4 shrink-0" />
 													<span>{project.year}</span>
-													<span className="w-1 h-1 rounded-full bg-muted-foreground" />
+													<span className="w-1 h-1 rounded-full bg-muted-foreground shrink-0" />
 													<span className="capitalize">{project.category}</span>
 												</div>
 
@@ -304,23 +303,23 @@ export default function Project() {
 												<div className="flex flex-wrap gap-2 mb-6">
 													{project.badges.slice(0, 5).map((badge, i) => (
 														<Badge key={i} variant="secondary" className="text-xs">
-															<Code2 className="h-3 w-3 mr-1" />
+															<Code2 className="h-3 w-3 mr-1 shrink-0" />
 															{badge}
 														</Badge>
 													))}
 												</div>
 
 												{/* Actions */}
-												<div className="flex gap-3 mt-auto">
+												<div className="flex flex-col sm:flex-row gap-3 mt-auto">
 													<Button className="flex-1" asChild>
 														<Link href={project.visitLink} target="_blank">
-															<ExternalLink className="h-4 w-4 mr-2" />
+															<ExternalLink className="h-4 w-4 mr-2 shrink-0" />
 															Live Demo
 														</Link>
 													</Button>
 													<Button variant="outline" className="flex-1" asChild>
 														<Link href={project.githubLink} target="_blank">
-															<Github className="h-4 w-4 mr-2" />
+															<Github className="h-4 w-4 mr-2 shrink-0" />
 															Source Code
 														</Link>
 													</Button>
@@ -347,19 +346,19 @@ export default function Project() {
 								{regularProjects.map((project) => (
 									<motion.div key={project.title} variants={itemVariants}>
 										<Card className="group h-full bg-card border-border hover:border-primary/30 transition-all duration-300 overflow-hidden">
-											{/* Image */}
-											<div className="relative h-48 overflow-hidden">
+											{/* Image - Fixed for mobile */}
+											<div className="relative h-48 w-full overflow-hidden bg-muted">
 												<Image
 													alt={project.title}
 													src={project.imageSrc}
-													width={2000}
-													height={2000}
-													className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+													fill
+													sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+													className="object-cover transition-transform duration-500 group-hover:scale-105"
 												/>
-												<div className="absolute top-3 right-3">
+												<div className="absolute top-3 right-3 z-10">
 													<Badge
 														variant="secondary"
-														className="text-white bg-black"
+														className="text-white bg-black/70 backdrop-blur-sm"
 													>
 														{project.year}
 													</Badge>
@@ -392,16 +391,16 @@ export default function Project() {
 												</div>
 
 												{/* Actions */}
-												<div className="flex gap-2">
+												<div className="flex flex-col sm:flex-row gap-2">
 													<Button size="sm" className="flex-1" asChild>
 														<Link href={project.visitLink} target="_blank">
-															<ExternalLink className="h-3 w-3 mr-1" />
+															<ExternalLink className="h-3 w-3 mr-1 shrink-0" />
 															Demo
 														</Link>
 													</Button>
 													<Button size="sm" variant="outline" className="flex-1" asChild>
 														<Link href={project.githubLink} target="_blank">
-															<Github className="h-3 w-3 mr-1" />
+															<Github className="h-3 w-3 mr-1 shrink-0" />
 															Code
 														</Link>
 													</Button>
@@ -426,8 +425,8 @@ export default function Project() {
 							<Button variant="outline" size="lg" className="rounded-full" asChild>
 								<Link href="https://github.com/apiz23" target="_blank">
 									<span className="mr-2">View all on GitHub</span>
-									<Github className="h-4 w-4" />
-									<ArrowRight className="h-4 w-4 ml-2" />
+									<Github className="h-4 w-4 shrink-0" />
+									<ArrowRight className="h-4 w-4 ml-2 shrink-0" />
 								</Link>
 							</Button>
 						</motion.div>
