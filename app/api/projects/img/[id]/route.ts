@@ -1,29 +1,27 @@
 import supabase from "@/lib/supabase";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
-  req: Request,
-  { params }: { params: { name: string } },
+	req: NextRequest,
+	context: { params: Promise<{ id: string }> },
 ) {
-  try {
-    const fileName = params.name;
+	try {
+		const { id } = await context.params;
 
-    // 👉 build path inside bucket
-    const filePath = `img-project/${fileName}.png`;
+		// 👉 build path inside bucket
+		const filePath = `img-project/${id}.png`;
 
-    // 👉 get public URL
-    const { data } = supabase.storage
-      .from("portfolio") // bucket name
-      .getPublicUrl(filePath);
+		// 👉 get public URL
+		const { data } = supabase.storage.from("portfolio").getPublicUrl(filePath);
 
-    return NextResponse.json({
-      url: data.publicUrl,
-      path: filePath,
-    });
-  } catch (err: any) {
-    return NextResponse.json(
-      { error: err.message || "Failed to get image URL" },
-      { status: 500 },
-    );
-  }
+		return NextResponse.json({
+			url: data.publicUrl,
+			path: filePath,
+		});
+	} catch (err: any) {
+		return NextResponse.json(
+			{ error: err.message || "Failed to get image URL" },
+			{ status: 500 },
+		);
+	}
 }
