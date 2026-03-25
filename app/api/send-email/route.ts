@@ -1,40 +1,52 @@
+import { NextResponse } from "next/server";
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 export async function POST(req: Request) {
-	try {
-		const body = await req.json();
+  try {
+    const body = await req.json();
 
-		const res = await fetch("https://dev-send-api.vercel.app/send", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${process.env.DEVSEND_API_KEY}`,
-			},
-			body: JSON.stringify({
-				to: "piz230601@gmail.com",
-				subject: body.subject,
-				text: `
-New message from portfolio:
+    const { name, email, subject, message } = body;
 
-Name: ${body.name}
-Email: ${body.email}
+    const { data, error } = await resend.emails.send({
+      from: "Hafizu Portfolio <onboarding@resend.dev>",
+      to: ["piz230601@gmail.com"],
 
-Message:
-${body.message}
-        `,
-				fromName: body.name,
-				replyTo: body.email,
-			}),
-		});
+      subject: subject || "New Message from Portfolio",
 
-		const text = await res.text();
-		console.log("DevSend response:", text);
+      replyTo: email,
 
-		if (!res.ok) {
-			return Response.json({ error: text }, { status: 500 });
-		}
+      html: `
+        <h2>New Message from Portfolio</h2>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Message:</strong></p>
+        <p>${message}</p>
+      `,
 
-		return Response.json({ success: true });
-	} catch (err) {
-		console.error(err);
-		return Response.json({ error: "Server crash" }, { status: 500 });
-	}
+      text: `
+        New message from portfolio:
+
+        Name: ${name}
+        Email: ${email}
+
+        Message:
+        ${message}
+      `,
+    });
+
+    if (error) {
+      console.error(error);
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    return NextResponse.json({ success: true, data });
+  } catch (err: any) {
+    console.error(err);
+    return NextResponse.json(
+      { error: err.message || "Server crash" },
+      { status: 500 },
+    );
+  }
 }
