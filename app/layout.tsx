@@ -4,6 +4,7 @@ import { Sora, Inter } from "next/font/google";
 import Squares from "@/components/light-rays";
 import { Toaster } from "sonner";
 import ScrollToTop from "@/components/scroll-top";
+import { Analytics } from "@vercel/analytics/next";
 
 const sora = Sora({
 	subsets: ["latin"],
@@ -66,6 +67,7 @@ export default function RootLayout({
 					</div>
 				</div>
 				<ScrollToTop />
+				<Analytics />
 			</body>
 		</html>
 	);
