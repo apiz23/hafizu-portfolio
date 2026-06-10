@@ -1,25 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import {
-	MapPin,
-	Code2,
-	BookOpen,
-	Github,
-	Linkedin,
-	Mail,
-	Download,
-	ArrowDown,
-	Sparkles,
-	GraduationCap,
-} from "lucide-react";
+import { MapPin, ArrowDown, Github, Linkedin, Mail } from "lucide-react";
 import profile from "@/public/img/profile2.jpg";
 import { TextAnimate } from "./ui/text-animate";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { Badge } from "./ui/badge";
-import { motion } from "framer-motion";
 import {
 	SiReact,
 	SiNextdotjs,
@@ -34,326 +22,228 @@ import {
 } from "./ui/scroll-based-velocity";
 import { RiExternalLinkLine } from "react-icons/ri";
 
+const fadeUp = {
+	hidden: { opacity: 0, y: 24 },
+	visible: (i: number = 0) => ({
+		opacity: 1,
+		y: 0,
+		transition: {
+			duration: 0.5,
+			delay: i * 0.08,
+			ease: [0.22, 1, 0.36, 1] as const,
+		},
+	}),
+};
+
+const techLogos = [
+	{ node: <SiReact />, title: "React", href: "https://react.dev" },
+	{ node: <SiNextdotjs />, title: "Next.js", href: "https://nextjs.org" },
+	{
+		node: <SiTypescript />,
+		title: "TypeScript",
+		href: "https://www.typescriptlang.org",
+	},
+	{
+		node: <SiTailwindcss />,
+		title: "Tailwind CSS",
+		href: "https://tailwindcss.com",
+	},
+	{ node: <SiNodedotjs />, title: "Node.js", href: "https://nodejs.org" },
+	{
+		node: <SiPostgresql />,
+		title: "PostgreSQL",
+		href: "https://www.postgresql.org",
+	},
+];
+
 export default function Intro() {
-	const [isMounted, setIsMounted] = useState(false);
-	const [windowWidth, setWindowWidth] = useState(0);
-
-	useEffect(() => {
-		setIsMounted(true);
-		setWindowWidth(window.innerWidth);
-
-		const handleResize = () => {
-			setWindowWidth(window.innerWidth);
-		};
-
-		window.addEventListener("resize", handleResize);
-		return () => window.removeEventListener("resize", handleResize);
-	}, []);
-
-	const skills = [
-		"Next.js",
-		"React",
-		"TypeScript",
-		"Node.js",
-		"PostgreSQL",
-		"TailwindCSS",
-	];
-
-	// Tech logos for the loop
-	const techLogos = [
-		{ node: <SiReact />, title: "React", href: "https://react.dev" },
-		{ node: <SiNextdotjs />, title: "Next.js", href: "https://nextjs.org" },
-		{
-			node: <SiTypescript />,
-			title: "TypeScript",
-			href: "https://www.typescriptlang.org",
-		},
-		{
-			node: <SiTailwindcss />,
-			title: "Tailwind CSS",
-			href: "https://tailwindcss.com",
-		},
-		{ node: <SiNodedotjs />, title: "Node.js", href: "https://nodejs.org" },
-		{
-			node: <SiPostgresql />,
-			title: "PostgreSQL",
-			href: "https://www.postgresql.org",
-		},
-	];
-
-	// Responsive sizing
-	const getAvatarSize = () => {
-		if (windowWidth < 640) return "h-32 w-32";
-		if (windowWidth < 768) return "h-40 w-40";
-		if (windowWidth < 1024) return "h-48 w-48";
-		return "h-56 w-56";
-	};
-
-	const getTitleSize = () => {
-		if (windowWidth < 640) return "text-3xl";
-		if (windowWidth < 768) return "text-4xl";
-		if (windowWidth < 1024) return "text-5xl";
-		return "text-6xl";
-	};
-
-	// Framer Motion variants
-	const containerVariants = {
-		hidden: { opacity: 0 },
-		visible: {
-			opacity: 1,
-			transition: {
-				staggerChildren: 0.1,
-				delayChildren: 0.2,
-			},
-		},
-	};
-
-	const itemVariants = {
-		hidden: { opacity: 0, y: 20 },
-		visible: {
-			opacity: 1,
-			y: 0,
-			transition: {
-				type: "spring",
-				stiffness: 100,
-				damping: 10,
-			},
-		},
-	};
-
-	// Smooth scroll function
 	const scrollToProjects = (e: React.MouseEvent<HTMLAnchorElement>) => {
 		e.preventDefault();
-		const projectsSection = document.getElementById("projects");
-		if (projectsSection) {
-			projectsSection.scrollIntoView({
-				behavior: "smooth",
-				block: "start",
-			});
-		}
+		document
+			.getElementById("projects")
+			?.scrollIntoView({ behavior: "smooth", block: "start" });
 	};
-
-	if (!isMounted) {
-		return (
-			<section className="relative min-h-screen flex items-center justify-center bg-background">
-				<div className="flex flex-col items-center gap-4">
-					<div className="animate-spin rounded-full h-12 w-12 border-4 border-primary/30 border-t-primary" />
-					<div className="animate-pulse text-primary font-medium tracking-wide">
-						Loading...
-					</div>
-				</div>
-			</section>
-		);
-	}
 
 	return (
 		<section
 			id="home"
-			className="relative min-h-screen flex items-center justify-center overflow-hidden pt-10 md:pt-0 bg-gradient-to-b from-background via-background/95 to-background"
+			className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-background pb-12 pt-16"
 		>
-			{/* Animated background - more subtle */}
-			<div className="absolute inset-0 -z-10">
-				<div className="absolute top-20 left-10 w-64 h-64 md:w-96 md:h-96 bg-primary/5 rounded-full blur-3xl animate-pulse" />
-				<div className="absolute bottom-20 right-10 w-64 h-64 md:w-96 md:h-96 bg-secondary/5 rounded-full blur-3xl animate-pulse [animation-delay:2s]" />
-				<div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-48 h-48 md:w-80 md:h-80 bg-accent/5 rounded-full blur-3xl animate-pulse [animation-delay:4s]" />
-
-				{/* Grid pattern overlay */}
-				<div className="absolute inset-0 bg-grid-pattern opacity-[0.02]" />
-
-				{/* Gradient overlay */}
-				<div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+			{/* Subtle ambient */}
+			<div className="absolute inset-0 -z-10 pointer-events-none">
+				<div className="absolute top-1/4 right-1/3 w-[500px] h-[500px] bg-primary/[0.04] rounded-full blur-[100px]" />
 			</div>
 
-			<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
-				<motion.div
-					variants={containerVariants}
-					initial="hidden"
-					animate="visible"
-					className="max-w-5xl mx-auto"
-				>
-					{/* Avatar Section - static */}
-					<motion.div
-						className="flex justify-center mb-8 md:mb-10"
-						variants={itemVariants}
-					>
-						<div className="relative">
-							{/* Glow effect */}
-							<div className="absolute inset-0 rounded-full bg-primary/20 blur-2xl scale-110" />
-
-							<Avatar
-								className={`relative ${getAvatarSize()} border-4 border-background shadow-2xl ring-2 ring-primary/20`}
-							>
-								<AvatarImage
-									src={profile.src}
-									alt="Hafizuddin Hamid"
-									className="object-cover"
-								/>
-								<AvatarFallback>
-									<div className="animate-pulse bg-muted h-full w-full" />
-								</AvatarFallback>
-							</Avatar>
-						</div>
-					</motion.div>
-
-					{/* Text Content */}
-					<div className="text-center space-y-6 sm:space-y-7 md:space-y-8">
-						{/* Greeting Badge */}
-						<motion.div variants={itemVariants}>
+			<div className="container mx-auto px-4 sm:px-6 lg:px-8">
+				{/* Two-column: text left, avatar right */}
+				<div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-10 lg:gap-16 items-center max-w-5xl mx-auto">
+					{/* Left: text */}
+					<div className="flex flex-col gap-6">
+						{/* Status */}
+						<motion.div custom={0} variants={fadeUp} initial="hidden" animate="visible">
 							<Badge
 								variant="outline"
-								className="inline-flex items-center gap-2 px-4 py-2 border-primary/20 bg-primary/5 text-primary rounded-full text-sm"
+								className="w-fit inline-flex items-center gap-2 px-4 py-1.5 border-primary/30 bg-primary/5 text-primary rounded-full text-sm"
 							>
-								<Sparkles className="h-4 w-4" />
-								<span className="tracking-wide">Available for opportunities</span>
+								<span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+								Available for opportunities
 							</Badge>
 						</motion.div>
 
-						{/* Name with gradient */}
-						<motion.div variants={itemVariants}>
+						{/* Name */}
+						<motion.div custom={1} variants={fadeUp} initial="hidden" animate="visible">
 							<TextAnimate
 								animation="slideUp"
 								by="word"
-								className="scroll-m-20 text-4xl md:text-6xl lg:text-7xl font-black uppercase tracking-tighter"
+								className="text-5xl sm:text-6xl lg:text-7xl font-black uppercase tracking-tighter leading-[0.9]"
 							>
 								MUHD HAFIZUDDIN
 							</TextAnimate>
 						</motion.div>
 
-						{/* Title with animated underline */}
-						<motion.div variants={itemVariants} className="relative inline-block">
-							<h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-muted-foreground font-medium tracking-wide">
+						{/* Role + location */}
+						<motion.div
+							custom={2}
+							variants={fadeUp}
+							initial="hidden"
+							animate="visible"
+							className="flex flex-wrap items-center gap-x-4 gap-y-1.5"
+						>
+							<span className="text-lg md:text-xl text-muted-foreground font-medium">
 								Software Engineering Student
-							</h2>
-							<motion.div
-								initial={{ scaleX: 0 }}
-								animate={{ scaleX: 1 }}
-								transition={{ delay: 0.8, duration: 0.6, ease: "easeOut" }}
-								className="absolute -bottom-2 left-0 right-0 h-0.5 bg-gradient-to-r from-primary via-secondary to-accent rounded-full origin-left"
-							/>
+							</span>
+							<span className="text-border hidden sm:inline">·</span>
+							<span className="flex items-center gap-1.5 text-sm text-muted-foreground">
+								<MapPin className="h-3.5 w-3.5 text-primary flex-shrink-0" />
+								Johor, Malaysia
+							</span>
 						</motion.div>
 
-						{/* Location */}
-						<motion.div
-							variants={itemVariants}
-							className="flex items-center justify-center gap-2 text-sm text-muted-foreground"
+						{/* Bio — no card wrapper */}
+						<motion.p
+							custom={3}
+							variants={fadeUp}
+							initial="hidden"
+							animate="visible"
+							className="text-base text-muted-foreground leading-relaxed max-w-[55ch]"
 						>
-							<MapPin className="h-4 w-4 text-primary" />
-							<span className="tracking-wide">JOHOR, Malaysia</span>
-						</motion.div>
+							Final-year Software Engineering student at UTHM Malaysia. Built
+							full-stack systems with Next.js, TypeScript, and PostgreSQL — from
+							a QR commerce platform during my internship at Xeersoft to personal
+							projects connecting real users. Looking for opportunities to ship
+							things that matter.
+						</motion.p>
 
-						{/* About Section - improved card design */}
-						<motion.div variants={itemVariants} className="max-w-3xl mx-auto mt-8">
-							<div className="relative">
-								{/* Decorative element */}
-								<div className="absolute -top-3 left-1/2 -translate-x-1/2 w-12 h-1 bg-gradient-to-r from-primary via-secondary to-accent rounded-full" />
-
-								<div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-6 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-primary/30">
-									<div className="flex items-center gap-3 mb-4">
-										<div className="p-2 rounded-lg bg-primary/10">
-											<GraduationCap className="h-5 w-5 text-primary" />
-										</div>
-										<h3 className="text-lg font-semibold text-card-foreground tracking-tight">
-											About Me
-										</h3>
-									</div>
-									<p className="text-sm md:text-base text-muted-foreground leading-relaxed tracking-wide">
-										I am a dedicated software engineering student passionate about
-										full-stack development and creating innovative solutions. Skilled in
-										modern frameworks like Next.js and Tailwind CSS, I enjoy building
-										impactful projects and continuously learning new technologies to solve
-										real-world problems.
-									</p>
-								</div>
-							</div>
-						</motion.div>
-
-						{/* Logo Loop Section */}
+						{/* CTAs */}
 						<motion.div
-							variants={itemVariants}
-							className="mt-12 w-full overflow-hidden"
+							custom={4}
+							variants={fadeUp}
+							initial="hidden"
+							animate="visible"
+							className="flex flex-wrap items-center gap-3"
 						>
-							<ScrollVelocityContainer className="py-4">
-								<ScrollVelocityRow baseVelocity={20} direction={1}>
-									<div className="flex items-center gap-12 px-4">
-										{techLogos.map((logo, i) => (
-											<Link
-												key={`top-${i}`}
-												href={logo.href}
-												target="_blank"
-												className="text-6xl md:text-7xl text-muted-foreground hover:text-primary transition-colors"
-											>
-												{logo.node}
-											</Link>
-										))}
-									</div>
-								</ScrollVelocityRow>
-							</ScrollVelocityContainer>
-						</motion.div>
-
-						{/* CTA Buttons - improved design */}
-						<motion.div
-							variants={itemVariants}
-							className="flex flex-col sm:flex-row justify-center gap-4 mt-12"
-						>
-							<Button
-								size="lg"
-								className="group rounded-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-md hover:shadow-lg transition-all duration-300 px-8 py-6"
-								asChild
-								variant="outline"
-							>
+							<Button size="lg" className="rounded-full px-7 group" asChild>
 								<Link href="#projects" scroll={false} onClick={scrollToProjects}>
-									<span className="flex items-center gap-2">
-										View My Work
-										<ArrowDown className="h-4 w-4 group-hover:translate-y-1 transition-transform duration-300" />
-									</span>
+									View My Work
+									<ArrowDown className="ml-2 h-4 w-4 group-hover:translate-y-0.5 transition-transform duration-200" />
 								</Link>
 							</Button>
-
 							<Button
 								size="lg"
 								variant="outline"
-								className="group rounded-full border-2 border-border hover:border-primary hover:bg-primary/5 transition-all duration-300 px-8 py-6"
+								className="rounded-full px-7"
 								asChild
 							>
 								<Link
 									href="https://docs.google.com/document/d/1SsIiM2VCZnLpso4zuoE6EraAcZrMW_pmXiKLz_1Go8Y/edit?usp=sharing"
 									target="_blank"
 								>
-									<span className="flex items-center gap-2">
-										<RiExternalLinkLine className="h-4 w-4 group-hover:translate-y-0.5 transition-transform duration-300" />
-										View Resume
-									</span>
+									<RiExternalLinkLine className="mr-2 h-4 w-4" />
+									View Resume
 								</Link>
 							</Button>
 						</motion.div>
 
-						{/* Social Links - added for completeness */}
+						{/* Social icons — bare, no card borders */}
 						<motion.div
-							variants={itemVariants}
-							className="flex justify-center gap-4 pt-4"
+							custom={5}
+							variants={fadeUp}
+							initial="hidden"
+							animate="visible"
+							className="flex items-center gap-4"
 						>
 							<Link
 								href="https://github.com/apiz23"
 								target="_blank"
-								className="p-2 rounded-full bg-card border border-border hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 group"
+								aria-label="GitHub"
+								className="text-muted-foreground hover:text-foreground transition-colors"
 							>
-								<Github className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+								<Github className="h-5 w-5" />
 							</Link>
 							<Link
 								href="https://www.linkedin.com/in/muh-hafizuddin/"
 								target="_blank"
-								className="p-2 rounded-full bg-card border border-border hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 group"
+								aria-label="LinkedIn"
+								className="text-muted-foreground hover:text-foreground transition-colors"
 							>
-								<Linkedin className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+								<Linkedin className="h-5 w-5" />
 							</Link>
 							<Link
 								href="#contact"
-								className="p-2 rounded-full bg-card border border-border hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 group"
+								aria-label="Contact"
+								className="text-muted-foreground hover:text-foreground transition-colors"
 							>
-								<Mail className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+								<Mail className="h-5 w-5" />
 							</Link>
 						</motion.div>
 					</div>
+
+					{/* Right: avatar */}
+					<motion.div
+						custom={2}
+						variants={fadeUp}
+						initial="hidden"
+						animate="visible"
+						className="flex justify-center lg:justify-end order-first lg:order-last"
+					>
+						<Avatar className="h-44 w-44 sm:h-56 sm:w-56 lg:h-64 lg:w-64 border-2 border-border shadow-lg">
+							<AvatarImage
+								src={profile.src}
+								alt="Hafizuddin Hamid"
+								className="object-cover"
+							/>
+							<AvatarFallback>
+								<div className="bg-muted h-full w-full" />
+							</AvatarFallback>
+						</Avatar>
+					</motion.div>
+				</div>
+
+				{/* Tech logos strip */}
+				<motion.div
+					custom={6}
+					variants={fadeUp}
+					initial="hidden"
+					animate="visible"
+					className="mt-16 w-full overflow-hidden"
+				>
+					<ScrollVelocityContainer className="py-4">
+						<ScrollVelocityRow baseVelocity={20} direction={1}>
+							<div className="flex items-center gap-12 px-4">
+								{techLogos.map((logo, i) => (
+									<Link
+										key={i}
+										href={logo.href}
+										target="_blank"
+										aria-label={logo.title}
+										className="text-5xl md:text-6xl text-muted-foreground/50 hover:text-primary transition-colors"
+									>
+										{logo.node}
+									</Link>
+								))}
+							</div>
+						</ScrollVelocityRow>
+					</ScrollVelocityContainer>
 				</motion.div>
 			</div>
 		</section>

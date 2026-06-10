@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import {
 	Card,
@@ -22,12 +22,12 @@ import {
 	GraduationCap,
 	TrendingUp,
 	Award,
-	BookOpen,
 	Sparkles,
 	Star,
 	Rocket,
 	Brain,
 	Target,
+	BookOpen,
 	Clock,
 	MapPin,
 	Calendar,
@@ -200,16 +200,7 @@ export default function Education() {
 						viewport={{ once: true }}
 						transition={{ duration: 0.5 }}
 					>
-						<Badge
-							variant="outline"
-							className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary/20 via-secondary/20 to-accent/20 text-primary border-primary/30 mb-6 hover:scale-105 transition-transform backdrop-blur-sm"
-						>
-							<GraduationCap className="h-5 w-5 animate-pulse" />
-							<span className="text-sm font-medium tracking-wide text-primary">
-								Academic Journey
-							</span>
-							<Sparkles className="h-4 w-4 text-accent animate-spin-slow" />
-						</Badge>
+						<p className="text-sm font-medium tracking-widest uppercase text-primary mb-4">Academic Journey</p>
 					</motion.div>
 
 					{/* EDUCATION text - Fixed visibility for dark mode */}
@@ -221,11 +212,6 @@ export default function Education() {
 						>
 							Education
 						</TextAnimate>
-
-						{/* Glow effect */}
-						<div className="absolute inset-0 -z-10 blur-3xl opacity-50">
-							<div className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-accent rounded-full" />
-						</div>
 					</div>
 
 					<motion.p
@@ -258,14 +244,11 @@ export default function Education() {
 										className={`absolute inset-0 bg-gradient-to-br ${edu.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
 									/>
 
-									{/* Animated Border */}
-									<div className="absolute inset-0 rounded-lg p-[1px] bg-gradient-to-r from-primary/50 via-secondary/50 to-accent/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
 									<CardContent className="relative p-6 flex flex-col h-full z-10">
 										{/* Logo and Period */}
 										<div className="flex items-start justify-between mb-4">
 											<motion.div
-												whileHover={{ rotate: 360 }}
+												whileHover={{ scale: 1.05 }}
 												transition={{ duration: 0.5 }}
 												className="h-16 w-16 relative p-2 bg-white rounded-xl border border-border/50 shadow-lg group-hover:shadow-primary/20"
 											>
@@ -346,7 +329,7 @@ export default function Education() {
 									<div>
 										<div className="flex items-center gap-3 mb-2">
 											<motion.div
-												whileHover={{ rotate: 360 }}
+												whileHover={{ scale: 1.05 }}
 												transition={{ duration: 0.5 }}
 												className="p-3 rounded-xl bg-gradient-to-br from-primary to-secondary text-primary-foreground shadow-lg"
 											>
@@ -418,7 +401,7 @@ export default function Education() {
 									</div>
 								) : error ? (
 									<div className="h-[400px] flex flex-col items-center justify-center gap-4">
-										<div className="text-destructive animate-bounce">
+										<div className="text-destructive">
 											<BookOpen className="h-16 w-16" />
 										</div>
 										<p className="text-destructive font-medium tracking-wide">

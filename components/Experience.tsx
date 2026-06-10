@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import {
 	Accordion,
@@ -11,19 +11,12 @@ import {
 	CalendarIcon,
 	MapPinIcon,
 	BriefcaseIcon,
-	LoaderIcon,
-	Building2,
 	CheckCircle2,
 	Code2,
-	Sparkles,
 	Rocket,
 	TrendingUp,
-	Users,
-	GitBranch,
-	Zap,
 	Award,
 	Clock,
-	Target,
 	Camera,
 	ChevronRight,
 } from "lucide-react";
@@ -116,16 +109,7 @@ export default function Experience() {
 						viewport={{ once: true }}
 						transition={{ duration: 0.5 }}
 					>
-						<Badge
-							variant="outline"
-							className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary/20 via-secondary/20 to-accent/20 text-primary border-primary/30 mb-6 hover:scale-105 transition-transform backdrop-blur-sm"
-						>
-							<BriefcaseIcon className="h-5 w-5 animate-pulse" />
-							<span className="text-sm font-medium tracking-wide text-primary">
-								Professional Journey
-							</span>
-							<Sparkles className="h-4 w-4 text-accent animate-spin-slow" />
-						</Badge>
+						<p className="text-sm font-medium tracking-widest uppercase text-primary mb-4">Professional Journey</p>
 					</motion.div>
 
 					<div className="relative mb-6">
@@ -136,11 +120,6 @@ export default function Experience() {
 						>
 							Work Experience
 						</TextAnimate>
-
-						{/* Glow effect */}
-						<div className="absolute inset-0 -z-10 blur-3xl opacity-50">
-							<div className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-accent rounded-full" />
-						</div>
 					</div>
 
 					<motion.p
@@ -167,25 +146,19 @@ export default function Experience() {
 						>
 							<Card className="relative group bg-gradient-to-br from-card/80 via-card/60 to-card/40 backdrop-blur-sm border border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20 overflow-hidden">
 								{/* Animated gradient border */}
-								<div className="absolute inset-0 rounded-lg p-[1px] bg-gradient-to-r from-primary/50 via-secondary/50 to-accent/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-								{/* Gradient accent line */}
-								<div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-secondary to-accent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
-
-								{/* Floating particles */}
-								<div className="absolute top-0 right-0 w-20 h-20 bg-primary/5 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700" />
-								<div className="absolute bottom-0 left-0 w-20 h-20 bg-secondary/5 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700" />
+								{/* Accent line */}
+								<div className="absolute top-0 left-0 w-full h-px bg-border transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
 
 								<CardContent className="relative p-6 md:p-8 z-10">
 									<div className="flex flex-col md:flex-row gap-6">
 										{/* Logo with enhanced animation */}
 										<motion.div
 											className="flex-shrink-0"
-											whileHover={{ scale: 1.1, rotate: 5 }}
+											whileHover={{ scale: 1.03 }}
 											transition={{ type: "spring", stiffness: 300 }}
 										>
-											<div className="relative h-20 w-20 md:h-24 md:w-24 rounded-xl bg-gradient-to-br from-card to-card/50 p-3 shadow-lg border border-border/50 group-hover:border-primary/30 transition-colors overflow-hidden">
-												<div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+											<div className="relative h-20 w-20 md:h-24 md:w-24 rounded-xl bg-card p-3 shadow-sm border border-border group-hover:border-primary/40 transition-colors overflow-hidden">
 												<img
 													src={exp.logo}
 													alt={exp.company}
@@ -208,7 +181,7 @@ export default function Experience() {
 															<Award className="h-5 w-5 text-accent" />
 														</motion.span>
 													</h3>
-													<p className="text-lg font-semibold bg-gradient-to-r from-primary to-secondary bg-clip-text">
+													<p className="text-lg font-semibold text-primary">
 														{exp.position}
 													</p>
 												</div>
@@ -268,9 +241,8 @@ export default function Experience() {
 												<AccordionItem value="details" className="border-border/50">
 													<AccordionTrigger className="text-primary hover:text-secondary py-3 hover:no-underline group/trigger">
 														<span className="flex items-center gap-2">
-															<Rocket className="h-4 w-4 text-accent group-hover/trigger:animate-bounce" />
+															<Rocket className="h-4 w-4 text-accent group-hover/trigger:translate-y-[-2px] transition-transform duration-200" />
 															<span>View full details</span>
-															<Building2 className="h-4 w-4 opacity-0 group-hover/trigger:opacity-100 transition-opacity" />
 														</span>
 													</AccordionTrigger>
 													<AccordionContent>
@@ -280,20 +252,16 @@ export default function Experience() {
 															transition={{ duration: 0.3 }}
 															className="space-y-6 pt-4"
 														>
-															{/* Description with quote style */}
-															<div className="relative pl-4 border-l-4 border-gradient-to-b from-primary to-secondary">
-																<p className="text-muted-foreground leading-relaxed italic">
-																	{exp.description}
-																</p>
-															</div>
+															{/* Description */}
+															<p className="text-muted-foreground leading-relaxed">
+																{exp.description}
+															</p>
 
 															{/* Key Achievements with progress bars */}
 															<div>
 																<h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-																	<span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-																	<span className="bg-gradient-to-r from-primary to-secondary bg-clip-text">
-																		Key Achievements
-																	</span>
+																	<span className="h-1.5 w-1.5 rounded-full bg-primary" />
+																	<span>Key Achievements</span>
 																</h4>
 																<ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
 																	{exp.achievements.map((achievement, i) => (
@@ -316,10 +284,8 @@ export default function Experience() {
 															{/* Technologies with enhanced styling */}
 															<div>
 																<h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-																	<span className="h-2 w-2 rounded-full bg-secondary animate-pulse delay-300" />
-																	<span className="bg-gradient-to-r from-secondary to-accent bg-clip-text">
-																		Technologies Used
-																	</span>
+																	<span className="h-1.5 w-1.5 rounded-full bg-secondary" />
+																	<span>Technologies Used</span>
 																</h4>
 																<div className="flex flex-wrap gap-2">
 																	{exp.technologies.map((tech, i) => (
@@ -375,7 +341,7 @@ export default function Experience() {
 									<span className="text-sm">Captured Moments</span>
 								</Badge>
 							</motion.div>
-							<h3 className="text-2xl md:text-3xl font-bold mb-3 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text">
+							<h3 className="text-2xl md:text-3xl font-bold mb-3 text-foreground">
 								Internship Memories
 							</h3>
 							<p className="text-muted-foreground">
@@ -441,7 +407,7 @@ export default function Experience() {
 										</div>
 										<div>
 											<p className="text-sm text-muted-foreground">Total Experience</p>
-											<p className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text">
+											<p className="text-2xl font-bold text-primary">
 												{experiences[0].duration}
 											</p>
 										</div>
@@ -455,7 +421,7 @@ export default function Experience() {
 										</div>
 										<div>
 											<p className="text-sm text-muted-foreground">Technologies Used</p>
-											<p className="text-2xl font-bold bg-gradient-to-r from-secondary to-accent bg-clip-text">
+											<p className="text-2xl font-bold text-secondary">
 												{experiences[0].technologies.length}+
 											</p>
 										</div>
@@ -469,7 +435,7 @@ export default function Experience() {
 										</div>
 										<div>
 											<p className="text-sm text-muted-foreground">Achievements</p>
-											<p className="text-2xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text">
+											<p className="text-2xl font-bold text-accent">
 												{experiences[0].achievements.length}
 											</p>
 										</div>

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { TextAnimate } from "./ui/text-animate";
 import { Button } from "./ui/button";
@@ -13,7 +15,6 @@ import {
 	Github,
 	Linkedin,
 	Sparkles,
-	ArrowUp,
 	CheckCircle2,
 	MessageCircle,
 } from "lucide-react";
@@ -124,7 +125,7 @@ export default function Contact() {
 			</div>
 
 			<div className="container mx-auto px-4 sm:px-6 lg:px-8">
-				{/* Section Header - Mobile optimized */}
+				{/* Section Header */}
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					whileInView={{ opacity: 1, y: 0 }}
@@ -155,10 +156,10 @@ export default function Contact() {
 					</motion.p>
 				</motion.div>
 
-				{/* Main Content - Mobile first grid */}
+				{/* Main Content */}
 				<div className="max-w-6xl mx-auto">
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12">
-						{/* Contact Information - Reordered for mobile */}
+						{/* Contact Information */}
 						<div className="order-2 lg:order-1 space-y-6 md:space-y-8">
 							{/* Contact Info Cards */}
 							<div>
@@ -191,7 +192,7 @@ export default function Contact() {
 								</div>
 							</div>
 
-							{/* Social Links - Better grid for mobile */}
+							{/* Social Links */}
 							<div>
 								<h3 className="text-xl md:text-2xl font-semibold mb-4 md:mb-6 px-1">
 									Social Media
@@ -226,7 +227,7 @@ export default function Contact() {
 							</div>
 						</div>
 
-						{/* Contact Form - Order first on mobile */}
+						{/* Contact Form */}
 						<div className="order-1 lg:order-2">
 							<Card className="shadow-lg">
 								<CardContent className="p-4 md:p-6 lg:p-8">
@@ -302,7 +303,6 @@ export default function Contact() {
 											type="submit"
 											disabled={formStatus !== "idle"}
 											className="w-full h-10 md:h-12 text-sm md:text-base"
-											variant="outline"
 										>
 											{formStatus === "idle" && (
 												<>
@@ -340,7 +340,7 @@ export default function Contact() {
 					</div>
 				</div>
 
-				{/* Footer - Mobile optimized */}
+				{/* Footer */}
 				<motion.footer
 					initial={{ opacity: 0, y: 20 }}
 					whileInView={{ opacity: 1, y: 0 }}
