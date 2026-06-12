@@ -1,7 +1,6 @@
 ﻿import type { Metadata } from "next";
 import "./globals.css";
 import { Sora, Figtree, JetBrains_Mono } from "next/font/google";
-import Squares from "@/components/light-rays";
 import { Toaster } from "sonner";
 import ScrollToTop from "@/components/scroll-top";
 import { Analytics } from "@vercel/analytics/next";
@@ -57,15 +56,15 @@ export default function RootLayout({
 				className={`${sora.variable} ${figtree.variable} ${jetbrainsMono.variable} font-sans bg-background antialiased`}
 			>
 				<Providers>
-					<div className="fixed inset-0 opacity-20 pointer-events-none">
-						<Squares
-							speed={0.5}
-							squareSize={60}
-							direction="diagonal"
-							borderColor="currentColor"
-							hoverFillColor="transparent"
-						/>
-					</div>
+					{/* Ambient top-light — soft indigo radial, purpose: depth without decoration */}
+					<div
+						className="fixed inset-0 pointer-events-none z-0"
+						aria-hidden="true"
+						style={{
+							background:
+								"radial-gradient(ellipse 100% 55% at 50% -5%, oklch(0.72 0.12 277 / 0.09) 0%, transparent 68%)",
+						}}
+					/>
 					<Navbar />
 					<div className="relative min-h-screen">
 						{children}

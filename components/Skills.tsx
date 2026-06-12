@@ -59,7 +59,7 @@ function SkillBar({
 export default function Skills() {
 	return (
 		<section id="skills" className="py-20 md:py-32 bg-primary/[0.02]">
-			<div className="w-full px-8">
+			<div className="max-w-5xl mx-auto px-8 w-full">
 				<motion.h2
 					initial={{ opacity: 0, y: 20 }}
 					whileInView={{ opacity: 1, y: 0 }}
