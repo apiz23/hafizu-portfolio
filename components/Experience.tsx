@@ -1,450 +1,103 @@
-﻿"use client";
+"use client";
 
-import {
-	Accordion,
-	AccordionContent,
-	AccordionItem,
-	AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Badge } from "./ui/badge";
-import {
-	CalendarIcon,
-	MapPinIcon,
-	BriefcaseIcon,
-	CheckCircle2,
-	Code2,
-	Rocket,
-	TrendingUp,
-	Award,
-	Clock,
-	Camera,
-	ChevronRight,
-} from "lucide-react";
-import { TextAnimate } from "./ui/text-animate";
 import { motion } from "framer-motion";
-import Image from "next/image";
-import intern1 from "@/public/img/intern1.jpeg";
-import intern2 from "@/public/img/intern2.jpg";
-import intern4 from "@/public/img/intern4.jpg";
-import intern5 from "@/public/img/intern5.jpg";
-import { Card, CardContent } from "./ui/card";
+
+const experiences = [
+	{
+		company: "Xeersoft",
+		period: "2023 – 2024",
+		position: "Software Developer Intern",
+		location: "Bukit Indah, Johor Bahru",
+		achievements: [
+			"Implemented 5+ new features for the Tokopak QR commerce system",
+			"Improved system performance by 30% through code optimization",
+			"Collaborated with cross-functional teams to deliver features on schedule",
+			"Participated in daily stand-ups and agile development processes",
+		],
+		technologies: [
+			"React",
+			"jQuery",
+			"PostgreSQL",
+			"Laravel",
+			"Git",
+			"Docker",
+			"REST API",
+		],
+	},
+];
 
 export default function Experience() {
-	const experiences = [
-		{
-			company: "Xeersoft",
-			position: "Software Developer Intern",
-			period: "2023 - 2024",
-			duration: "6 months",
-			location: "Office - Bukit Indah, Johor Bahru",
-			logo:
-				"https://media.glassdoor.com/sql/508401/xeersoft-squarelogo-1432219510383.png",
-			description:
-				"Worked as Software Developer Intern maintaining a QR code system named 'Tokopak'. Analyzed, designed, and developed new functionalities and features for the existing system.",
-			achievements: [
-				"Implemented 5+ new features for the Tokopak QR system",
-				"Improved system performance by 30% through code optimization",
-				"Collaborated with cross-functional teams to deliver features on schedule",
-				"Participated in daily stand-ups and agile development processes",
-			],
-			technologies: [
-				"React",
-				"JQuery",
-				"PostgreSQL",
-				"Laravel",
-				"Git",
-				"Docker",
-				"REST API",
-			],
-			highlights: [
-				"Reduced bug reports by 40%",
-				"Documented 15+ API endpoints",
-				"Mentored 2 junior developers",
-			],
-		},
-	];
-
-	// Animation variants
-	const containerVariants = {
-		hidden: { opacity: 0 },
-		visible: {
-			opacity: 1,
-			transition: {
-				staggerChildren: 0.1,
-			},
-		},
-	};
-
-	const itemVariants = {
-		hidden: { opacity: 0, y: 20 },
-		visible: { opacity: 1, y: 0 },
-	};
-
-	const memoryImages = [
-		{
-			src: intern1,
-			caption: "Annual Grand meeting at Xeersoft",
-			location: "Bukit Indah, Johor Bahru",
-		},
-		{
-			src: intern2,
-			caption: "Christmas celebration",
-			location: "Bukit Indah, Johor Bahru",
-		},
-		{ src: intern4, caption: "Project presentation", location: "Virtual" },
-		{ src: intern5, caption: "Project presentation", location: "Virtual" },
-	];
-
 	return (
-		<section
-			id="experience"
-			className="relative py-20 md:py-32 bg-background overflow-hidden"
-		>
-			<div className="container mx-auto px-4 relative z-10">
-				{/* Header Section */}
-				<div className="text-center mb-16">
+		<section id="experience" className="py-20 md:py-32 bg-background">
+			<div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+				<motion.h2
+					initial={{ opacity: 0, y: 20 }}
+					whileInView={{ opacity: 1, y: 0 }}
+					viewport={{ once: true }}
+					className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-foreground mb-16"
+				>
+					EXPERIENCE
+				</motion.h2>
+
+				{experiences.map((exp, index) => (
 					<motion.div
+						key={exp.company}
 						initial={{ opacity: 0, y: 20 }}
 						whileInView={{ opacity: 1, y: 0 }}
 						viewport={{ once: true }}
-						transition={{ duration: 0.5 }}
+						transition={{ delay: index * 0.1 }}
+						className="group border-t border-foreground/10 py-10 hover:bg-primary/[0.02] transition-colors -mx-4 px-4 sm:-mx-6 sm:px-6"
 					>
-						<p className="text-sm font-medium tracking-widest uppercase text-primary mb-4">Professional Journey</p>
-					</motion.div>
+						<div className="grid grid-cols-1 md:grid-cols-[180px_1fr_180px] gap-6 items-start">
+							{/* Left: year + company */}
+							<div>
+								<p className="font-mono text-sm text-muted-foreground">
+									{exp.period}
+								</p>
+								<p className="font-mono text-sm font-semibold text-foreground mt-1">
+									{exp.company}
+								</p>
+								<p className="text-xs text-muted-foreground mt-0.5">
+									{exp.location}
+								</p>
+							</div>
 
-					<div className="relative mb-6">
-						<TextAnimate
-							animation="slideUp"
-							by="word"
-							className="scroll-m-20 text-4xl md:text-6xl lg:text-7xl font-black uppercase tracking-tighter"
-						>
-							Work Experience
-						</TextAnimate>
-					</div>
-
-					<motion.p
-						initial={{ opacity: 0, y: 20 }}
-						whileInView={{ opacity: 1, y: 0 }}
-						viewport={{ once: true }}
-						transition={{ delay: 0.2, duration: 0.5 }}
-						className="text-muted-foreground mt-6 text-lg max-w-2xl mx-auto tracking-wide"
-					>
-						My professional journey and the valuable experiences I've gained
-					</motion.p>
-				</div>
-
-				<div className="max-w-5xl mx-auto">
-					{experiences.map((exp, index) => (
-						<motion.div
-							key={exp.company}
-							initial={{ opacity: 0, y: 30 }}
-							whileInView={{ opacity: 1, y: 0 }}
-							transition={{ duration: 0.6, delay: index * 0.2 }}
-							viewport={{ once: true }}
-							whileHover={{ y: -4 }}
-							className="mb-16"
-						>
-							<Card className="relative group bg-gradient-to-br from-card/80 via-card/60 to-card/40 backdrop-blur-sm border border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20 overflow-hidden">
-								{/* Animated gradient border */}
-
-								{/* Accent line */}
-								<div className="absolute top-0 left-0 w-full h-px bg-border transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-
-								<CardContent className="relative p-6 md:p-8 z-10">
-									<div className="flex flex-col md:flex-row gap-6">
-										{/* Logo with enhanced animation */}
-										<motion.div
-											className="flex-shrink-0"
-											whileHover={{ scale: 1.03 }}
-											transition={{ type: "spring", stiffness: 300 }}
+							{/* Center: role + achievements */}
+							<div>
+								<h3 className="text-xl font-bold text-foreground mb-5">
+									{exp.position}
+								</h3>
+								<ul className="space-y-2.5">
+									{exp.achievements.map((achievement, i) => (
+										<li
+											key={i}
+											className="flex items-start gap-3 text-sm text-muted-foreground"
 										>
-											<div className="relative h-20 w-20 md:h-24 md:w-24 rounded-xl bg-card p-3 shadow-sm border border-border group-hover:border-primary/40 transition-colors overflow-hidden">
-												<img
-													src={exp.logo}
-													alt={exp.company}
-													className="relative h-full w-full object-contain z-10"
-												/>
-											</div>
-										</motion.div>
+											<span className="text-primary mt-0.5 shrink-0 font-mono">
+												—
+											</span>
+											{achievement}
+										</li>
+									))}
+								</ul>
+							</div>
 
-										{/* Content */}
-										<div className="flex-1">
-											<div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-4">
-												<div>
-													<h3 className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors flex items-center gap-2">
-														{exp.company}
-														<motion.span
-															initial={{ opacity: 0, scale: 0 }}
-															whileInView={{ opacity: 1, scale: 1 }}
-															transition={{ delay: 0.3 }}
-														>
-															<Award className="h-5 w-5 text-accent" />
-														</motion.span>
-													</h3>
-													<p className="text-lg font-semibold text-primary">
-														{exp.position}
-													</p>
-												</div>
-												<Badge
-													variant="secondary"
-													className="text-sm py-1.5 px-4 bg-gradient-to-r from-secondary/20 to-secondary/5 text-secondary border-secondary/30 backdrop-blur-sm"
-												>
-													<Clock className="h-3 w-3 mr-1" />
-													{exp.period}
-												</Badge>
-											</div>
-
-											{/* Metadata with improved styling */}
-											<div className="flex flex-wrap gap-3 mb-4">
-												<div className="flex items-center gap-1.5 bg-muted/30 px-3 py-1.5 rounded-full border border-border/50 backdrop-blur-sm">
-													<CalendarIcon className="h-4 w-4 text-primary" />
-													<span className="text-sm text-muted-foreground">
-														{exp.duration}
-													</span>
-												</div>
-												<div className="flex items-center gap-1.5 bg-muted/30 px-3 py-1.5 rounded-full border border-border/50 backdrop-blur-sm">
-													<MapPinIcon className="h-4 w-4 text-secondary" />
-													<span className="text-sm text-muted-foreground">
-														{exp.location}
-													</span>
-												</div>
-												<div className="flex items-center gap-1.5 bg-muted/30 px-3 py-1.5 rounded-full border border-border/50 backdrop-blur-sm">
-													<BriefcaseIcon className="h-4 w-4 text-accent" />
-													<span className="text-sm text-muted-foreground">Internship</span>
-												</div>
-											</div>
-
-											{/* Quick highlights with enhanced styling */}
-											<motion.div
-												variants={containerVariants}
-												initial="hidden"
-												whileInView="visible"
-												viewport={{ once: true }}
-												className="flex flex-wrap gap-2 mb-4"
-											>
-												{exp.highlights.map((highlight, i) => (
-													<motion.div key={i} variants={itemVariants}>
-														<Badge
-															variant="outline"
-															className="bg-gradient-to-r from-primary/10 to-secondary/10 text-primary border-primary/20 hover:bg-primary/20 transition-all duration-300 backdrop-blur-sm group/badge"
-														>
-															<CheckCircle2 className="h-3 w-3 mr-1 text-secondary" />
-															{highlight}
-															<ChevronRight className="h-3 w-3 ml-1 opacity-0 group-hover/badge:opacity-100 group-hover/badge:translate-x-1 transition-all" />
-														</Badge>
-													</motion.div>
-												))}
-											</motion.div>
-
-											{/* Accordion details with enhanced styling */}
-											<Accordion type="single" collapsible className="w-full">
-												<AccordionItem value="details" className="border-border/50">
-													<AccordionTrigger className="text-primary hover:text-secondary py-3 hover:no-underline group/trigger">
-														<span className="flex items-center gap-2">
-															<Rocket className="h-4 w-4 text-accent group-hover/trigger:translate-y-[-2px] transition-transform duration-200" />
-															<span>View full details</span>
-														</span>
-													</AccordionTrigger>
-													<AccordionContent>
-														<motion.div
-															initial={{ opacity: 0, y: -10 }}
-															animate={{ opacity: 1, y: 0 }}
-															transition={{ duration: 0.3 }}
-															className="space-y-6 pt-4"
-														>
-															{/* Description */}
-															<p className="text-muted-foreground leading-relaxed">
-																{exp.description}
-															</p>
-
-															{/* Key Achievements with progress bars */}
-															<div>
-																<h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-																	<span className="h-1.5 w-1.5 rounded-full bg-primary" />
-																	<span>Key Achievements</span>
-																</h4>
-																<ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-																	{exp.achievements.map((achievement, i) => (
-																		<motion.li
-																			key={i}
-																			initial={{ opacity: 0, x: -10 }}
-																			whileInView={{ opacity: 1, x: 0 }}
-																			transition={{ delay: i * 0.1 }}
-																			viewport={{ once: true }}
-																			whileHover={{ x: 5 }}
-																			className="flex items-start gap-2 text-muted-foreground group/achievement"
-																		>
-																			<CheckCircle2 className="h-5 w-5 text-secondary shrink-0 mt-0.5 group-hover/achievement:scale-110 transition-transform" />
-																			<span className="text-sm">{achievement}</span>
-																		</motion.li>
-																	))}
-																</ul>
-															</div>
-
-															{/* Technologies with enhanced styling */}
-															<div>
-																<h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-																	<span className="h-1.5 w-1.5 rounded-full bg-secondary" />
-																	<span>Technologies Used</span>
-																</h4>
-																<div className="flex flex-wrap gap-2">
-																	{exp.technologies.map((tech, i) => (
-																		<motion.div
-																			key={tech}
-																			initial={{ opacity: 0, scale: 0.8 }}
-																			whileInView={{ opacity: 1, scale: 1 }}
-																			transition={{ delay: i * 0.05 }}
-																			viewport={{ once: true }}
-																			whileHover={{ scale: 1.1, y: -2 }}
-																		>
-																			<Badge
-																				variant="outline"
-																				className="px-3 py-1.5 bg-gradient-to-br from-card to-card/50 border-primary/20 text-foreground hover:border-primary hover:bg-primary/5 transition-all duration-300 backdrop-blur-sm"
-																			>
-																				<Code2 className="h-3 w-3 mr-1 text-primary" />
-																				{tech}
-																			</Badge>
-																		</motion.div>
-																	))}
-																</div>
-															</div>
-														</motion.div>
-													</AccordionContent>
-												</AccordionItem>
-											</Accordion>
-										</div>
-									</div>
-								</CardContent>
-							</Card>
-						</motion.div>
-					))}
-
-					{/* Internship Photo Gallery with enhanced styling */}
-					<motion.div
-						initial={{ opacity: 0, y: 30 }}
-						whileInView={{ opacity: 1, y: 0 }}
-						viewport={{ once: true }}
-						transition={{ delay: 0.4, duration: 0.6 }}
-						className="mt-20"
-					>
-						<div className="text-center mb-8">
-							<motion.div
-								initial={{ opacity: 0, scale: 0.9 }}
-								whileInView={{ opacity: 1, scale: 1 }}
-								viewport={{ once: true }}
-							>
-								<Badge
-									variant="outline"
-									className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent border-accent/20 mb-4"
-								>
-									<Camera className="h-4 w-4" />
-									<span className="text-sm">Captured Moments</span>
-								</Badge>
-							</motion.div>
-							<h3 className="text-2xl md:text-3xl font-bold mb-3 text-foreground">
-								Internship Memories
-							</h3>
-							<p className="text-muted-foreground">
-								Moments captured during my professional journey
-							</p>
-						</div>
-
-						<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-							{memoryImages.map((img, idx) => (
-								<motion.div
-									key={idx}
-									initial={{ opacity: 0, scale: 0.9 }}
-									whileInView={{ opacity: 1, scale: 1 }}
-									viewport={{ once: true }}
-									transition={{ delay: idx * 0.1 }}
-									whileHover={{ y: -8, scale: 1.02 }}
-									className="relative group overflow-hidden rounded-xl shadow-lg cursor-pointer border border-border/50"
-								>
-									<div className="aspect-video overflow-hidden bg-gradient-to-br from-primary/5 to-secondary/5">
-										<Image
-											src={img.src}
-											alt={img.caption}
-											className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-										/>
-									</div>
-
-									{/* Enhanced overlay */}
-									<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-									{/* Caption with location */}
-									<div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-										<p className="text-white text-sm font-medium flex items-center gap-2">
-											<Camera className="h-3 w-3" />
-											{img.caption}
-										</p>
-										<p className="text-white/80 text-xs flex items-center gap-1 mt-1">
-											<MapPinIcon className="h-3 w-3" />
-											{img.location}
-										</p>
-									</div>
-
-									{/* Corner accent */}
-									<div className="absolute top-2 right-2 w-12 h-12 bg-gradient-to-br from-primary to-secondary opacity-0 group-hover:opacity-30 rounded-bl-full transition-opacity duration-300" />
-								</motion.div>
-							))}
+							{/* Right: tech tags */}
+							<div className="flex flex-wrap gap-1.5 md:justify-end">
+								{exp.technologies.map((tech) => (
+									<span
+										key={tech}
+										className="text-xs text-muted-foreground font-mono bg-muted/60 px-2 py-0.5 rounded"
+									>
+										{tech}
+									</span>
+								))}
+							</div>
 						</div>
 					</motion.div>
+				))}
 
-					{/* Skills Summary with enhanced styling */}
-					<motion.div
-						initial={{ opacity: 0, y: 20 }}
-						whileInView={{ opacity: 1, y: 0 }}
-						viewport={{ once: true }}
-						transition={{ delay: 0.6 }}
-						className="mt-16"
-					>
-						<Card className="bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-sm border border-border/50">
-							<CardContent className="p-6">
-								<div className="flex flex-wrap items-center justify-center gap-4 md:gap-8">
-									<div className="flex items-center gap-3">
-										<div className="p-2 rounded-full bg-primary/10">
-											<Clock className="h-5 w-5 text-primary" />
-										</div>
-										<div>
-											<p className="text-sm text-muted-foreground">Total Experience</p>
-											<p className="text-2xl font-bold text-primary">
-												{experiences[0].duration}
-											</p>
-										</div>
-									</div>
-
-									<div className="h-12 w-px bg-border/50 hidden md:block" />
-
-									<div className="flex items-center gap-3">
-										<div className="p-2 rounded-full bg-secondary/10">
-											<Code2 className="h-5 w-5 text-secondary" />
-										</div>
-										<div>
-											<p className="text-sm text-muted-foreground">Technologies Used</p>
-											<p className="text-2xl font-bold text-secondary">
-												{experiences[0].technologies.length}+
-											</p>
-										</div>
-									</div>
-
-									<div className="h-12 w-px bg-border/50 hidden md:block" />
-
-									<div className="flex items-center gap-3">
-										<div className="p-2 rounded-full bg-accent/10">
-											<TrendingUp className="h-5 w-5 text-accent" />
-										</div>
-										<div>
-											<p className="text-sm text-muted-foreground">Achievements</p>
-											<p className="text-2xl font-bold text-accent">
-												{experiences[0].achievements.length}
-											</p>
-										</div>
-									</div>
-								</div>
-							</CardContent>
-						</Card>
-					</motion.div>
-				</div>
+				<div className="border-t border-foreground/10" />
 			</div>
 		</section>
 	);
