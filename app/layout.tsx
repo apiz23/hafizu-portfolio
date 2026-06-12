@@ -66,12 +66,8 @@ export default function RootLayout({
 						/>
 					</div>
 					<div className="relative min-h-screen">
-						<div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-2 md:py-12">
-							<div className="relative bg-background/90 backdrop-blur-sm rounded-2xl border border-border/30 shadow-sm p-2">
-								{children}
-								<Toaster richColors position="top-center" />
-							</div>
-						</div>
+						{children}
+						<Toaster richColors position="top-center" />
 					</div>
 					<ScrollToTop />
 					<Analytics />

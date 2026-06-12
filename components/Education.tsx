@@ -107,12 +107,12 @@ export default function Education() {
 
 	return (
 		<section id="education" className="py-20 md:py-32 bg-background">
-			<div className="container">
+			<div className="w-full px-8">
 				<motion.h2
 					initial={{ opacity: 0, y: 20 }}
 					whileInView={{ opacity: 1, y: 0 }}
 					viewport={{ once: true }}
-					className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-foreground mb-16"
+					className="text-5xl md:text-7xl font-serif font-black uppercase tracking-tighter text-foreground mb-16"
 				>
 					EDUCATION
 				</motion.h2>

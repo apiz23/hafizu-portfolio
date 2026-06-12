@@ -67,7 +67,7 @@ export default function Intro() {
 			id="home"
 			className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-background pb-12 pt-20"
 		>
-			<div className="container">
+			<div className="w-full px-8">
 				{/* Available badge */}
 				<motion.div
 					custom={0}
@@ -93,7 +93,7 @@ export default function Intro() {
 					animate="visible"
 				>
 					<h1
-						className="font-black uppercase leading-[0.85] tracking-tighter text-foreground"
+						className="font-serif font-black uppercase leading-[0.85] tracking-tighter text-foreground"
 						style={{ fontSize: "clamp(4rem, 13vw, 12rem)" }}
 					>
 						<span className="block">MUHA</span>

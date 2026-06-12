@@ -42,14 +42,14 @@ function SkillBar({
 }) {
 	return (
 		<div className="flex items-center gap-4">
-			<span className="text-sm text-muted-foreground w-44 shrink-0">{name}</span>
+			<span className="text-sm text-muted-foreground w-36 shrink-0">{name}</span>
 			<div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
 				<motion.div
 					className="h-full bg-primary rounded-full"
 					initial={{ width: 0 }}
 					whileInView={{ width: `${fill}%` }}
 					viewport={{ once: true }}
-					transition={{ duration: 0.9, delay, ease: "easeOut" }}
+					transition={{ duration: 0.9, delay, ease: [0.16, 1, 0.3, 1] }}
 				/>
 			</div>
 		</div>
@@ -59,12 +59,12 @@ function SkillBar({
 export default function Skills() {
 	return (
 		<section id="skills" className="py-20 md:py-32 bg-primary/[0.02]">
-			<div className="container">
+			<div className="w-full px-8">
 				<motion.h2
 					initial={{ opacity: 0, y: 20 }}
 					whileInView={{ opacity: 1, y: 0 }}
 					viewport={{ once: true }}
-					className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-foreground mb-16"
+					className="text-5xl md:text-7xl font-serif font-black uppercase tracking-tighter text-foreground mb-16"
 				>
 					SKILLS
 				</motion.h2>

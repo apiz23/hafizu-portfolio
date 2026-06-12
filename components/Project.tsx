@@ -53,7 +53,7 @@ export default function Project() {
 
 	return (
 		<section id="projects" className="py-20 md:py-32 bg-background">
-			<div className="container">
+			<div className="w-full px-8">
 				{/* Header row */}
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
@@ -61,7 +61,7 @@ export default function Project() {
 					viewport={{ once: true }}
 					className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-12"
 				>
-					<h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-foreground">
+					<h2 className="text-5xl md:text-7xl font-serif font-black uppercase tracking-tighter text-foreground">
 						PROJECTS
 					</h2>
 					<span className="font-mono text-sm text-muted-foreground shrink-0">
@@ -81,7 +81,7 @@ export default function Project() {
 						<button
 							key={cat.id}
 							onClick={() => setFilter(cat.id)}
-							className={`text-sm px-4 py-1.5 rounded-full transition-colors ${
+							className={`text-sm px-4 py-1.5 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
 								filter === cat.id
 									? "bg-foreground text-background"
 									: "text-muted-foreground hover:text-foreground"
