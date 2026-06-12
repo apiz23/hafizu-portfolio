@@ -31,7 +31,7 @@ export default function Skills() {
 	return (
 		<section
 			id="skills"
-			className="py-14 bg-background border-t border-border"
+			className="section-dark py-14 bg-background border-t border-border"
 		>
 			<div className="max-w-4xl mx-auto px-8 w-full">
 				<motion.div
@@ -60,7 +60,7 @@ export default function Skills() {
 							key={skill.name}
 							className="bg-background px-4 py-4 flex flex-col gap-1.5"
 						>
-							<span className="text-[20px] text-[#888888]">{skill.icon}</span>
+							<span className="text-[20px] text-muted-foreground">{skill.icon}</span>
 							<span className="font-mono text-[12px] font-bold text-foreground">
 								{skill.name}
 							</span>

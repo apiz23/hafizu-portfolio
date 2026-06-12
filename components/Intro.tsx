@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { RiExternalLinkLine } from "react-icons/ri";
 
 const fadeUp = {
@@ -31,6 +32,9 @@ export default function Intro() {
       className="min-h-screen flex flex-col justify-center bg-background pt-24 pb-16"
     >
       <div className="max-w-4xl mx-auto px-8 w-full">
+        <div className="flex flex-col lg:flex-row items-start gap-12 lg:gap-16">
+        {/* Left: all text */}
+        <div className="flex-1 min-w-0">
 
         {/* Available badge */}
         <motion.div
@@ -157,7 +161,28 @@ export default function Intro() {
             Email
           </Link>
         </motion.div>
+        </div>{/* end left */}
 
+        {/* Right: avatar */}
+        <motion.div
+          custom={1}
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          className="hidden lg:block shrink-0 pt-10"
+        >
+          <Image
+            src="/img/profile.jpg"
+            alt="Hafizuddin Hamid"
+            width={200}
+            height={260}
+            priority
+            className="object-cover object-top grayscale w-[200px] h-[260px]"
+            style={{ borderRadius: "3px" }}
+          />
+        </motion.div>
+
+        </div>{/* end flex row */}
       </div>
     </section>
   );

@@ -20,7 +20,7 @@ const links = [
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-14 bg-background border-t border-border">
+    <section id="contact" className="section-dark py-14 bg-background border-t border-border">
       <div className="max-w-4xl mx-auto px-8">
         <motion.div
           initial={{ opacity: 0, y: 12 }}
