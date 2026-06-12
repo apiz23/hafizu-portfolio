@@ -10,6 +10,7 @@ import { Line, LineChart, CartesianGrid, XAxis, YAxis, Legend } from "recharts";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { BookOpen } from "lucide-react";
+import { fadeUp, clipReveal } from "@/lib/animations";
 import {
   Select,
   SelectTrigger,
@@ -94,8 +95,8 @@ export default function Education() {
   }, [selectedValue]);
 
   const chartConfig = {
-    GPA: { label: "GPA", color: "var(--chart-1)" },
-    CPA: { label: "CPA", color: "var(--chart-2)" },
+    GPA: { label: "GPA", color: "hsl(var(--chart-1))" },
+    CPA: { label: "CPA", color: "hsl(var(--chart-2))" },
   } satisfies ChartConfig;
 
   const minGPA = chartData.length > 0 ? Math.min(...chartData.map((d) => d.GPA)) : 0;
@@ -106,9 +107,10 @@ export default function Education() {
       <div className="max-w-4xl mx-auto px-4 sm:px-8 w-full">
 
         <motion.h2
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          variants={clipReveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-10%" }}
           className="font-serif font-black uppercase tracking-[-0.04em] text-foreground mb-10"
           style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
         >
@@ -119,10 +121,11 @@ export default function Education() {
         {educationDetails.map((edu, index) => (
           <motion.div
             key={edu.level}
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            custom={index}
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
-            transition={{ delay: index * 0.08 }}
             className="grid grid-cols-1 md:grid-cols-[80px_1fr] gap-4 border-t border-[#e8e8e8] py-5"
           >
             <div className="pt-0.5">
