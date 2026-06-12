@@ -20,13 +20,14 @@ const experiences = [
 
 export default function Experience() {
   return (
-    <section id="experience" className="py-14 bg-background border-t border-[#e8e8e8]">
+    <section id="experience" className="py-14 bg-background border-t border-border">
       <div className="max-w-4xl mx-auto px-8 w-full">
 
         <motion.h2
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
           className="font-serif font-black uppercase tracking-[-0.04em] text-foreground mb-10"
           style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
         >
@@ -40,7 +41,7 @@ export default function Experience() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: index * 0.08 }}
-            className="grid grid-cols-1 md:grid-cols-[80px_1fr] gap-4 border-t border-[#e8e8e8] py-5"
+            className="grid grid-cols-1 md:grid-cols-[80px_1fr] gap-4 border-t border-border py-5"
           >
             {/* Date + company */}
             <div className="pt-0.5">
@@ -53,9 +54,9 @@ export default function Experience() {
             <div>
               <h3 className="text-[13px] font-semibold text-foreground mb-4">{exp.position}</h3>
               <ul className="space-y-2 mb-5">
-                {exp.achievements.map((achievement, i) => (
-                  <li key={i} className="flex items-start gap-2.5 text-[12px] text-muted-foreground leading-[1.6]">
-                    <span className="font-mono text-muted-foreground mt-0.5 shrink-0">—</span>
+                {exp.achievements.map((achievement) => (
+                  <li key={achievement} className="flex items-start gap-2.5 text-[12px] text-muted-foreground leading-[1.6]">
+                    <span aria-hidden="true" className="font-mono text-muted-foreground mt-0.5 shrink-0">—</span>
                     {achievement}
                   </li>
                 ))}
@@ -64,7 +65,7 @@ export default function Experience() {
                 {exp.technologies.map((tech) => (
                   <span
                     key={tech}
-                    className="font-mono text-[9px] text-muted-foreground border border-[#e8e8e8] px-2 py-0.5 rounded-[2px]"
+                    className="font-mono text-[9px] text-muted-foreground border border-border px-2 py-0.5 rounded-[2px]"
                   >
                     {tech}
                   </span>
@@ -74,7 +75,7 @@ export default function Experience() {
           </motion.div>
         ))}
 
-        <div className="border-t border-[#e8e8e8]" />
+        <div className="border-t border-border" />
       </div>
     </section>
   );
