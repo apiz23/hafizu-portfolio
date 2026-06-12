@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -31,11 +31,11 @@ function SkeletonRow({ delay }: { delay: number }) {
 			className="flex items-center gap-4 border-t border-border py-3.5"
 			style={{ animationDelay: `${delay}ms` }}
 		>
-			<div className="w-6 h-3 bg-[#e8e8e8] rounded animate-pulse shrink-0" />
-			<div className="flex-1 h-4 bg-[#e8e8e8] rounded animate-pulse" />
-			<div className="hidden sm:block w-24 h-3 bg-[#e8e8e8] rounded animate-pulse" />
-			<div className="hidden sm:block w-10 h-3 bg-[#e8e8e8] rounded animate-pulse" />
-			<div className="w-4 h-3 bg-[#e8e8e8] rounded animate-pulse shrink-0" />
+			<div className="w-6 h-3 bg-border rounded animate-pulse shrink-0" />
+			<div className="flex-1 h-4 bg-border rounded animate-pulse" />
+			<div className="hidden sm:block w-24 h-3 bg-border rounded animate-pulse" />
+			<div className="hidden sm:block w-10 h-3 bg-border rounded animate-pulse" />
+			<div className="w-4 h-3 bg-border rounded animate-pulse shrink-0" />
 		</div>
 	);
 }
@@ -96,9 +96,10 @@ export default function Project() {
 						<button
 							key={cat.id}
 							onClick={() => setFilter(cat.id)}
+							aria-pressed={filter === cat.id}
 							className={`font-mono text-[9px] uppercase tracking-[0.08em] px-3 py-1.5 rounded-[2px] border transition-colors cursor-pointer focus-visible:outline-none ${
 								filter === cat.id
-									? "bg-foreground text-white border-foreground"
+									? "bg-foreground text-background border-foreground"
 									: "bg-background text-muted-foreground border-border hover:border-foreground hover:text-foreground"
 							}`}
 						>
@@ -148,7 +149,7 @@ export default function Project() {
 											className="border-t border-border py-3.5 flex items-center gap-4 cursor-pointer group hover:bg-[#fafafa] transition-colors duration-150"
 										>
 											{/* Number */}
-											<span className="font-mono text-[11px] text-[#ccc] w-6 shrink-0">
+											<span className="font-mono text-[11px] text-[#ccc] w-6 shrink-0" aria-hidden="true">
 												{String(index + 1).padStart(2, "0")}
 											</span>
 
@@ -159,8 +160,8 @@ export default function Project() {
 
 											{/* Tech tags */}
 											<span className="hidden sm:flex gap-2 shrink-0">
-												{project.badges.slice(0, 3).map((badge, i) => (
-													<span key={i} className="font-mono text-[10px] text-muted-foreground">
+												{project.badges.slice(0, 3).map((badge) => (
+													<span key={badge} className="font-mono text-[10px] text-muted-foreground">
 														{badge}
 													</span>
 												))}
