@@ -9,6 +9,8 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { fadeUp } from "@/lib/animations";
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function Intro() {
   const scrollToProjects = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -21,7 +23,6 @@ export default function Intro() {
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
       gsap.to(headingRef.current, {
         y: -40,
@@ -63,6 +64,7 @@ export default function Intro() {
         </motion.div>
 
         {/* Name */}
+        {/* Framer Motion handles mount fade-in; GSAP ScrollTrigger handles scroll-out on the same element. */}
         <motion.h1
           ref={headingRef}
           custom={1}
