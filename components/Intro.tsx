@@ -1,22 +1,13 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { RiExternalLinkLine } from "react-icons/ri";
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 12 },
-  visible: (i: number = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.4,
-      delay: i * 0.08,
-      ease: [0.22, 1, 0.36, 1] as const,
-    },
-  }),
-};
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { fadeUp } from "@/lib/animations";
 
 export default function Intro() {
   const scrollToProjects = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -26,6 +17,27 @@ export default function Intro() {
       ?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  const headingRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    gsap.registerPlugin(ScrollTrigger);
+    const ctx = gsap.context(() => {
+      gsap.to(headingRef.current, {
+        y: -40,
+        opacity: 0,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#home",
+          start: "center top",
+          end: "bottom top",
+          scrub: 1,
+        },
+      });
+    });
+    return () => ctx.revert();
+  }, []);
+
   return (
     <section
       id="home"
@@ -34,7 +46,7 @@ export default function Intro() {
       <div className="max-w-4xl mx-auto px-4 sm:px-8 w-full">
         <div className="flex flex-col lg:flex-row items-start gap-12 lg:gap-16">
         {/* Left: all text */}
-        <div className="flex-1 min-w-0">
+        <div className="flex-1 min-w-0 relative z-10">
 
         {/* Available badge */}
         <motion.div
@@ -52,12 +64,13 @@ export default function Intro() {
 
         {/* Name */}
         <motion.h1
+          ref={headingRef}
           custom={1}
           variants={fadeUp}
           initial="hidden"
           animate="visible"
           className="font-serif font-black uppercase leading-[0.92] tracking-[-0.04em] text-foreground"
-          style={{ fontSize: "clamp(2.5rem, 9vw, 6rem)" }}
+          style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)" }}
         >
           <span className="block">MUHD</span>
           <span className="block">HAFIZUDDIN</span>
