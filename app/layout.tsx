@@ -50,15 +50,7 @@ export default function RootLayout({
       >
         <Providers>
           {/* Dot grid */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none fixed inset-0 z-0"
-            style={{
-              backgroundImage: "radial-gradient(circle, var(--dot-color) 1px, transparent 1px)",
-              backgroundSize: "28px 28px",
-              opacity: 0.7,
-            }}
-          />
+          <div aria-hidden="true" className="dot-grid" />
           {/* Grain overlay */}
           <div aria-hidden="true" className="grain-overlay" />
           <Navbar />
