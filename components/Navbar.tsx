@@ -53,7 +53,7 @@ export default function Navbar() {
       className="fixed top-4 left-0 right-0 z-50 flex justify-center pointer-events-none"
     >
       <nav
-        className={`pointer-events-auto flex items-center gap-5 bg-[#111111] rounded-full px-4 py-2 transition-all duration-300 ${
+        className={`pointer-events-auto flex items-center gap-5 bg-foreground rounded-full px-4 py-2 transition-all duration-300 ${
           scrolled ? "shadow-lg shadow-black/20" : ""
         }`}
         aria-label="Site navigation"
