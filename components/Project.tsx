@@ -65,7 +65,7 @@ export default function Project() {
 
 	return (
 		<section id="projects" className="py-14 bg-background border-t border-border">
-			<div className="max-w-4xl mx-auto px-8">
+			<div className="max-w-4xl mx-auto px-4 sm:px-8">
 				{/* Header row */}
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
@@ -90,7 +90,7 @@ export default function Project() {
 					whileInView={{ opacity: 1, y: 0 }}
 					viewport={{ once: true }}
 					transition={{ delay: 0.1 }}
-					className="flex gap-2 mt-4 mb-2"
+					className="flex flex-wrap gap-2 mt-4 mb-2"
 				>
 					{categories.map((cat) => (
 						<button
@@ -168,7 +168,7 @@ export default function Project() {
 											</span>
 
 											{/* Year */}
-											<span className="font-mono text-[12px] text-muted-foreground shrink-0">
+											<span className="hidden sm:inline font-mono text-[12px] text-muted-foreground shrink-0">
 												{project.year}
 											</span>
 

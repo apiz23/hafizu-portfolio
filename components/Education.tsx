@@ -103,7 +103,7 @@ export default function Education() {
 
   return (
     <section id="education" className="py-14 bg-background border-t border-[#e8e8e8]">
-      <div className="max-w-4xl mx-auto px-8 w-full">
+      <div className="max-w-4xl mx-auto px-4 sm:px-8 w-full">
 
         <motion.h2
           initial={{ opacity: 0, y: 12 }}

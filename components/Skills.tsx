@@ -33,7 +33,7 @@ export default function Skills() {
 			id="skills"
 			className="section-dark py-14 bg-background border-t border-border"
 		>
-			<div className="max-w-4xl mx-auto px-8 w-full">
+			<div className="max-w-4xl mx-auto px-4 sm:px-8 w-full">
 				<motion.div
 					initial={{ opacity: 0, y: 12 }}
 					whileInView={{ opacity: 1, y: 0 }}

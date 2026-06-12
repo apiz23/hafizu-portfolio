@@ -31,7 +31,7 @@ export default function Intro() {
       id="home"
       className="min-h-screen flex flex-col justify-center bg-background pt-24 pb-16"
     >
-      <div className="max-w-4xl mx-auto px-8 w-full">
+      <div className="max-w-4xl mx-auto px-4 sm:px-8 w-full">
         <div className="flex flex-col lg:flex-row items-start gap-12 lg:gap-16">
         {/* Left: all text */}
         <div className="flex-1 min-w-0">
@@ -57,7 +57,7 @@ export default function Intro() {
           initial="hidden"
           animate="visible"
           className="font-serif font-black uppercase leading-[0.92] tracking-[-0.04em] text-foreground"
-          style={{ fontSize: "clamp(3.5rem, 8vw, 6rem)" }}
+          style={{ fontSize: "clamp(2.5rem, 9vw, 6rem)" }}
         >
           <span className="block">MUHD</span>
           <span className="block">HAFIZUDDIN</span>
