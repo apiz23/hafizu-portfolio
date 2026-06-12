@@ -56,7 +56,7 @@ export default function RootLayout({
 				className={`${sora.variable} ${figtree.variable} ${jetbrainsMono.variable} font-sans bg-background antialiased`}
 			>
 				<Providers>
-					{/* Ambient top-light — soft indigo radial, purpose: depth without decoration */}
+					{/* Background layers */}
 					<div
 						className="fixed inset-0 pointer-events-none z-0"
 						aria-hidden="true"
@@ -65,8 +65,13 @@ export default function RootLayout({
 								"radial-gradient(ellipse 100% 55% at 50% -5%, oklch(0.72 0.12 277 / 0.09) 0%, transparent 68%)",
 						}}
 					/>
+					{/* Grain — paper texture at 4% opacity */}
+					<div
+						className="fixed inset-0 pointer-events-none z-0 grain-overlay"
+						aria-hidden="true"
+					/>
 					<Navbar />
-					<div className="relative min-h-screen">
+					<div className="relative z-10 min-h-screen">
 						{children}
 						<Toaster richColors position="top-center" />
 					</div>
