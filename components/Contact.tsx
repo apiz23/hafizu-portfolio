@@ -59,7 +59,7 @@ export default function Contact() {
                   <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-foreground">
                     {label}
                   </span>
-                  <span className="font-mono text-[13px] text-[#ccc] group-hover:text-foreground transition-colors">
+                  <span className="font-mono text-[13px] text-muted-foreground group-hover:text-foreground transition-colors">
                     ↗
                   </span>
                 </Link>
@@ -73,6 +73,7 @@ export default function Contact() {
               © 2026 Hafizuddin Hamid
             </span>
             <button
+              type="button"
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               className="font-mono text-[10px] text-muted-foreground hover:text-foreground transition-colors"
             >
