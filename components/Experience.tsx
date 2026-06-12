@@ -29,7 +29,7 @@ const experiences = [
 export default function Experience() {
 	return (
 		<section id="experience" className="py-20 md:py-32 bg-background">
-			<div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+			<div className="container">
 				<motion.h2
 					initial={{ opacity: 0, y: 20 }}
 					whileInView={{ opacity: 1, y: 0 }}
@@ -46,7 +46,7 @@ export default function Experience() {
 						whileInView={{ opacity: 1, y: 0 }}
 						viewport={{ once: true }}
 						transition={{ delay: index * 0.1 }}
-						className="group border-t border-foreground/10 py-10 hover:bg-primary/[0.02] transition-colors -mx-4 px-4 sm:-mx-6 sm:px-6"
+						className="group border-t border-foreground/10 py-10 hover:bg-primary/[0.02] transition-colors -mx-8 px-8"
 					>
 						<div className="grid grid-cols-1 md:grid-cols-[180px_1fr_180px] gap-6 items-start">
 							{/* Left: year + company */}

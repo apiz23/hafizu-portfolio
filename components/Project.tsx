@@ -53,7 +53,7 @@ export default function Project() {
 
 	return (
 		<section id="projects" className="py-20 md:py-32 bg-background">
-			<div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+			<div className="container">
 				{/* Header row */}
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
@@ -112,7 +112,7 @@ export default function Project() {
 								<Link
 									href={project.visit_link}
 									target="_blank"
-									className="group flex items-center gap-4 sm:gap-6 border-t border-foreground/10 py-5 hover:bg-primary/[0.02] transition-colors -mx-4 px-4 sm:-mx-6 sm:px-6"
+									className="group flex items-center gap-4 sm:gap-6 border-t border-foreground/10 py-5 hover:bg-primary/[0.02] transition-colors -mx-8 px-8"
 								>
 									{/* Number */}
 									<span className="text-4xl sm:text-5xl font-black text-muted-foreground/20 group-hover:text-primary/30 transition-colors w-14 sm:w-16 shrink-0 font-mono leading-none">
