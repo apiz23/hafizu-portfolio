@@ -2,135 +2,70 @@
 
 import { motion } from "framer-motion";
 import {
-	SiDocker,
-	SiFigma,
-	SiGit,
-	SiNodedotjs,
-	SiPostgresql,
+  SiReact,
+  SiNextdotjs,
+  SiTypescript,
+  SiTailwindcss,
+  SiNodedotjs,
+  SiPostgresql,
+  SiDocker,
+  SiFigma,
+  SiGit,
+  SiSupabase,
 } from "react-icons/si";
 
-const frontend = [
-	{ name: "Next.js", fill: 92 },
-	{ name: "React", fill: 90 },
-	{ name: "Tailwind CSS", fill: 88 },
-	{ name: "TypeScript", fill: 82 },
+const skills = [
+  { icon: <SiNextdotjs />, name: "Next.js", level: "Advanced" },
+  { icon: <SiReact />, name: "React", level: "Advanced" },
+  { icon: <SiTypescript />, name: "TypeScript", level: "Advanced" },
+  { icon: <SiTailwindcss />, name: "Tailwind CSS", level: "Advanced" },
+  { icon: <SiNodedotjs />, name: "Node.js", level: "Intermediate" },
+  { icon: <SiPostgresql />, name: "PostgreSQL", level: "Intermediate" },
+  { icon: <SiSupabase />, name: "Supabase", level: "Intermediate" },
+  { icon: <SiGit />, name: "Git", level: "Advanced" },
+  { icon: <SiDocker />, name: "Docker", level: "Familiar" },
+  { icon: <SiFigma />, name: "Figma", level: "Familiar" },
 ];
-
-const backend = [
-	{ name: "Git / GitHub", fill: 90 },
-	{ name: "Supabase / PostgreSQL", fill: 78 },
-	{ name: "Node.js", fill: 75 },
-	{ name: "Docker", fill: 55 },
-];
-
-const tools = [
-	{ icon: <SiFigma />, label: "Figma" },
-	{ icon: <SiGit />, label: "Git" },
-	{ icon: <SiNodedotjs />, label: "Node.js" },
-	{ icon: <SiPostgresql />, label: "PostgreSQL" },
-	{ icon: <SiDocker />, label: "Docker" },
-];
-
-function SkillBar({
-	name,
-	fill,
-	delay,
-}: {
-	name: string;
-	fill: number;
-	delay: number;
-}) {
-	return (
-		<div className="flex items-center gap-4">
-			<span className="text-sm text-muted-foreground w-36 shrink-0">{name}</span>
-			<div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
-				<motion.div
-					className="h-full bg-primary rounded-full"
-					initial={{ width: 0 }}
-					whileInView={{ width: `${fill}%` }}
-					viewport={{ once: true }}
-					transition={{ duration: 0.9, delay, ease: [0.16, 1, 0.3, 1] }}
-				/>
-			</div>
-		</div>
-	);
-}
 
 export default function Skills() {
-	return (
-		<section id="skills" className="py-20 md:py-32 bg-primary/[0.02]">
-			<div className="max-w-5xl mx-auto px-8 w-full">
-				<motion.h2
-					initial={{ opacity: 0, y: 20 }}
-					whileInView={{ opacity: 1, y: 0 }}
-					viewport={{ once: true }}
-					className="text-5xl md:text-7xl font-serif font-black uppercase tracking-tighter text-foreground mb-16"
-				>
-					SKILLS
-				</motion.h2>
+  return (
+    <section id="skills" className="py-14 bg-background border-t border-[#e8e8e8]">
+      <div className="max-w-4xl mx-auto px-8 w-full">
 
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
-					{/* Frontend */}
-					<motion.div
-						initial={{ opacity: 0, y: 20 }}
-						whileInView={{ opacity: 1, y: 0 }}
-						viewport={{ once: true }}
-						transition={{ delay: 0.1 }}
-					>
-						<p className="text-xs uppercase tracking-widest text-muted-foreground mb-8">
-							Frontend
-						</p>
-						<div className="flex flex-col gap-6">
-							{frontend.map((skill, i) => (
-								<SkillBar key={skill.name} {...skill} delay={i * 0.1} />
-							))}
-						</div>
-					</motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="flex justify-between items-end mb-8"
+        >
+          <h2
+            className="font-serif font-black uppercase tracking-[-0.04em] text-foreground"
+            style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
+          >
+            SKILLS
+          </h2>
+        </motion.div>
 
-					{/* Backend & Tools */}
-					<motion.div
-						initial={{ opacity: 0, y: 20 }}
-						whileInView={{ opacity: 1, y: 0 }}
-						viewport={{ once: true }}
-						transition={{ delay: 0.2 }}
-					>
-						<p className="text-xs uppercase tracking-widest text-muted-foreground mb-8">
-							Backend & Tools
-						</p>
-						<div className="flex flex-col gap-6">
-							{backend.map((skill, i) => (
-								<SkillBar
-									key={skill.name}
-									{...skill}
-									delay={i * 0.1 + 0.1}
-								/>
-							))}
-						</div>
-					</motion.div>
-				</div>
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1 }}
+          className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-[1px] bg-[#e8e8e8] border border-[#e8e8e8] rounded-[6px] overflow-hidden"
+        >
+          {skills.map((skill) => (
+            <div
+              key={skill.name}
+              className="bg-white px-4 py-4 flex flex-col gap-1.5"
+            >
+              <span className="text-[18px] text-[#888888]">{skill.icon}</span>
+              <span className="font-mono text-[10px] font-bold text-foreground">{skill.name}</span>
+              <span className="font-mono text-[9px] text-muted-foreground">{skill.level}</span>
+            </div>
+          ))}
+        </motion.div>
 
-				{/* Tool icons strip */}
-				<motion.div
-					initial={{ opacity: 0, y: 16 }}
-					whileInView={{ opacity: 1, y: 0 }}
-					viewport={{ once: true }}
-					transition={{ delay: 0.4 }}
-					className="mt-14 pt-10 border-t border-border flex flex-wrap gap-8 items-center"
-				>
-					<span className="text-xs uppercase tracking-widest text-muted-foreground">
-						Also use
-					</span>
-					{tools.map(({ icon, label }) => (
-						<div
-							key={label}
-							className="flex items-center gap-2 text-muted-foreground/50 hover:text-muted-foreground transition-colors cursor-pointer"
-						>
-							<span className="text-xl">{icon}</span>
-							<span className="text-xs">{label}</span>
-						</div>
-					))}
-				</motion.div>
-			</div>
-		</section>
-	);
+      </div>
+    </section>
+  );
 }
