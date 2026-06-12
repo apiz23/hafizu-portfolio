@@ -6,6 +6,7 @@ import { Toaster } from "sonner";
 import ScrollToTop from "@/components/scroll-top";
 import { Analytics } from "@vercel/analytics/next";
 import { Providers } from "@/components/providers";
+import Navbar from "@/components/Navbar";
 
 const sora = Sora({
 	subsets: ["latin"],
@@ -65,6 +66,7 @@ export default function RootLayout({
 							hoverFillColor="transparent"
 						/>
 					</div>
+					<Navbar />
 					<div className="relative min-h-screen">
 						{children}
 						<Toaster richColors position="top-center" />
@@ -76,4 +78,3 @@ export default function RootLayout({
 		</html>
 	);
 }
-

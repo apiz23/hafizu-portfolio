@@ -83,7 +83,7 @@ export default function Intro() {
 	return (
 		<section
 			id="home"
-			className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-background pb-12 pt-20"
+			className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-background pb-12 pt-28"
 		>
 			<div className="w-full px-8">
 				{/* Available badge */}
