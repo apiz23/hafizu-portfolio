@@ -94,10 +94,11 @@ export default function Contact() {
 				>
 					<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 						<div>
-							<label className="text-xs text-muted-foreground mb-1.5 block uppercase tracking-wider">
+							<label htmlFor="contact-name" className="text-xs text-muted-foreground mb-1.5 block uppercase tracking-wider">
 								Name
 							</label>
 							<Input
+								id="contact-name"
 								type="text"
 								name="name"
 								placeholder="John Doe"
@@ -105,10 +106,11 @@ export default function Contact() {
 							/>
 						</div>
 						<div>
-							<label className="text-xs text-muted-foreground mb-1.5 block uppercase tracking-wider">
+							<label htmlFor="contact-email" className="text-xs text-muted-foreground mb-1.5 block uppercase tracking-wider">
 								Email
 							</label>
 							<Input
+								id="contact-email"
 								type="email"
 								name="email"
 								placeholder="john@example.com"
@@ -118,10 +120,11 @@ export default function Contact() {
 					</div>
 
 					<div>
-						<label className="text-xs text-muted-foreground mb-1.5 block uppercase tracking-wider">
+						<label htmlFor="contact-subject" className="text-xs text-muted-foreground mb-1.5 block uppercase tracking-wider">
 							Subject
 						</label>
 						<Input
+							id="contact-subject"
 							type="text"
 							name="subject"
 							placeholder="What's this about?"
@@ -130,10 +133,11 @@ export default function Contact() {
 					</div>
 
 					<div>
-						<label className="text-xs text-muted-foreground mb-1.5 block uppercase tracking-wider">
+						<label htmlFor="contact-message" className="text-xs text-muted-foreground mb-1.5 block uppercase tracking-wider">
 							Message
 						</label>
 						<Textarea
+							id="contact-message"
 							placeholder="Your message..."
 							rows={4}
 							name="message"

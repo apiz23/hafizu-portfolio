@@ -123,7 +123,7 @@ export default function Skills() {
 					{tools.map(({ icon, label }) => (
 						<div
 							key={label}
-							className="flex items-center gap-2 text-muted-foreground/50 hover:text-muted-foreground transition-colors"
+							className="flex items-center gap-2 text-muted-foreground/50 hover:text-muted-foreground transition-colors cursor-pointer"
 						>
 							<span className="text-xl">{icon}</span>
 							<span className="text-xs">{label}</span>

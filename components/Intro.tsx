@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
-import { TextAnimate } from "./ui/text-animate";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { Badge } from "./ui/badge";
@@ -31,6 +30,25 @@ const fadeUp = {
 			ease: [0.22, 1, 0.36, 1] as const,
 		},
 	}),
+};
+
+const heroName = {
+	hidden: {},
+	visible: {
+		transition: {
+			staggerChildren: 0.1,
+			delayChildren: 0.05,
+		},
+	},
+};
+
+const heroWord = {
+	hidden: { opacity: 0, y: 28 },
+	visible: {
+		opacity: 1,
+		y: 0,
+		transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as const },
+	},
 };
 
 const techLogos = [
@@ -85,35 +103,35 @@ export default function Intro() {
 					</Badge>
 				</motion.div>
 
-				{/* Name — 3-line editorial */}
-				<motion.div
-					custom={1}
-					variants={fadeUp}
+				{/* Name — 3-line editorial, per-word stagger */}
+				<motion.h1
+					variants={heroName}
 					initial="hidden"
 					animate="visible"
+					className="font-serif font-black uppercase leading-[0.85] tracking-tighter text-foreground"
+					style={{ fontSize: "clamp(4rem, 13vw, 12rem)" }}
 				>
-					<h1
-						className="font-serif font-black uppercase leading-[0.85] tracking-tighter text-foreground"
-						style={{ fontSize: "clamp(4rem, 13vw, 12rem)" }}
-					>
-						<span className="block">MUHA</span>
-						<span className="block">
-							F<span className="text-primary">I</span>Z
-						</span>
-						<span className="block">UDDIN</span>
-					</h1>
-				</motion.div>
+					<motion.span className="block" variants={heroWord}>
+						MUHA
+					</motion.span>
+					<motion.span className="block" variants={heroWord}>
+						F<span className="text-primary">I</span>Z
+					</motion.span>
+					<motion.span className="block" variants={heroWord}>
+						UDDIN
+					</motion.span>
+				</motion.h1>
 
-				{/* Horizontal rule */}
-				<motion.div
-					custom={2}
-					variants={fadeUp}
-					initial="hidden"
-					animate="visible"
-					className="my-8"
-				>
-					<div className="h-[2px] w-full bg-foreground" />
-				</motion.div>
+				{/* Horizontal rule — animates from left */}
+				<div className="my-8">
+					<motion.div
+						className="h-[2px] w-full bg-foreground"
+						initial={{ scaleX: 0 }}
+						animate={{ scaleX: 1 }}
+						transition={{ duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+						style={{ transformOrigin: "left" }}
+					/>
+				</div>
 
 				{/* Bottom row: role + bio left, stats right */}
 				<motion.div
@@ -136,7 +154,7 @@ export default function Intro() {
 					</div>
 					<div className="flex gap-8 shrink-0">
 						<div className="text-right">
-							<p className="text-4xl font-black text-foreground leading-none">
+							<p className="text-4xl font-black font-mono text-foreground leading-none">
 								12+
 							</p>
 							<p className="text-xs text-muted-foreground uppercase tracking-widest mt-1">
@@ -144,7 +162,7 @@ export default function Intro() {
 							</p>
 						</div>
 						<div className="text-right">
-							<p className="text-4xl font-black text-foreground leading-none">
+							<p className="text-4xl font-black font-mono text-foreground leading-none">
 								1yr
 							</p>
 							<p className="text-xs text-muted-foreground uppercase tracking-widest mt-1">

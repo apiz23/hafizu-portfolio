@@ -125,7 +125,7 @@ export default function Education() {
 						whileInView={{ opacity: 1, y: 0 }}
 						viewport={{ once: true }}
 						transition={{ delay: index * 0.08 }}
-						className="group border-t border-foreground/10 py-8 hover:bg-primary/[0.02] transition-colors -mx-8 px-8"
+						className="group border-t border-foreground/10 py-8 hover:bg-foreground/[0.03] transition-colors -mx-8 px-8"
 					>
 						<div className="grid grid-cols-1 md:grid-cols-[180px_1fr_auto] gap-4 items-start">
 							{/* Left: period */}

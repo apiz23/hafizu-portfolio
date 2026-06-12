@@ -46,7 +46,7 @@ export default function Experience() {
 						whileInView={{ opacity: 1, y: 0 }}
 						viewport={{ once: true }}
 						transition={{ delay: index * 0.1 }}
-						className="group border-t border-foreground/10 py-10 hover:bg-primary/[0.02] transition-colors -mx-8 px-8"
+						className="group border-t border-foreground/10 py-10 hover:bg-foreground/[0.03] transition-colors duration-150 -mx-8 px-8"
 					>
 						<div className="grid grid-cols-1 md:grid-cols-[180px_1fr_180px] gap-6 items-start">
 							{/* Left: year + company */}
