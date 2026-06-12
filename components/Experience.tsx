@@ -29,7 +29,7 @@ export default function Experience() {
           viewport={{ once: true }}
           transition={{ duration: 0.35, ease: "easeOut" }}
           className="font-serif font-black uppercase tracking-[-0.04em] text-foreground mb-10"
-          style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
+          style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
         >
           EXPERIENCE
         </motion.h2>
@@ -45,17 +45,17 @@ export default function Experience() {
           >
             {/* Date + company */}
             <div className="pt-0.5">
-              <p className="font-mono text-[10px] text-muted-foreground">{exp.period}</p>
-              <p className="font-mono text-[10px] font-bold text-foreground mt-1">{exp.company}</p>
-              <p className="font-mono text-[9px] text-muted-foreground mt-0.5">{exp.location}</p>
+              <p className="font-mono text-[12px] text-muted-foreground">{exp.period}</p>
+              <p className="font-mono text-[12px] font-bold text-foreground mt-1">{exp.company}</p>
+              <p className="font-mono text-[11px] text-muted-foreground mt-0.5">{exp.location}</p>
             </div>
 
             {/* Role + achievements + tech */}
             <div>
-              <h3 className="text-[13px] font-semibold text-foreground mb-4">{exp.position}</h3>
+              <h3 className="text-[15px] font-semibold text-foreground mb-4">{exp.position}</h3>
               <ul className="space-y-2 mb-5">
                 {exp.achievements.map((achievement) => (
-                  <li key={achievement} className="flex items-start gap-2.5 text-[12px] text-muted-foreground leading-[1.6]">
+                  <li key={achievement} className="flex items-start gap-2.5 text-[14px] text-muted-foreground leading-[1.6]">
                     <span aria-hidden="true" className="font-mono text-muted-foreground mt-0.5 shrink-0">—</span>
                     {achievement}
                   </li>
@@ -65,7 +65,7 @@ export default function Experience() {
                 {exp.technologies.map((tech) => (
                   <span
                     key={tech}
-                    className="font-mono text-[9px] text-muted-foreground border border-border px-2 py-0.5 rounded-[2px]"
+                    className="font-mono text-[11px] text-muted-foreground border border-border px-2 py-0.5 rounded-[2px]"
                   >
                     {tech}
                   </span>

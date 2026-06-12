@@ -110,7 +110,7 @@ export default function Education() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="font-serif font-black uppercase tracking-[-0.04em] text-foreground mb-10"
-          style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
+          style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
         >
           EDUCATION
         </motion.h2>
@@ -126,17 +126,17 @@ export default function Education() {
             className="grid grid-cols-1 md:grid-cols-[80px_1fr] gap-4 border-t border-[#e8e8e8] py-5"
           >
             <div className="pt-0.5">
-              <p className="font-mono text-[10px] text-muted-foreground">{edu.period}</p>
-              <p className="font-mono text-[9px] text-muted-foreground/70 mt-0.5">{edu.note}</p>
+              <p className="font-mono text-[12px] text-muted-foreground">{edu.period}</p>
+              <p className="font-mono text-[15px] text-muted-foreground/70 mt-0.5">{edu.note}</p>
             </div>
             <div>
-              <h3 className="text-[13px] font-semibold text-foreground mb-1">{edu.title}</h3>
-              <p className="font-mono text-[10px] text-muted-foreground mb-3">{edu.institution}</p>
+              <h3 className="text-[15px] font-semibold text-foreground mb-1">{edu.title}</h3>
+              <p className="font-mono text-[12px] text-muted-foreground mb-3">{edu.institution}</p>
               <div className="flex flex-wrap gap-1.5">
                 {edu.highlights.map((h) => (
                   <span
                     key={h}
-                    className="font-mono text-[9px] text-muted-foreground border border-[#e8e8e8] px-2 py-0.5 rounded-[2px]"
+                    className="font-mono text-[15px] text-muted-foreground border border-[#e8e8e8] px-2 py-0.5 rounded-[2px]"
                   >
                     {h}
                   </span>
@@ -157,16 +157,16 @@ export default function Education() {
         >
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
             <div>
-              <p className="font-mono text-[9px] uppercase tracking-[0.1em] text-muted-foreground mb-1">
+              <p className="font-mono text-[15px] uppercase tracking-[0.1em] text-muted-foreground mb-1">
                 Academic Performance
               </p>
-              <h3 className="text-[18px] font-semibold text-foreground">GPA over semesters</h3>
+              <h3 className="text-[20px] font-semibold text-foreground">GPA over semesters</h3>
             </div>
             <Select
               value={selectedValue}
               onValueChange={(value) => setSelectedValue(value as EducationLevel)}
             >
-              <SelectTrigger className="w-[160px] rounded-[3px] border-[#e8e8e8] font-mono text-[11px]">
+              <SelectTrigger className="w-[160px] rounded-[3px] border-[#e8e8e8] font-mono text-[15px]">
                 <SelectValue placeholder="Select level" />
               </SelectTrigger>
               <SelectContent>
@@ -188,7 +188,7 @@ export default function Education() {
           ) : error ? (
             <div className="h-[280px] flex flex-col items-center justify-center gap-3 text-muted-foreground border border-[#e8e8e8] rounded-[6px]">
               <BookOpen className="h-8 w-8" />
-              <p className="font-mono text-[11px]">Failed to load chart data</p>
+              <p className="font-mono text-[15px]">Failed to load chart data</p>
             </div>
           ) : (
             <>
@@ -235,7 +235,7 @@ export default function Education() {
                 </ChartContainer>
               </div>
               {chartData.length > 0 && (
-                <p className="font-mono text-[10px] text-muted-foreground mt-2">
+                <p className="font-mono text-[12px] text-muted-foreground mt-2">
                   Trending {trend.direction} by {trend.value} · {chartData.length} semesters recorded
                 </p>
               )}

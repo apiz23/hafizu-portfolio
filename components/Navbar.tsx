@@ -62,7 +62,7 @@ export default function Navbar() {
         <Link
           href="#home"
           onClick={(e) => scrollTo(e, "#home")}
-          className="font-mono font-bold text-[11px] tracking-[0.14em] text-white pr-4 border-r border-white/20 hover:text-white/80 transition-colors"
+          className="font-mono font-bold text-[13px] tracking-[0.14em] text-white pr-4 border-r border-white/20 hover:text-white/80 transition-colors"
           aria-label="Back to top"
         >
           HF.
@@ -78,7 +78,7 @@ export default function Navbar() {
                 key={href}
                 href={href}
                 onClick={(e) => scrollTo(e, href)}
-                className={`text-[10px] font-mono uppercase tracking-widest transition-colors relative ${
+                className={`text-[12px] font-mono uppercase tracking-widest transition-colors relative ${
                   isActive ? "text-white" : "text-white/40 hover:text-white/70"
                 }`}
               >
@@ -100,7 +100,7 @@ export default function Navbar() {
           <Link
             href="#contact"
             onClick={(e) => scrollTo(e, "#contact")}
-            className="text-[10px] font-mono uppercase tracking-widest text-white/40 hover:text-white/70 transition-colors"
+            className="text-[12px] font-mono uppercase tracking-widest text-white/40 hover:text-white/70 transition-colors"
           >
             Contact
           </Link>

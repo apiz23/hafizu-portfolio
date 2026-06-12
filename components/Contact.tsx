@@ -40,7 +40,7 @@ export default function Contact() {
                 <br />
                 something.
               </h2>
-              <p className="font-sans text-[13px] text-muted-foreground mt-3 leading-[1.65]">
+              <p className="font-sans text-[15px] text-muted-foreground mt-3 leading-[1.65]">
                 Open to full-time roles, internships, and interesting projects.
                 Based in Johor, Malaysia.
               </p>
@@ -56,10 +56,10 @@ export default function Contact() {
                   rel="noopener noreferrer"
                   className="flex items-center justify-between border border-border rounded-[4px] px-3.5 py-2.5 hover:border-foreground transition-colors group cursor-pointer"
                 >
-                  <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-foreground">
+                  <span className="font-mono text-[13px] uppercase tracking-[0.08em] text-foreground">
                     {label}
                   </span>
-                  <span className="font-mono text-[13px] text-muted-foreground group-hover:text-foreground transition-colors">
+                  <span className="font-mono text-[15px] text-muted-foreground group-hover:text-foreground transition-colors">
                     ↗
                   </span>
                 </Link>
@@ -69,13 +69,13 @@ export default function Contact() {
 
           {/* Footer */}
           <div className="mt-16 pt-5 border-t border-border flex justify-between items-center">
-            <span className="font-mono text-[10px] text-muted-foreground">
+            <span className="font-mono text-[12px] text-muted-foreground">
               © 2026 Hafizuddin Hamid
             </span>
             <button
               type="button"
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="font-mono text-[10px] text-muted-foreground hover:text-foreground transition-colors"
+              className="font-mono text-[12px] text-muted-foreground hover:text-foreground transition-colors"
             >
               Back to top ↑
             </button>

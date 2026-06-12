@@ -75,11 +75,11 @@ export default function Project() {
 				>
 					<h2
 						className="font-serif font-black uppercase tracking-[-0.04em]"
-						style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
+						style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
 					>
 						PROJECTS
 					</h2>
-					<span className="font-mono text-[11px] text-muted-foreground">
+					<span className="font-mono text-[13px] text-muted-foreground">
 						{loading ? "—" : `${projects.length} projects`}
 					</span>
 				</motion.div>
@@ -97,7 +97,7 @@ export default function Project() {
 							key={cat.id}
 							onClick={() => setFilter(cat.id)}
 							aria-pressed={filter === cat.id}
-							className={`font-mono text-[9px] uppercase tracking-[0.08em] px-3 py-1.5 rounded-[2px] border transition-colors cursor-pointer focus-visible:outline-none ${
+							className={`font-mono text-[11px] uppercase tracking-[0.08em] px-3 py-1.5 rounded-[2px] border transition-colors cursor-pointer focus-visible:outline-none ${
 								filter === cat.id
 									? "bg-foreground text-background border-foreground"
 									: "bg-background text-muted-foreground border-border hover:border-foreground hover:text-foreground"
@@ -127,7 +127,7 @@ export default function Project() {
 						>
 							{filteredProjects.length === 0 ? (
 								<div className="border-t border-border py-16 text-center">
-									<p className="font-mono text-[11px] text-muted-foreground">
+									<p className="font-mono text-[13px] text-muted-foreground">
 										No projects in this category yet.
 									</p>
 								</div>
@@ -149,32 +149,32 @@ export default function Project() {
 											className="border-t border-border py-3.5 flex items-center gap-4 cursor-pointer group hover:bg-[#fafafa] transition-colors duration-150"
 										>
 											{/* Number */}
-											<span className="font-mono text-[11px] text-[#ccc] w-6 shrink-0" aria-hidden="true">
+											<span className="font-mono text-[13px] text-[#ccc] w-6 shrink-0" aria-hidden="true">
 												{String(index + 1).padStart(2, "0")}
 											</span>
 
 											{/* Title */}
-											<span className="text-[14px] font-semibold text-foreground flex-1 min-w-0 truncate">
+											<span className="text-[16px] font-semibold text-foreground flex-1 min-w-0 truncate">
 												{project.title}
 											</span>
 
 											{/* Tech tags */}
 											<span className="hidden sm:flex gap-2 shrink-0">
 												{project.badges.slice(0, 3).map((badge) => (
-													<span key={badge} className="font-mono text-[10px] text-muted-foreground">
+													<span key={badge} className="font-mono text-[12px] text-muted-foreground">
 														{badge}
 													</span>
 												))}
 											</span>
 
 											{/* Year */}
-											<span className="font-mono text-[10px] text-muted-foreground shrink-0">
+											<span className="font-mono text-[12px] text-muted-foreground shrink-0">
 												{project.year}
 											</span>
 
 											{/* Arrow */}
 											<span
-												className="font-mono text-[14px] text-[#ccc] group-hover:text-foreground transition-colors shrink-0"
+												className="font-mono text-[16px] text-[#ccc] group-hover:text-foreground transition-colors shrink-0"
 												aria-hidden="true"
 											>
 												→
@@ -199,7 +199,7 @@ export default function Project() {
 					<Link
 						href="https://github.com/apiz23"
 						target="_blank"
-						className="font-mono text-[10px] uppercase tracking-[0.08em] text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1"
+						className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1"
 					>
 						<Github className="h-3 w-3" />
 						<span>View all on GitHub</span>

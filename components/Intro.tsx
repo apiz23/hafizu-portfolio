@@ -40,7 +40,7 @@ export default function Intro() {
           animate="visible"
           className="mb-7"
         >
-          <span className="inline-flex items-center gap-2 border border-[#bbf7d0] bg-[#f0fdf4] rounded-[3px] px-3 py-1 font-mono text-[10px] uppercase tracking-[0.1em] text-[#16a34a]">
+          <span className="inline-flex items-center gap-2 border border-[#bbf7d0] bg-[#f0fdf4] rounded-[3px] px-3 py-1 font-mono text-[12px] uppercase tracking-[0.1em] text-[#16a34a]">
             <span className="h-1.5 w-1.5 rounded-full bg-[#16a34a]" />
             Available for opportunities · Johor, MY
           </span>
@@ -53,7 +53,7 @@ export default function Intro() {
           initial="hidden"
           animate="visible"
           className="font-serif font-black uppercase leading-[0.92] tracking-[-0.04em] text-foreground"
-          style={{ fontSize: "clamp(3rem, 8vw, 5.5rem)" }}
+          style={{ fontSize: "clamp(3.5rem, 8vw, 6rem)" }}
         >
           <span className="block">MUHD</span>
           <span className="block">HAFIZUDDIN</span>
@@ -77,7 +77,7 @@ export default function Intro() {
           className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6"
         >
           <div className="max-w-[38ch]">
-            <p className="font-mono text-[11px] uppercase tracking-[0.06em] text-muted-foreground mb-2">
+            <p className="font-mono text-[13px] uppercase tracking-[0.06em] text-muted-foreground mb-2">
               Software Engineering Student
             </p>
             <p className="text-sm text-muted-foreground leading-[1.65]">
@@ -90,11 +90,11 @@ export default function Intro() {
           <div className="flex gap-8 shrink-0">
             <div className="text-right">
               <p className="font-mono font-bold text-[28px] text-foreground leading-none">12+</p>
-              <p className="font-mono text-[9px] uppercase tracking-[0.1em] text-muted-foreground mt-1">Projects</p>
+              <p className="font-mono text-[13px] uppercase tracking-[0.1em] text-muted-foreground mt-1">Projects</p>
             </div>
             <div className="text-right">
               <p className="font-mono font-bold text-[28px] text-foreground leading-none">1yr</p>
-              <p className="font-mono text-[9px] uppercase tracking-[0.1em] text-muted-foreground mt-1">Experience</p>
+              <p className="font-mono text-[13px] uppercase tracking-[0.1em] text-muted-foreground mt-1">Experience</p>
             </div>
           </div>
         </motion.div>
@@ -111,14 +111,14 @@ export default function Intro() {
             href="#projects"
             scroll={false}
             onClick={scrollToProjects}
-            className="inline-flex items-center gap-2 bg-foreground text-background font-mono text-[10px] uppercase tracking-[0.08em] px-5 py-2.5 rounded-[3px] hover:opacity-80 transition-opacity"
+            className="inline-flex items-center gap-2 bg-foreground text-background font-mono text-[12px] uppercase tracking-[0.08em] px-5 py-2.5 rounded-[3px] hover:opacity-80 transition-opacity"
           >
             View My Work ↓
           </Link>
           <Link
             href="https://docs.google.com/document/d/1SsIiM2VCZnLpso4zuoE6EraAcZrMW_pmXiKLz_1Go8Y/edit?usp=sharing"
             target="_blank"
-            className="inline-flex items-center gap-2 border border-[#e8e8e8] text-muted-foreground font-mono text-[10px] uppercase tracking-[0.08em] px-5 py-2.5 rounded-[3px] hover:text-foreground hover:border-[#111] transition-colors"
+            className="inline-flex items-center gap-2 border border-[#e8e8e8] text-muted-foreground font-mono text-[12px] uppercase tracking-[0.08em] px-5 py-2.5 rounded-[3px] hover:text-foreground hover:border-[#111] transition-colors"
           >
             <RiExternalLinkLine className="h-3.5 w-3.5" />
             Resume
@@ -137,7 +137,7 @@ export default function Intro() {
             href="https://github.com/apiz23"
             target="_blank"
             aria-label="GitHub"
-            className="font-mono text-[9px] uppercase tracking-[0.1em] text-muted-foreground hover:text-foreground transition-colors"
+            className="font-mono text-[13px] uppercase tracking-[0.1em] text-muted-foreground hover:text-foreground transition-colors"
           >
             GitHub
           </Link>
@@ -145,14 +145,14 @@ export default function Intro() {
             href="https://www.linkedin.com/in/muh-hafizuddin/"
             target="_blank"
             aria-label="LinkedIn"
-            className="font-mono text-[9px] uppercase tracking-[0.1em] text-muted-foreground hover:text-foreground transition-colors"
+            className="font-mono text-[13px] uppercase tracking-[0.1em] text-muted-foreground hover:text-foreground transition-colors"
           >
             LinkedIn
           </Link>
           <Link
             href="#contact"
             aria-label="Contact"
-            className="font-mono text-[9px] uppercase tracking-[0.1em] text-muted-foreground hover:text-foreground transition-colors"
+            className="font-mono text-[13px] uppercase tracking-[0.1em] text-muted-foreground hover:text-foreground transition-colors"
           >
             Email
           </Link>

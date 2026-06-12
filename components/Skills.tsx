@@ -40,7 +40,7 @@ export default function Skills() {
         >
           <h2
             className="font-serif font-black uppercase tracking-[-0.04em] text-foreground"
-            style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
+            style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
           >
             SKILLS
           </h2>
@@ -58,9 +58,9 @@ export default function Skills() {
               key={skill.name}
               className="bg-white px-4 py-4 flex flex-col gap-1.5"
             >
-              <span className="text-[18px] text-[#888888]">{skill.icon}</span>
-              <span className="font-mono text-[10px] font-bold text-foreground">{skill.name}</span>
-              <span className="font-mono text-[9px] text-muted-foreground">{skill.level}</span>
+              <span className="text-[20px] text-[#888888]">{skill.icon}</span>
+              <span className="font-mono text-[12px] font-bold text-foreground">{skill.name}</span>
+              <span className="font-mono text-[11px] text-muted-foreground">{skill.level}</span>
             </div>
           ))}
         </motion.div>
