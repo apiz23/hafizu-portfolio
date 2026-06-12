@@ -53,7 +53,7 @@ export default function Project() {
 
 	return (
 		<section id="projects" className="py-20 md:py-32 bg-background">
-			<div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+			<div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
 				{/* Header row */}
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}

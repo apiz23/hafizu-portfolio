@@ -67,7 +67,7 @@ export default function Intro() {
 			id="home"
 			className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-background pb-12 pt-20"
 		>
-			<div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+			<div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
 				{/* Available badge */}
 				<motion.div
 					custom={0}
