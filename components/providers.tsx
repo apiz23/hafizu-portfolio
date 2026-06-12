@@ -6,7 +6,7 @@ import SmoothScroll from "./smooth-scroll";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} forcedTheme="light">
+    <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
       <MotionConfig reducedMotion="user">
         <SmoothScroll />
         {children}

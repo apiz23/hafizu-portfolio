@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useTheme } from "next-themes";
 
 const navLinks = [
   { label: "Skills", href: "#skills" },
@@ -22,6 +23,7 @@ function scrollTo(e: React.MouseEvent<HTMLAnchorElement>, href: string) {
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("home");
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -105,6 +107,16 @@ export default function Navbar() {
             Contact
           </Link>
         </div>
+
+        {/* Theme toggle */}
+        <button
+          type="button"
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          className="text-white/40 hover:text-white transition-colors text-[14px] font-mono pl-4 border-l border-white/20"
+          aria-label="Toggle dark mode"
+        >
+          {theme === "dark" ? "○" : "●"}
+        </button>
       </nav>
     </motion.header>
   );
