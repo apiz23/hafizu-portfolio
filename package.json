@@ -35,7 +35,6 @@
     "embla-carousel-autoplay": "^8.1.6",
     "embla-carousel-react": "^8.1.8",
     "framer-motion": "^11.2.12",
-    "gsap": "^3.12.5",
     "lenis": "^1.1.5",
     "lucide-react": "^0.400.0",
     "motion": "^12.0.5",
@@ -54,6 +53,7 @@
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "three": "^0.182.0",
+    "vaul": "^1.1.2",
     "zod": "^4.3.6"
   },
   "devDependencies": {

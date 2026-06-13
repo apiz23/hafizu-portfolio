@@ -1,15 +1,11 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { RiExternalLinkLine } from "react-icons/ri";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { fadeUp } from "@/lib/animations";
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function Intro() {
   const scrollToProjects = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -19,28 +15,28 @@ export default function Intro() {
       ?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const headingRef = useRef<HTMLHeadingElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const prefersReducedMotion = useReducedMotion();
 
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const ctx = gsap.context(() => {
-      gsap.to(headingRef.current, {
-        y: -40,
-        opacity: 0,
-        ease: "none",
-        scrollTrigger: {
-          trigger: "#home",
-          start: "center top",
-          end: "bottom top",
-          scrub: 1,
-        },
-      });
-    });
-    return () => ctx.revert();
-  }, []);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["center start", "end start"],
+  });
+
+  const scrollY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    prefersReducedMotion ? [0, 0] : [0, -40]
+  );
+  const scrollOpacity = useTransform(
+    scrollYProgress,
+    [0, 1],
+    prefersReducedMotion ? [1, 1] : [1, 0]
+  );
 
   return (
     <section
+      ref={sectionRef}
       id="home"
       className="min-h-screen flex flex-col justify-center bg-background pt-24 pb-16"
     >
@@ -63,20 +59,20 @@ export default function Intro() {
           </span>
         </motion.div>
 
-        {/* Name */}
-        {/* Framer Motion handles mount fade-in; GSAP ScrollTrigger handles scroll-out on the same element. */}
-        <motion.h1
-          ref={headingRef}
-          custom={1}
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          className="font-serif font-black uppercase leading-[0.92] tracking-[-0.04em] text-foreground"
-          style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)" }}
-        >
-          <span className="block">MUHD</span>
-          <span className="block">HAFIZUDDIN</span>
-        </motion.h1>
+        {/* Name — entrance via fadeUp, scroll-out via MotionValues */}
+        <motion.div style={{ y: scrollY, opacity: scrollOpacity }}>
+          <motion.h1
+            custom={1}
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            className="font-serif font-black uppercase leading-[0.92] tracking-[-0.04em] text-foreground"
+            style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)" }}
+          >
+            <span className="block">MUHD</span>
+            <span className="block">HAFIZUDDIN</span>
+          </motion.h1>
+        </motion.div>
 
         {/* Rule */}
         <motion.div
@@ -187,7 +183,7 @@ export default function Intro() {
           className="hidden lg:block shrink-0 pt-10"
         >
           <Image
-            src="/img/profile.jpg"
+            src="/img/profile2.jpg"
             alt="Hafizuddin Hamid"
             width={200}
             height={260}
