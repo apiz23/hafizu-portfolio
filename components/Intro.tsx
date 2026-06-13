@@ -188,7 +188,7 @@ export default function Intro() {
             width={200}
             height={260}
             priority
-            className="object-cover object-top grayscale w-[200px] h-[260px]"
+            className="object-cover object-top w-[200px] h-[260px]"
             style={{ borderRadius: "3px" }}
           />
         </motion.div>
