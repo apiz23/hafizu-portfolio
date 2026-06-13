@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Github } from "lucide-react";
 import { useState, useEffect } from "react";
+import { clipReveal, EASE_OUT_EXPO } from "@/lib/animations";
 
 type ProjectType = {
 	id: string;
@@ -67,22 +68,21 @@ export default function Project() {
 		<section id="projects" className="py-14 bg-background border-t border-border">
 			<div className="max-w-4xl mx-auto px-4 sm:px-8">
 				{/* Header row */}
-				<motion.div
-					initial={{ opacity: 0, y: 20 }}
-					whileInView={{ opacity: 1, y: 0 }}
-					viewport={{ once: true }}
-					className="flex justify-between items-baseline"
-				>
-					<h2
+				<div className="flex justify-between items-baseline">
+					<motion.h2
+						variants={clipReveal}
+						initial="hidden"
+						whileInView="visible"
+						viewport={{ once: true, margin: "-10%" }}
 						className="font-serif font-black uppercase tracking-[-0.04em]"
 						style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
 					>
 						PROJECTS
-					</h2>
+					</motion.h2>
 					<span className="font-mono text-[13px] text-muted-foreground">
 						{loading ? "—" : `${projects.length} projects`}
 					</span>
-				</motion.div>
+				</div>
 
 				{/* Category filter */}
 				<motion.div
@@ -135,12 +135,12 @@ export default function Project() {
 								filteredProjects.map((project, index) => (
 									<motion.div
 										key={project.id}
-										initial={{ opacity: 0, y: 12 }}
+										initial={{ opacity: 0, y: 16 }}
 										animate={{ opacity: 1, y: 0 }}
 										transition={{
-											delay: index * 0.04,
-											duration: 0.3,
-											ease: [0.22, 1, 0.36, 1],
+											delay: index * 0.05,
+											duration: 0.4,
+											ease: EASE_OUT_EXPO,
 										}}
 									>
 										<Link
