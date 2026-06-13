@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { fadeUp, clipReveal } from "@/lib/animations";
 
 const experiences = [
   {
@@ -24,10 +25,10 @@ export default function Experience() {
       <div className="max-w-4xl mx-auto px-4 sm:px-8 w-full">
 
         <motion.h2
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.35, ease: "easeOut" }}
+          variants={clipReveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-10%" }}
           className="font-serif font-black uppercase tracking-[-0.04em] text-foreground mb-10"
           style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
         >
@@ -37,10 +38,11 @@ export default function Experience() {
         {experiences.map((exp, index) => (
           <motion.div
             key={exp.company}
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            custom={index}
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
-            transition={{ delay: index * 0.08 }}
             className="grid grid-cols-1 md:grid-cols-[80px_1fr] gap-4 border-t border-border py-5"
           >
             {/* Date + company */}
