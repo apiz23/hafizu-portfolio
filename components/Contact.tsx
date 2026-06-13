@@ -1,7 +1,8 @@
 "use client";
 
+import { useRef } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { fadeUp, clipReveal } from "@/lib/animations";
 
 const links = [
@@ -20,15 +21,13 @@ const links = [
 ];
 
 export default function Contact() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const sectionInView = useInView(sectionRef, { once: true });
+
   return (
     <section id="contact" className="section-dark py-14 bg-background border-t border-border">
       <div className="max-w-4xl mx-auto px-4 sm:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          viewport={{ once: true }}
-        >
+        <div ref={sectionRef}>
           {/* Two-column grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {/* Left column */}
@@ -36,8 +35,7 @@ export default function Contact() {
               <motion.h2
                 variants={clipReveal}
                 initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-10%" }}
+                animate={sectionInView ? "visible" : "hidden"}
                 className="font-serif font-black tracking-[-0.03em] leading-[1.05] text-foreground"
                 style={{ fontSize: "clamp(1.8rem, 4vw, 2.5rem)" }}
               >
@@ -59,8 +57,7 @@ export default function Contact() {
                   custom={index}
                   variants={fadeUp}
                   initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
+                  animate={sectionInView ? "visible" : "hidden"}
                 >
                   <Link
                     href={href}
@@ -93,7 +90,7 @@ export default function Contact() {
               Back to top ↑
             </button>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

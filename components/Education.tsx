@@ -7,8 +7,8 @@ import {
   type ChartConfig,
 } from "@/components/ui/chart";
 import { Line, LineChart, CartesianGrid, XAxis, YAxis, Legend } from "recharts";
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState, useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { BookOpen } from "lucide-react";
 import { fadeUp, clipReveal } from "@/lib/animations";
 import {
@@ -57,6 +57,13 @@ const educationDetails = [
 ];
 
 export default function Education() {
+  const h2Ref = useRef<HTMLHeadingElement>(null);
+  const h2InView = useInView(h2Ref, { once: true, margin: "-10%" });
+  const rowsRef = useRef<HTMLDivElement>(null);
+  const rowsInView = useInView(rowsRef, { once: true });
+  const chartRef = useRef<HTMLDivElement>(null);
+  const chartInView = useInView(chartRef, { once: true });
+
   const [selectedValue, setSelectedValue] = useState<EducationLevel>("bachelor");
   const [latestCGPA, setLatestCGPA] = useState<number | null>(null);
   const [chartData, setChartData] = useState<Pointer[]>([]);
@@ -107,10 +114,10 @@ export default function Education() {
       <div className="max-w-4xl mx-auto px-4 sm:px-8 w-full">
 
         <motion.h2
+          ref={h2Ref}
           variants={clipReveal}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-10%" }}
+          animate={h2InView ? "visible" : "hidden"}
           className="font-serif font-black uppercase tracking-[-0.04em] text-foreground mb-10"
           style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
         >
@@ -118,14 +125,14 @@ export default function Education() {
         </motion.h2>
 
         {/* Timeline rows */}
+        <div ref={rowsRef}>
         {educationDetails.map((edu, index) => (
           <motion.div
             key={edu.level}
             custom={index}
             variants={fadeUp}
             initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
+            animate={rowsInView ? "visible" : "hidden"}
             className="grid grid-cols-1 md:grid-cols-[80px_1fr] gap-4 border-t border-[#e8e8e8] py-5"
           >
             <div className="pt-0.5">
@@ -148,14 +155,15 @@ export default function Education() {
             </div>
           </motion.div>
         ))}
+        </div>
 
         <div className="border-t border-[#e8e8e8] mb-12" />
 
         {/* GPA Chart */}
         <motion.div
+          ref={chartRef}
           initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={chartInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
           transition={{ delay: 0.2 }}
         >
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">

@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { fadeUp, clipReveal } from "@/lib/animations";
 
 const experiences = [
@@ -20,29 +21,34 @@ const experiences = [
 ];
 
 export default function Experience() {
+  const h2Ref = useRef<HTMLHeadingElement>(null);
+  const h2InView = useInView(h2Ref, { once: true, margin: "-10%" });
+  const rowsRef = useRef<HTMLDivElement>(null);
+  const rowsInView = useInView(rowsRef, { once: true });
+
   return (
     <section id="experience" className="section-dark py-14 bg-background border-t border-border">
       <div className="max-w-4xl mx-auto px-4 sm:px-8 w-full">
 
         <motion.h2
+          ref={h2Ref}
           variants={clipReveal}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-10%" }}
+          animate={h2InView ? "visible" : "hidden"}
           className="font-serif font-black uppercase tracking-[-0.04em] text-foreground mb-10"
           style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
         >
           EXPERIENCE
         </motion.h2>
 
+        <div ref={rowsRef}>
         {experiences.map((exp, index) => (
           <motion.div
             key={exp.company}
             custom={index}
             variants={fadeUp}
             initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
+            animate={rowsInView ? "visible" : "hidden"}
             className="grid grid-cols-1 md:grid-cols-[80px_1fr] gap-4 border-t border-border py-5"
           >
             {/* Date + company */}
@@ -76,6 +82,7 @@ export default function Experience() {
             </div>
           </motion.div>
         ))}
+        </div>
 
         <div className="border-t border-border" />
       </div>

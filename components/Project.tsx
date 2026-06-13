@@ -1,9 +1,9 @@
 ﻿"use client";
 
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import { Github } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { clipReveal, EASE_OUT_EXPO } from "@/lib/animations";
 
 type ProjectType = {
@@ -42,6 +42,13 @@ function SkeletonRow({ delay }: { delay: number }) {
 }
 
 export default function Project() {
+	const h2Ref = useRef<HTMLHeadingElement>(null);
+	const h2InView = useInView(h2Ref, { once: true, margin: "-10%" });
+	const filterRef = useRef<HTMLDivElement>(null);
+	const filterInView = useInView(filterRef, { once: true });
+	const githubRef = useRef<HTMLDivElement>(null);
+	const githubInView = useInView(githubRef, { once: true });
+
 	const [filter, setFilter] = useState<string>("all");
 	const [projects, setProjects] = useState<ProjectType[]>([]);
 	const [loading, setLoading] = useState(true);
@@ -70,10 +77,10 @@ export default function Project() {
 				{/* Header row */}
 				<div className="flex justify-between items-baseline">
 					<motion.h2
+						ref={h2Ref}
 						variants={clipReveal}
 						initial="hidden"
-						whileInView="visible"
-						viewport={{ once: true, margin: "-10%" }}
+						animate={h2InView ? "visible" : "hidden"}
 						className="font-serif font-black uppercase tracking-[-0.04em]"
 						style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
 					>
@@ -86,9 +93,9 @@ export default function Project() {
 
 				{/* Category filter */}
 				<motion.div
+					ref={filterRef}
 					initial={{ opacity: 0, y: 12 }}
-					whileInView={{ opacity: 1, y: 0 }}
-					viewport={{ once: true }}
+					animate={filterInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
 					transition={{ delay: 0.1 }}
 					className="flex flex-wrap gap-2 mt-4 mb-2"
 				>
@@ -190,9 +197,9 @@ export default function Project() {
 
 				{/* GitHub link */}
 				<motion.div
+					ref={githubRef}
 					initial={{ opacity: 0, y: 16 }}
-					whileInView={{ opacity: 1, y: 0 }}
-					viewport={{ once: true }}
+					animate={githubInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
 					transition={{ delay: 0.3 }}
 					className="mt-6"
 				>
