@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { fadeUp, clipReveal } from "@/lib/animations";
 
 const links = [
   {
@@ -32,14 +33,18 @@ export default function Contact() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {/* Left column */}
             <div>
-              <h2
+              <motion.h2
+                variants={clipReveal}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-10%" }}
                 className="font-serif font-black tracking-[-0.03em] leading-[1.05] text-foreground"
                 style={{ fontSize: "clamp(1.8rem, 4vw, 2.5rem)" }}
               >
                 Let&apos;s build
                 <br />
                 something.
-              </h2>
+              </motion.h2>
               <p className="font-sans text-[15px] text-muted-foreground mt-3 leading-[1.65]">
                 Open to full-time roles, internships, and interesting projects.
                 Based in Johor, Malaysia.
@@ -48,21 +53,29 @@ export default function Contact() {
 
             {/* Right column — link rows */}
             <div className="flex flex-col gap-2.5">
-              {links.map(({ label, href }) => (
-                <Link
+              {links.map(({ label, href }, index) => (
+                <motion.div
                   key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between border border-border rounded-[4px] px-3.5 py-2.5 hover:border-foreground transition-colors group cursor-pointer"
+                  custom={index}
+                  variants={fadeUp}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
                 >
-                  <span className="font-mono text-[13px] uppercase tracking-[0.08em] text-foreground">
-                    {label}
-                  </span>
-                  <span className="font-mono text-[15px] text-muted-foreground group-hover:text-foreground transition-colors">
-                    ↗
-                  </span>
-                </Link>
+                  <Link
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between border border-border rounded-[4px] px-3.5 py-2.5 hover:border-foreground transition-colors group cursor-pointer"
+                  >
+                    <span className="font-mono text-[13px] uppercase tracking-[0.08em] text-foreground">
+                      {label}
+                    </span>
+                    <span className="font-mono text-[15px] text-muted-foreground group-hover:text-foreground transition-colors">
+                      ↗
+                    </span>
+                  </Link>
+                </motion.div>
               ))}
             </div>
           </div>
