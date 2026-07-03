@@ -55,6 +55,9 @@ const categories = [
 
 export default function UploadProjectPage() {
   const router = useRouter();
+  const [unlocked, setUnlocked] = useState(false);
+  const [secret, setSecret] = useState("");
+  const [secretError, setSecretError] = useState("");
   const [loading, setLoading] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -224,6 +227,7 @@ export default function UploadProjectPage() {
 
       const res = await fetch("/api/projects", {
         method: "POST",
+        headers: { "x-admin-secret": secret },
         body: formData,
       });
 
@@ -232,6 +236,11 @@ export default function UploadProjectPage() {
 
       const result = await res.json();
 
+      if (res.status === 401) {
+        setUnlocked(false);
+        setSecretError("Incorrect password");
+        throw new Error("Session expired, please re-enter the password");
+      }
       if (!res.ok) throw new Error(result.error);
 
       toast.success("Project published successfully! 🎉");
@@ -247,6 +256,46 @@ export default function UploadProjectPage() {
       setLoading(false);
     }
   };
+
+  if (!unlocked) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted/20 px-4">
+        <Card className="w-full max-w-sm">
+          <CardHeader>
+            <CardTitle>Admin access</CardTitle>
+            <CardDescription>
+              Enter the upload password to continue.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (!secret) return;
+                setSecretError("");
+                setUnlocked(true);
+              }}
+              className="space-y-4"
+            >
+              <Input
+                type="password"
+                placeholder="Password"
+                value={secret}
+                onChange={(e) => setSecret(e.target.value)}
+                autoFocus
+              />
+              {secretError && (
+                <p className="text-sm text-red-500">{secretError}</p>
+              )}
+              <Button type="submit" className="w-full">
+                Unlock
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-muted/20 py-8 sm:py-12">

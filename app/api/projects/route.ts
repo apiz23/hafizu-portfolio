@@ -20,6 +20,11 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
+  const secret = req.headers.get("x-admin-secret");
+  if (!secret || secret !== process.env.ADMIN_UPLOAD_SECRET) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   try {
     const formData = await req.formData();
 

@@ -5,6 +5,7 @@ import { motion, AnimatePresence, useInView } from "framer-motion";
 import { Github } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { clipReveal, EASE_OUT_EXPO } from "@/lib/animations";
+import { LinkPreview } from "@/components/ui/link-preview";
 
 type ProjectType = {
 	id: string;
@@ -150,43 +151,66 @@ export default function Project() {
 											ease: EASE_OUT_EXPO,
 										}}
 									>
-										<Link
-											href={project.visit_link || "#"}
-											target={project.visit_link ? "_blank" : undefined}
-											className="border-t border-border py-3.5 flex items-center gap-4 cursor-pointer group hover:bg-[#fafafa] transition-colors duration-150"
-										>
-											{/* Number */}
-											<span className="font-mono text-[13px] text-[#ccc] w-6 shrink-0" aria-hidden="true">
-												{String(index + 1).padStart(2, "0")}
-											</span>
-
-											{/* Title */}
-											<span className="text-[16px] font-semibold text-foreground flex-1 min-w-0 truncate">
-												{project.title}
-											</span>
-
-											{/* Tech tags */}
-											<span className="hidden sm:flex gap-2 shrink-0">
-												{project.badges.slice(0, 3).map((badge) => (
-													<span key={badge} className="font-mono text-[12px] text-muted-foreground">
-														{badge}
+										{(() => {
+											const rowClassName =
+												"border-t border-border py-3.5 flex items-center gap-4 cursor-pointer group hover:bg-[#fafafa] transition-colors duration-150";
+											const rowContent = (
+												<>
+													{/* Number */}
+													<span className="font-mono text-[13px] text-[#ccc] w-6 shrink-0" aria-hidden="true">
+														{String(index + 1).padStart(2, "0")}
 													</span>
-												))}
-											</span>
 
-											{/* Year */}
-											<span className="hidden sm:inline font-mono text-[12px] text-muted-foreground shrink-0">
-												{project.year}
-											</span>
+													{/* Title */}
+													<span className="text-[16px] font-semibold text-foreground flex-1 min-w-0 truncate">
+														{project.title}
+													</span>
 
-											{/* Arrow */}
-											<span
-												className="font-mono text-[16px] text-[#ccc] group-hover:text-foreground transition-colors shrink-0"
-												aria-hidden="true"
-											>
-												→
-											</span>
-										</Link>
+													{/* Tech tags */}
+													<span className="hidden sm:flex gap-2 shrink-0">
+														{project.badges.slice(0, 3).map((badge) => (
+															<span key={badge} className="font-mono text-[12px] text-muted-foreground">
+																{badge}
+															</span>
+														))}
+													</span>
+
+													{/* Year */}
+													<span className="hidden sm:inline font-mono text-[12px] text-muted-foreground shrink-0">
+														{project.year}
+													</span>
+
+													{/* Arrow */}
+													<span
+														className="font-mono text-[16px] text-[#ccc] group-hover:text-foreground transition-colors shrink-0"
+														aria-hidden="true"
+													>
+														→
+													</span>
+												</>
+											);
+
+											return project.visit_link && project.image_src ? (
+												<LinkPreview
+													url={project.visit_link}
+													isStatic
+													imageSrc={project.image_src}
+													width={240}
+													height={150}
+													className={rowClassName}
+												>
+													{rowContent}
+												</LinkPreview>
+											) : (
+												<Link
+													href={project.visit_link || "#"}
+													target={project.visit_link ? "_blank" : undefined}
+													className={rowClassName}
+												>
+													{rowContent}
+												</Link>
+											);
+										})()}
 									</motion.div>
 								))
 							)}

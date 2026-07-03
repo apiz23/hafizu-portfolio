@@ -24,6 +24,11 @@ export async function DELETE(
 	req: NextRequest,
 	context: { params: Promise<{ id: string }> },
 ) {
+	const secret = req.headers.get("x-admin-secret");
+	if (!secret || secret !== process.env.ADMIN_UPLOAD_SECRET) {
+		return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+	}
+
 	const { id } = await context.params;
 
 	const { error } = await supabase.from("projects").delete().eq("id", id);
