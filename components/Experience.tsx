@@ -30,6 +30,9 @@ export default function Experience() {
     <section id="experience" className="section-dark py-14 bg-background border-t border-border">
       <div className="max-w-4xl mx-auto px-4 sm:px-8 w-full">
 
+        <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-muted-foreground mb-1">
+          Sheet 04 / Experience
+        </p>
         <motion.h2
           ref={h2Ref}
           variants={clipReveal}

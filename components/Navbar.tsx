@@ -96,7 +96,7 @@ export default function Navbar() {
                 {isActive && (
                   <motion.span
                     layoutId="nav-dot"
-                    className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 h-[3px] w-[3px] rounded-full bg-white"
+                    className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 h-[3px] w-[3px] rounded-full bg-[hsl(var(--redline))]"
                     transition={{ type: "spring", stiffness: 400, damping: 30 }}
                   />
                 )}

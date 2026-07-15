@@ -53,6 +53,12 @@ const categories = [
   { value: "mobile", label: "Mobile App", icon: Smartphone, color: "red" },
 ];
 
+// Paper-white fill on a muted panel so field boundaries stay visible —
+// the site's hairline --border token reads fine as a row divider but
+// disappears as a form-field outline, so form fields get their own contrast.
+const fieldClass =
+  "bg-background border-[hsl(var(--ink)/0.25)] focus-visible:border-[hsl(var(--ink))]";
+
 export default function UploadProjectPage() {
   const router = useRouter();
   const [unlocked, setUnlocked] = useState(false);
@@ -259,70 +265,79 @@ export default function UploadProjectPage() {
 
   if (!unlocked) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted/20 px-4">
-        <Card className="w-full max-w-sm">
-          <CardHeader>
-            <CardTitle>Admin access</CardTitle>
-            <CardDescription>
-              Enter the upload password to continue.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (!secret) return;
-                setSecretError("");
-                setUnlocked(true);
-              }}
-              className="space-y-4"
-            >
-              <Input
-                type="password"
-                placeholder="Password"
-                value={secret}
-                onChange={(e) => setSecret(e.target.value)}
-                autoFocus
-              />
-              {secretError && (
-                <p className="text-sm text-red-500">{secretError}</p>
-              )}
-              <Button type="submit" className="w-full">
-                Unlock
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
+      <div className="min-h-screen flex items-center justify-center bg-background px-4">
+        <div className="w-full max-w-sm border border-[hsl(var(--ink)/0.15)] bg-[hsl(var(--muted))] rounded-[3px] p-6">
+          <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-muted-foreground mb-1">
+            Sheet 00 / Access
+          </p>
+          <h1 className="font-serif font-black uppercase tracking-[-0.03em] text-foreground text-2xl mb-1">
+            Admin Access
+          </h1>
+          <p className="text-sm text-muted-foreground mb-5">
+            Enter the upload password to continue.
+          </p>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (!secret) return;
+              setSecretError("");
+              setUnlocked(true);
+            }}
+            className="space-y-4"
+          >
+            <Input
+              type="password"
+              placeholder="Password"
+              value={secret}
+              onChange={(e) => setSecret(e.target.value)}
+              autoFocus
+              className={`${fieldClass} rounded-[2px]`}
+            />
+            {secretError && (
+              <p className="font-mono text-[12px] text-destructive">{secretError}</p>
+            )}
+            <Button type="submit" className="w-full rounded-[2px] font-mono text-[12px] uppercase tracking-[0.08em]">
+              Unlock
+            </Button>
+          </form>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-muted/20 py-8 sm:py-12">
+    <div className="min-h-screen bg-background py-8 sm:py-12">
       <div className="container max-w-4xl mx-auto px-4 sm:px-6">
         {/* Header */}
         <div className="mb-8">
-          <Button variant="ghost" size="sm" className="mb-4 gap-2" asChild>
-            <Link href="/">
-              <ArrowLeft className="w-4 h-4" />
-              Back to Projects
-            </Link>
-          </Button>
-          <div className="text-center space-y-2">
-            <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-              Share Your Creation
-            </h1>
-            <p className="text-muted-foreground">
-              Showcase your project to the community and get feedback
-            </p>
-          </div>
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.08em] text-muted-foreground hover:text-foreground transition-colors mb-6"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            Back to Projects
+          </Link>
+          <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-muted-foreground mb-1">
+            Sheet 00 / New Project
+          </p>
+          <h1
+            className="font-serif font-black uppercase tracking-[-0.04em] text-foreground"
+            style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}
+          >
+            Add Project
+          </h1>
+          <p className="text-muted-foreground mt-2">
+            Publish a new project to the site.
+          </p>
         </div>
 
         {/* Form */}
         <form onSubmit={onSubmit} className="space-y-6">
-          <Card>
+          <Card className="rounded-[3px] shadow-none border-[hsl(var(--ink)/0.15)] bg-[hsl(var(--muted))]">
             <CardHeader>
-              <CardTitle>Project Details</CardTitle>
+              <CardTitle className="font-mono text-[13px] uppercase tracking-[0.1em] text-muted-foreground font-normal">
+                Project Details
+              </CardTitle>
               <CardDescription>
                 Provide all the necessary information about your project
               </CardDescription>
@@ -336,10 +351,10 @@ export default function UploadProjectPage() {
                   placeholder="e.g., AI-Powered Dashboard"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className={errors.title ? "border-red-500" : ""}
+                  className={`${fieldClass} ${errors.title ? "border-destructive" : ""}`}
                 />
                 {errors.title && (
-                  <p className="text-sm text-red-500">{errors.title}</p>
+                  <p className="text-sm text-destructive">{errors.title}</p>
                 )}
                 <p className="text-sm text-muted-foreground">
                   A catchy title for your project
@@ -352,12 +367,12 @@ export default function UploadProjectPage() {
                 <Textarea
                   id="description"
                   placeholder="Tell us about your project..."
-                  className="min-h-[120px] resize-none"
+                  className={`${fieldClass} min-h-[120px] resize-none`}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                 />
                 {errors.description && (
-                  <p className="text-sm text-red-500">{errors.description}</p>
+                  <p className="text-sm text-destructive">{errors.description}</p>
                 )}
                 <p className="text-sm text-muted-foreground">
                   Describe what your project does and what makes it special
@@ -377,13 +392,13 @@ export default function UploadProjectPage() {
                       <Input
                         id="github_link"
                         placeholder="https://github.com/username/project"
-                        className="pl-9"
+                        className={`${fieldClass} pl-9`}
                         value={githubLink}
                         onChange={(e) => setGithubLink(e.target.value)}
                       />
                     </div>
                     {errors.github_link && (
-                      <p className="text-sm text-red-500">
+                      <p className="text-sm text-destructive">
                         {errors.github_link}
                       </p>
                     )}
@@ -396,13 +411,13 @@ export default function UploadProjectPage() {
                       <Input
                         id="visit_link"
                         placeholder="https://your-project.com"
-                        className="pl-9"
+                        className={`${fieldClass} pl-9`}
                         value={visitLink}
                         onChange={(e) => setVisitLink(e.target.value)}
                       />
                     </div>
                     {errors.visit_link && (
-                      <p className="text-sm text-red-500">
+                      <p className="text-sm text-destructive">
                         {errors.visit_link}
                       </p>
                     )}
@@ -417,10 +432,10 @@ export default function UploadProjectPage() {
                 <div className="space-y-2">
                   <Label htmlFor="category">Category *</Label>
                   <Select value={category} onValueChange={setCategory}>
-                    <SelectTrigger>
+                    <SelectTrigger className={fieldClass}>
                       <SelectValue placeholder="Select a category" />
                     </SelectTrigger>
-                    <SelectContent className="bg-white">
+                    <SelectContent className="bg-background">
                       {categories.map((cat) => (
                         <SelectItem key={cat.value} value={cat.value}>
                           <div className="flex items-center gap-2">
@@ -432,7 +447,7 @@ export default function UploadProjectPage() {
                     </SelectContent>
                   </Select>
                   {errors.category && (
-                    <p className="text-sm text-red-500">{errors.category}</p>
+                    <p className="text-sm text-destructive">{errors.category}</p>
                   )}
                 </div>
 
@@ -443,13 +458,13 @@ export default function UploadProjectPage() {
                     <Input
                       id="year"
                       placeholder="2024"
-                      className="pl-9"
+                      className={`${fieldClass} pl-9`}
                       value={year}
                       onChange={(e) => setYear(e.target.value)}
                     />
                   </div>
                   {errors.year && (
-                    <p className="text-sm text-red-500">{errors.year}</p>
+                    <p className="text-sm text-destructive">{errors.year}</p>
                   )}
                 </div>
               </div>
@@ -462,7 +477,7 @@ export default function UploadProjectPage() {
                   <Input
                     id="badges"
                     placeholder="React, TypeScript, Tailwind CSS, Node.js"
-                    className="pl-9"
+                    className={`${fieldClass} pl-9`}
                     value={badges}
                     onChange={(e) => setBadges(e.target.value)}
                   />
@@ -473,7 +488,7 @@ export default function UploadProjectPage() {
               </div>
 
               {/* Featured Checkbox */}
-              <div className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+              <div className="flex flex-row items-start space-x-3 space-y-0 rounded-md border border-[hsl(var(--ink)/0.15)] bg-background p-4">
                 <Checkbox
                   id="featured"
                   checked={featured}
@@ -503,10 +518,10 @@ export default function UploadProjectPage() {
                   onDragLeave={handleDrag}
                   onDragOver={handleDrag}
                   onDrop={handleDrop}
-                  className={`relative border-2 border-dashed rounded-lg p-6 transition-all cursor-pointer ${
+                  className={`relative border-2 border-dashed rounded-[3px] p-6 transition-all cursor-pointer bg-background ${
                     dragActive
                       ? "border-primary bg-primary/5"
-                      : "border-muted-foreground/25"
+                      : "border-[hsl(var(--ink)/0.3)]"
                   }`}
                 >
                   <input
@@ -518,7 +533,7 @@ export default function UploadProjectPage() {
                   <div className="text-center">
                     {previewUrl ? (
                       <div className="space-y-3">
-                        <div className="relative w-full h-48 rounded-lg overflow-hidden">
+                        <div className="relative w-full h-48 rounded-[3px] overflow-hidden">
                           <Image
                             src={previewUrl}
                             alt="Preview"

@@ -3,42 +3,52 @@
 @tailwind utilities;
 
 :root {
-  --background: 0 0% 100%;
-  --foreground: 0 0% 6.7%;
-  --card: 0 0% 100%;
-  --card-foreground: 0 0% 6.7%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 0 0% 6.7%;
-  --primary: 0 0% 6.7%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 0 0% 96.1%;
-  --secondary-foreground: 0 0% 6.7%;
-  --muted: 0 0% 96.1%;
-  --muted-foreground: 0 0% 53.3%;
-  --accent: 0 0% 96.1%;
-  --accent-foreground: 0 0% 6.7%;
-  --destructive: 0 72.2% 50.6%;
-  --destructive-foreground: 0 0% 100%;
-  --border: 0 0% 91%;
-  --input: 0 0% 91%;
-  --ring: 0 0% 6.7%;
-  --chart-1: 0 0% 6.7%;
-  --chart-2: 0 0% 53.3%;
-  --chart-3: 0 0% 80%;
-  --chart-4: 0 0% 26.7%;
-  --chart-5: 0 0% 40%;
-  --sidebar: 0 0% 100%;
-  --sidebar-foreground: 0 0% 6.7%;
-  --sidebar-primary: 0 0% 6.7%;
-  --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 0 0% 96.1%;
-  --sidebar-accent-foreground: 0 0% 6.7%;
-  --sidebar-border: 0 0% 91%;
-  --sidebar-ring: 0 0% 6.7%;
+  /* Blueprint palette — graphite ink on drafting paper */
+  --paper: 0 0% 98%;
+  --ink: 0 0% 8%;
+  --ink-dim: 0 0% 45%;
+  --grid-line: 0 0% 90%;
+  --redline: 18 86% 41%;
+  --redline-bg: 18 60% 95%;
+  --redline-border: 18 60% 82%;
+  --sheet-bg: 0 0% 4%;
+
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: var(--paper);
+  --card-foreground: var(--ink);
+  --popover: var(--paper);
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: var(--paper);
+  --secondary: 0 0% 93%;
+  --secondary-foreground: var(--ink);
+  --muted: 0 0% 93%;
+  --muted-foreground: var(--ink-dim);
+  --accent: 0 0% 93%;
+  --accent-foreground: var(--ink);
+  --destructive: var(--redline);
+  --destructive-foreground: var(--paper);
+  --border: var(--grid-line);
+  --input: var(--grid-line);
+  --ring: var(--ink);
+  --chart-1: var(--ink);
+  --chart-2: var(--ink-dim);
+  --chart-3: 0 0% 75%;
+  --chart-4: var(--redline);
+  --chart-5: 0 0% 55%;
+  --sidebar: var(--paper);
+  --sidebar-foreground: var(--ink);
+  --sidebar-primary: var(--ink);
+  --sidebar-primary-foreground: var(--paper);
+  --sidebar-accent: 0 0% 93%;
+  --sidebar-accent-foreground: var(--ink);
+  --sidebar-border: var(--grid-line);
+  --sidebar-ring: var(--ink);
   --font-sans: var(--font-inter, 'Inter', sans-serif);
-  --font-serif: var(--font-heading, 'Sora', sans-serif);
-  --font-mono: var(--font-mono, 'JetBrains Mono', monospace);
-  --radius: 3px;
+  --font-serif: var(--font-heading, 'Space Grotesk', sans-serif);
+  --font-mono: var(--font-mono, 'IBM Plex Mono', monospace);
+  --radius: 2px;
   --shadow-2xs: 0px 0px 0px 0px rgba(0,0,0,0.03);
   --shadow-xs: 0px 0px 0px 0px rgba(0,0,0,0.03);
   --shadow-sm: 0px 1px 2px -1px rgba(0,0,0,0.05);
@@ -113,13 +123,13 @@
 
 
 .section-dark {
-  --background: 0 0% 6.7%;
-  --foreground: 0 0% 94.1%;
-  --muted-foreground: 0 0% 63.9%;
-  --border: 0 0% 20%;
-  --chart-1: 0 0% 94.1%;
-  --chart-2: 0 0% 63.9%;
-  --muted: 0 0% 14.1%;
+  --background: var(--sheet-bg);
+  --foreground: var(--paper);
+  --muted-foreground: 0 0% 68%;
+  --border: 0 0% 16%;
+  --chart-1: var(--paper);
+  --chart-2: 0 0% 68%;
+  --muted: 0 0% 9%;
 }
 
 @layer base {
@@ -140,7 +150,6 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  :root { --dot-color: #ebebeb; }
 }
 
 @layer utilities {
@@ -150,8 +159,34 @@
     inset: 0;
     z-index: 10;
     mix-blend-mode: multiply;
-    background-image: radial-gradient(circle, var(--dot-color) 1.5px, transparent 1.5px);
+    background-image:
+      linear-gradient(hsl(var(--grid-line)) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--grid-line)) 1px, transparent 1px);
     background-size: 40px 40px;
+    opacity: 0.6;
+  }
+
+  .crop-marks::before,
+  .crop-marks::after {
+    content: "";
+    pointer-events: none;
+    position: fixed;
+    z-index: 40;
+    width: 14px;
+    height: 14px;
+    border: 1px solid hsl(var(--ink) / 0.35);
+  }
+  .crop-marks::before {
+    top: 14px;
+    left: 14px;
+    border-right: none;
+    border-bottom: none;
+  }
+  .crop-marks::after {
+    bottom: 14px;
+    right: 14px;
+    border-left: none;
+    border-top: none;
   }
 
   .grain-overlay {

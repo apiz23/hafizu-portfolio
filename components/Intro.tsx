@@ -45,16 +45,19 @@ export default function Intro() {
         {/* Left: all text */}
         <div className="flex-1 min-w-0 relative z-10">
 
-        {/* Available badge */}
+        {/* Sheet eyebrow + available badge */}
         <motion.div
           custom={0}
           variants={fadeUp}
           initial="hidden"
           animate="visible"
-          className="mb-7"
+          className="mb-5 flex flex-wrap items-center gap-3"
         >
-          <span className="inline-flex items-center gap-2 border border-[#bbf7d0] bg-[#f0fdf4] rounded-[3px] px-3 py-1 font-mono text-[12px] uppercase tracking-[0.1em] text-[#16a34a]">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#16a34a]" />
+          <span className="font-mono text-[12px] uppercase tracking-[0.14em] text-muted-foreground">
+            Sheet 01 / Intro
+          </span>
+          <span className="inline-flex items-center gap-2 border border-[hsl(var(--redline-border))] bg-[hsl(var(--redline-bg))] rounded-[2px] px-3 py-1 font-mono text-[12px] uppercase tracking-[0.1em] text-[hsl(var(--redline))]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--redline))]" />
             Available for opportunities · Johor, MY
           </span>
         </motion.div>
@@ -133,7 +136,7 @@ export default function Intro() {
           <Link
             href="https://docs.google.com/document/d/1SsIiM2VCZnLpso4zuoE6EraAcZrMW_pmXiKLz_1Go8Y/edit?usp=sharing"
             target="_blank"
-            className="inline-flex items-center gap-2 border border-[#e8e8e8] text-muted-foreground font-mono text-[12px] uppercase tracking-[0.08em] px-5 py-2.5 rounded-[3px] hover:text-foreground hover:border-[#111] transition-colors"
+            className="inline-flex items-center gap-2 border border-border text-muted-foreground font-mono text-[12px] uppercase tracking-[0.08em] px-5 py-2.5 rounded-[3px] hover:text-foreground hover:border-foreground transition-colors"
           >
             <RiExternalLinkLine className="h-3.5 w-3.5" />
             Resume
@@ -174,23 +177,46 @@ export default function Intro() {
         </motion.div>
         </div>{/* end left */}
 
-        {/* Right: avatar */}
+        {/* Right: avatar, framed as a drawing figure with dimension lines */}
         <motion.div
           custom={1}
           variants={fadeUp}
           initial="hidden"
           animate="visible"
-          className="hidden lg:block shrink-0 pt-10"
+          className="hidden lg:block shrink-0 pt-10 relative"
         >
-          <Image
-            src="/img/profile2.jpg"
-            alt="Hafizuddin Hamid"
-            width={200}
-            height={260}
-            priority
-            className="object-cover object-top w-[200px] h-[260px]"
-            style={{ borderRadius: "3px" }}
-          />
+          <div className="relative w-[200px] h-[260px]">
+            <Image
+              src="/img/profile2.jpg"
+              alt="Hafizuddin Hamid"
+              width={200}
+              height={260}
+              priority
+              className="object-cover object-top w-[200px] h-[260px] border border-border"
+              style={{ borderRadius: "2px" }}
+            />
+            {/* Corner crosshairs */}
+            {["-top-1.5 -left-1.5", "-top-1.5 -right-1.5", "-bottom-1.5 -left-1.5", "-bottom-1.5 -right-1.5"].map(
+              (pos) => (
+                <span
+                  key={pos}
+                  aria-hidden="true"
+                  className={`absolute ${pos} h-3 w-3 border border-[hsl(var(--redline))]`}
+                />
+              ),
+            )}
+            {/* Height dimension line */}
+            <div
+              aria-hidden="true"
+              className="absolute top-0 -right-8 h-full flex flex-col items-center justify-between text-muted-foreground"
+            >
+              <span className="font-mono text-[10px] rotate-90 whitespace-nowrap tracking-[0.08em]">260</span>
+              <span className="w-px h-full bg-border" />
+            </div>
+          </div>
+          <p className="font-mono text-[10px] uppercase tracking-[0.1em] text-muted-foreground mt-2 text-center">
+            Fig. 01 — Subject
+          </p>
         </motion.div>
 
         </div>{/* end flex row */}

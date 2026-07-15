@@ -42,16 +42,21 @@ export default function Skills() {
 		>
 			<div className="max-w-4xl mx-auto px-4 sm:px-8 w-full">
 				<div className="flex justify-between items-end mb-8">
-					<motion.h2
-						ref={h2Ref}
-						variants={clipReveal}
-						initial="hidden"
-						animate={h2InView ? "visible" : "hidden"}
-						className="font-serif font-black uppercase tracking-[-0.04em] text-foreground"
-						style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
-					>
-						SKILLS
-					</motion.h2>
+					<div>
+						<p className="font-mono text-[12px] uppercase tracking-[0.14em] text-muted-foreground mb-1">
+							Sheet 02 / Skills
+						</p>
+						<motion.h2
+							ref={h2Ref}
+							variants={clipReveal}
+							initial="hidden"
+							animate={h2InView ? "visible" : "hidden"}
+							className="font-serif font-black uppercase tracking-[-0.04em] text-foreground"
+							style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
+						>
+							SKILLS
+						</motion.h2>
+					</div>
 				</div>
 
 				<div ref={gridRef} className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-[1px] bg-border border border-border rounded-[6px] overflow-hidden">

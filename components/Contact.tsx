@@ -39,6 +39,9 @@ export default function Contact() {
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-12">
 						{/* Left column */}
 						<div>
+							<p className="font-mono text-[12px] uppercase tracking-[0.14em] text-muted-foreground mb-1">
+								Sheet 06 / Contact
+							</p>
 							<motion.h2
 								variants={clipReveal}
 								initial="hidden"

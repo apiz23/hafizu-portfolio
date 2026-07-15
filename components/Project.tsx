@@ -77,16 +77,21 @@ export default function Project() {
 			<div className="max-w-4xl mx-auto px-4 sm:px-8">
 				{/* Header row */}
 				<div className="flex justify-between items-baseline">
-					<motion.h2
-						ref={h2Ref}
-						variants={clipReveal}
-						initial="hidden"
-						animate={h2InView ? "visible" : "hidden"}
-						className="font-serif font-black uppercase tracking-[-0.04em]"
-						style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
-					>
-						PROJECTS
-					</motion.h2>
+					<div>
+						<p className="font-mono text-[12px] uppercase tracking-[0.14em] text-muted-foreground mb-1">
+							Sheet 05 / Projects
+						</p>
+						<motion.h2
+							ref={h2Ref}
+							variants={clipReveal}
+							initial="hidden"
+							animate={h2InView ? "visible" : "hidden"}
+							className="font-serif font-black uppercase tracking-[-0.04em]"
+							style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
+						>
+							PROJECTS
+						</motion.h2>
+					</div>
 					<span className="font-mono text-[13px] text-muted-foreground">
 						{loading ? "—" : `${projects.length} projects`}
 					</span>
@@ -153,11 +158,11 @@ export default function Project() {
 									>
 										{(() => {
 											const rowClassName =
-												"border-t border-border py-3.5 flex items-center gap-4 cursor-pointer group hover:bg-[#fafafa] transition-colors duration-150";
+												"border-t border-border py-3.5 flex items-center gap-4 cursor-pointer group hover:bg-[hsl(var(--muted))] transition-colors duration-150";
 											const rowContent = (
 												<>
 													{/* Number */}
-													<span className="font-mono text-[13px] text-[#ccc] w-6 shrink-0" aria-hidden="true">
+													<span className="font-mono text-[13px] text-muted-foreground/50 w-6 shrink-0" aria-hidden="true">
 														{String(index + 1).padStart(2, "0")}
 													</span>
 
@@ -182,7 +187,7 @@ export default function Project() {
 
 													{/* Arrow */}
 													<span
-														className="font-mono text-[16px] text-[#ccc] group-hover:text-foreground transition-colors shrink-0"
+														className="font-mono text-[16px] text-muted-foreground/50 group-hover:text-[hsl(var(--redline))] transition-colors shrink-0"
 														aria-hidden="true"
 													>
 														→
@@ -190,25 +195,21 @@ export default function Project() {
 												</>
 											);
 
-											return project.visit_link && project.image_src ? (
+											const previewUrl = project.visit_link || project.github_link;
+
+											if (!previewUrl) {
+												return <div className={rowClassName}>{rowContent}</div>;
+											}
+
+											return (
 												<LinkPreview
-													url={project.visit_link}
-													isStatic
-													imageSrc={project.image_src}
+													url={previewUrl}
 													width={240}
 													height={150}
 													className={rowClassName}
 												>
 													{rowContent}
 												</LinkPreview>
-											) : (
-												<Link
-													href={project.visit_link || "#"}
-													target={project.visit_link ? "_blank" : undefined}
-													className={rowClassName}
-												>
-													{rowContent}
-												</Link>
 											);
 										})()}
 									</motion.div>
