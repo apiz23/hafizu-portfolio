@@ -125,10 +125,6 @@ export default function Project({ showArchiveLink = true }: { showArchiveLink?: 
             </span>
           }
         />
-          <span className="font-mono text-[12px] text-ink-dim">
-            {loading ? "—" : `${filteredProjects.length} / ${projects.length}`}
-          </span>
-        </div>
 
         {/* Filter */}
         <motion.div
@@ -142,7 +138,7 @@ export default function Project({ showArchiveLink = true }: { showArchiveLink?: 
               key={cat.id}
               onClick={() => handleFilterChange(cat.id)}
               aria-pressed={filter === cat.id}
-              className={`px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.14em] transition-all duration-200 ${
+              className={`inline-flex items-center px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.14em] transition-all duration-200 tap-min ${
                 filter === cat.id
                   ? "bg-foreground text-background"
                   : "text-ink-dim ring-hairline hover:text-foreground"
@@ -332,7 +328,7 @@ export default function Project({ showArchiveLink = true }: { showArchiveLink?: 
           {showArchiveLink && (
             <Link
               href="/projects"
-              className="group inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-foreground link-underline"
+              className="group inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-foreground link-underline tap-min"
             >
               View all projects
               <span className="transition-transform duration-300 group-hover:translate-x-0.5">
@@ -343,7 +339,7 @@ export default function Project({ showArchiveLink = true }: { showArchiveLink?: 
           <Link
             href="https://github.com/apiz23"
             target="_blank"
-            className="group inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-dim link-underline"
+            className="group inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-dim link-underline tap-min"
           >
             View all on GitHub
             <span className="transition-transform duration-300 group-hover:translate-x-0.5">↗</span>

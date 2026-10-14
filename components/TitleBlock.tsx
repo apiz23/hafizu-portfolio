@@ -22,7 +22,7 @@ export default function TitleBlock() {
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ delay: 0.6, duration: 0.5 }}
 			aria-hidden="true"
-			className="hidden sm:block fixed bottom-4 right-4 z-30 select-none"
+			className="hidden sm:block fixed right-[max(1rem,env(safe-area-inset-right))] bottom-[max(1rem,env(safe-area-inset-bottom))] z-30 select-none"
 		>
 			<div className="border border-[hsl(var(--border))] bg-[hsl(var(--background))]/90 backdrop-blur-sm rounded-[2px] font-mono text-[10px] leading-tight text-foreground overflow-hidden">
 				<div className="px-3 py-1.5 border-b border-[hsl(var(--border))] flex items-center justify-between gap-6">

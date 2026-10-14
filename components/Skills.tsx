@@ -68,7 +68,7 @@ export default function Skills() {
               initial={{ opacity: 0, y: 12 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: i * 0.03, duration: 0.4 }}
-              className="group flex items-center gap-4 border-b border-edge-strong/10 py-4 transition-colors hover:border-accent"
+              className="group flex items-center gap-3 border-b border-edge-strong/10 py-4 transition-colors hover:border-accent sm:gap-4"
             >
               <span className="grid h-9 w-9 shrink-0 place-items-center ring-hairline transition-transform duration-300 group-hover:-translate-y-0.5">
                 {skill.src ? (
@@ -85,16 +85,20 @@ export default function Skills() {
                   </span>
                 )}
               </span>
-              <span className="font-display text-xl text-foreground">{skill.name}</span>
+              <span className="flex min-w-0 flex-1 flex-col gap-0.5 sm:flex-row sm:items-center sm:gap-0">
+                <span className="font-display text-lg leading-tight text-foreground sm:text-xl">
+                  {skill.name}
+                </span>
 
-              {/* dotted leader */}
-              <span
-                aria-hidden="true"
-                className="mx-2 hidden h-px flex-1 border-t border-dotted border-foreground/20 sm:block"
-              />
+                {/* dotted leader */}
+                <span
+                  aria-hidden="true"
+                  className="mx-2 hidden h-px flex-1 border-t border-dotted border-foreground/20 sm:block"
+                />
 
-              <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-dim transition-colors group-hover:text-foreground">
-                {skill.level}
+                <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-dim transition-colors group-hover:text-foreground sm:text-[11px]">
+                  {skill.level}
+                </span>
               </span>
             </motion.li>
           ))}

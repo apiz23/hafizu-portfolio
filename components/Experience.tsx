@@ -59,7 +59,6 @@ export default function Experience() {
           title="Experience"
           variant="reversed"
         />
-        </div>
 
         <div className="mt-4">
           {experiences.map((exp, index) => (

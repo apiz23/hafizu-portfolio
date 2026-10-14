@@ -44,7 +44,7 @@ export default function Navbar() {
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 pt-[env(safe-area-inset-top)] transition-all duration-300 ${
         scrolled
           ? "bg-background/85 backdrop-blur-md rule-b"
           : "bg-transparent"
@@ -55,7 +55,7 @@ export default function Navbar() {
           <Link
             href="#home"
             onClick={(e) => { e.preventDefault(); scrollToId("home"); }}
-            className="group flex items-center gap-2"
+            className="group flex items-center gap-2 tap-min"
             aria-label="Back to top"
           >
             <span className="text-foreground transition-colors group-hover:text-hover">
@@ -66,7 +66,7 @@ export default function Navbar() {
             </span>
           </Link>
 
-          <div className="hidden sm:flex items-center gap-7">
+          <div className="hidden md:flex items-center gap-5 lg:gap-7">
             {navLinks.map(({ label, href }) => {
               const id = href.replace("#", "");
               const isActive = active === id;
@@ -76,7 +76,7 @@ export default function Navbar() {
                   href={href}
                   data-active={isActive}
                   onClick={(e) => { e.preventDefault(); scrollToId(id); }}
-                  className="group inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.16em] text-ink-dim transition-colors hover:text-foreground"
+                  className="group inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.16em] text-ink-dim transition-colors hover:text-foreground tap-min"
                 >
                   <span
                     aria-hidden="true"
@@ -94,7 +94,7 @@ export default function Navbar() {
 
           <button
             type="button"
-            className="sm:hidden flex min-h-[44px] min-w-[44px] items-center justify-center text-foreground"
+            className="md:hidden flex min-h-[44px] min-w-[44px] items-center justify-center text-foreground"
             onClick={() => setMenuOpen(true)}
             aria-label="Open menu"
           >
@@ -109,7 +109,7 @@ export default function Navbar() {
       <Drawer open={menuOpen} onOpenChange={setMenuOpen}>
         <DrawerContent className="rule-t border-none bg-background">
           <DrawerTitle className="sr-only">Navigation Menu</DrawerTitle>
-          <div className="px-6 pb-8 pt-4">
+          <div className="px-6 pt-4 pb-[max(2rem,env(safe-area-inset-bottom))]">
             <nav className="flex flex-col" aria-label="Mobile navigation">
               {navLinks.map(({ label, href }) => {
                 const id = href.replace("#", "");

@@ -38,7 +38,7 @@ export default function Intro() {
     <section
       ref={sectionRef}
       id="home"
-      className="relative flex min-h-screen items-center overflow-hidden pt-24 pb-16"
+      className="relative flex min-h-svh items-center overflow-hidden pt-24 pb-16"
     >
       <GridRuler columns={6} />
 
@@ -79,7 +79,7 @@ export default function Intro() {
         </motion.div>
 
         {/* Headline — GitHub avatar sits behind it as a faded ink watermark */}
-        <div className="relative mx-auto mt-8 max-w-[16ch]">
+        <div className="relative mx-auto mt-8 w-full">
           <motion.div
             aria-hidden="true"
             initial={{ opacity: 0, scale: 0.92 }}
@@ -99,7 +99,7 @@ export default function Intro() {
             </div>
           </motion.div>
 
-          <h1 className="relative z-10 text-center display-xl text-foreground">
+          <h1 className="relative z-10 mx-auto text-center display-xl text-foreground text-balance">
             <motion.span
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
@@ -147,7 +147,7 @@ export default function Intro() {
                   .getElementById("projects")
                   ?.scrollIntoView({ behavior: "smooth", block: "start" });
               }}
-              className="group relative inline-flex items-center justify-center gap-2 overflow-hidden bg-foreground px-6 py-3.5 font-mono text-[11px] uppercase tracking-[0.16em] text-background"
+              className="group relative inline-flex items-center justify-center gap-2 overflow-hidden bg-foreground px-6 py-4 font-mono text-[11px] uppercase tracking-[0.16em] text-background sm:py-3.5"
             >
               <span className="relative z-10">View Work</span>
               <span
@@ -162,7 +162,7 @@ export default function Intro() {
               href="https://docs.google.com/document/d/1SsIiM2VCZnLpso4zuoE6EraAcZrMW_pmXiKLz_1Go8Y/edit?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 font-mono text-[11px] uppercase tracking-[0.16em] text-foreground ring-ink transition-colors hover:bg-foreground hover:text-background"
+              className="inline-flex items-center justify-center gap-2 px-6 py-4 font-mono text-[11px] uppercase tracking-[0.16em] text-foreground ring-ink transition-colors hover:bg-foreground hover:text-background sm:py-3.5"
             >
               Résumé ↗
             </Link>
@@ -174,14 +174,14 @@ export default function Intro() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.44, ease: EASE_OUT_EXPO }}
-          className="mx-auto mt-16 grid max-w-3xl grid-cols-3 rule-y"
+          className="mx-auto mt-12 grid max-w-3xl grid-cols-3 rule-y sm:mt-16"
         >
           {stats.map((s, i) => (
             <div
               key={s.label}
-              className={`px-4 py-6 text-center ${i > 0 ? "border-l border-edge-strong/15" : ""}`}
+              className={`px-2 py-5 text-center sm:px-4 sm:py-6 ${i > 0 ? "border-l border-edge-strong/15" : ""}`}
             >
-              <dd className="font-display text-4xl leading-none text-foreground">
+              <dd className="font-display text-2xl leading-none text-foreground sm:text-4xl">
                 {s.value}
               </dd>
               <dt className="eyebrow mt-2 block">{s.label}</dt>

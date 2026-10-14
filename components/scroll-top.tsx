@@ -26,12 +26,12 @@ export default function ScrollToTop() {
 					animate={{ opacity: 1, scale: 1, y: 0 }}
 					exit={{ opacity: 0, scale: 0.5, y: 20 }}
 					transition={{ duration: 0.2 }}
-					className="fixed bottom-4 left-4 z-30"
+					className="fixed left-[max(1rem,env(safe-area-inset-left))] bottom-[max(1rem,env(safe-area-inset-bottom))] z-30"
 				>
 					<Button
 						size="icon"
 						onClick={scrollToTop}
-						className="group relative h-10 w-10 rounded-none bg-foreground text-background shadow-none transition-colors duration-200 hover:bg-accent hover:text-accent-foreground border-0"
+						className="group relative h-11 w-11 rounded-none bg-foreground text-background shadow-none transition-colors duration-200 hover:bg-accent hover:text-accent-foreground border-0"
 						aria-label="Back to top"
 					>
 						<ArrowUp className="h-4 w-4" />

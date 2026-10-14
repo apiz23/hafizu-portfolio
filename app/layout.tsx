@@ -64,7 +64,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, viewport-fit=cover"
+        />
         {/* Framer Motion ships entrance states as inline `opacity:0`. Without
             JS those never animate in, so the page would render blank. Force
             them visible when scripting is unavailable. */}

@@ -199,7 +199,7 @@ export default function Education({
 					</div>
 
 					{isLoading ? (
-						<div className="flex h-[280px] items-center justify-center ring-hairline">
+						<div className="flex h-[240px] items-center justify-center ring-hairline sm:h-[280px]">
 							<motion.div
 								animate={{ rotate: 360 }}
 								transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
@@ -207,7 +207,7 @@ export default function Education({
 							/>
 						</div>
 					) : error ? (
-						<div className="flex h-[280px] flex-col items-center justify-center gap-3 ring-hairline">
+						<div className="flex h-[240px] flex-col items-center justify-center gap-3 ring-hairline sm:h-[280px]">
 							<BookOpen className="h-7 w-7 text-ink-dim" />
 							<p className="font-mono text-[12px] text-ink-dim">{error}</p>
 							<button
@@ -219,14 +219,14 @@ export default function Education({
 							</button>
 						</div>
 					) : chartData.length === 0 ? (
-						<div className="flex h-[280px] flex-col items-center justify-center gap-3 ring-hairline">
+						<div className="flex h-[240px] flex-col items-center justify-center gap-3 ring-hairline sm:h-[280px]">
 							<BookOpen className="h-7 w-7 text-ink-dim" />
 							<p className="font-mono text-[12px] text-ink-dim">
 								No academic results recorded yet.
 							</p>
 						</div>
 					) : (
-						<div className="h-[300px] w-full p-4 ring-hairline sm:p-6">
+						<div className="h-[260px] w-full p-3 ring-hairline sm:h-[300px] sm:p-6">
 							<ChartContainer config={chartConfig} className="h-full w-full">
 								<AreaChart
 									accessibilityLayer
@@ -249,6 +249,7 @@ export default function Education({
 										tickLine={false}
 										axisLine={false}
 										tickMargin={8}
+										minTickGap={8}
 										tick={{
 											fontFamily: "var(--font-mono)",
 											fontSize: 10,
