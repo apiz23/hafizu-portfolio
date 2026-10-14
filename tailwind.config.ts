@@ -18,24 +18,34 @@ const config = {
     		}
     	},
     	extend: {
+    	fontFamily: {
+    		sans: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
+    		display: ['var(--font-instrument)', 'Instrument Serif', 'Georgia', 'serif'],
+    		mono: ['var(--font-mono)', 'Space Mono', 'ui-monospace', 'monospace'],
+    	},
+    	maxWidth: {
+    		shell: '1400px',
+    	},
 colors: {
 			border: 'hsl(var(--border))',
 			input: 'hsl(var(--input))',
 			ring: 'hsl(var(--ring))',
 			background: 'hsl(var(--background))',
 			foreground: 'hsl(var(--foreground))',
+			surface: 'hsl(var(--surface))',
 			'surface-alt': 'hsl(var(--surface-alt))',
 			edge: 'hsl(var(--edge))',
-			lime: {
-				'50': 'hsl(88 90% 95%)',
-				'100': 'hsl(88 85% 85%)',
-				'200': 'hsl(88 80% 72%)',
-				'300': 'hsl(88 78% 62%)',
-				'400': 'hsl(var(--lime))',
-				'500': 'hsl(88 65% 42%)',
-				'600': 'hsl(88 60% 32%)',
-				'700': 'hsl(88 55% 22%)',
+			'edge-strong': 'hsl(var(--edge-strong))',
+			ink: {
+				DEFAULT: 'hsl(var(--ink))',
+				dim: 'hsl(var(--ink-dim))',
 			},
+			accent: {
+				DEFAULT: 'hsl(var(--accent))',
+				foreground: 'hsl(var(--accent-ink))',
+			},
+			hover: 'hsl(var(--hover))',
+			pressed: 'hsl(var(--pressed))',
 			primary: {
 				DEFAULT: 'hsl(var(--primary))',
 				foreground: 'hsl(var(--primary-foreground))'
@@ -51,10 +61,6 @@ colors: {
 			muted: {
 				DEFAULT: 'hsl(var(--muted))',
 				foreground: 'hsl(var(--muted-foreground))'
-			},
-			accent: {
-				DEFAULT: 'hsl(var(--accent))',
-				foreground: 'hsl(var(--accent-foreground))'
 			},
 			popover: {
 				DEFAULT: 'hsl(var(--popover))',

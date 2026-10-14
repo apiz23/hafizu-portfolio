@@ -1,30 +1,46 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Plus_Jakarta_Sans, Space_Mono } from "next/font/google";
+import { Instrument_Serif, Inter, Space_Mono } from "next/font/google";
 import { Toaster } from "sonner";
-import ScrollToTop from "@/components/scroll-top";
 import { Analytics } from "@vercel/analytics/next";
 import { Providers } from "@/components/providers";
-import Navbar from "@/components/Navbar";
+import SplashGate from "@/components/splash-gate";
 
-const jakarta = Plus_Jakarta_Sans({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-jakarta",
-  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-inter",
+  weight: ["300", "400", "500", "600"],
+  display: "swap",
+});
+
+const instrument = Instrument_Serif({
+  subsets: ["latin"],
+  variable: "--font-instrument",
+  weight: ["400"],
+  style: ["normal", "italic"],
+  display: "swap",
 });
 
 const spaceMono = Space_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
   weight: ["400", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://hafizuddin-portfolio.vercel.app"),
   title: "Hafizu | Portfolio",
   description: "Personal Portfolio by Hafizu - Software Developer",
+  manifest: "/icon/site.webmanifest",
   icons: {
-    icon: [{ url: "/favicon.ico", href: "/favicon.ico" }],
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icon/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: [{ url: "/icon/apple-touch-icon.png", sizes: "180x180" }],
   },
   openGraph: {
     title: "Hafizu | Portfolio",
@@ -33,7 +49,12 @@ export const metadata: Metadata = {
     url: "https://hafizuddin-portfolio.vercel.app",
     siteName: "Hafizu Portfolio",
     locale: "en_US",
-    images: [{ url: "/opengraph-image.png", width: 1200, height: 630 }],
+    // Images come from app/opengraph-image.tsx (auto-injected).
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Hafizu | Portfolio",
+    description: "Personal Portfolio by Hafizu - Software Developer",
   },
 };
 
@@ -44,18 +65,16 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
       </head>
       <body
-        className={`${jakarta.variable} ${spaceMono.variable} font-sans font-semibold bg-background antialiased`}
+        className={`${inter.variable} ${instrument.variable} ${spaceMono.variable} font-sans bg-background antialiased`}
       >
         <Providers>
-          <Navbar />
+          <SplashGate />
           <div className="relative min-h-screen">
             {children}
             <Toaster position="top-center" />
           </div>
-          <ScrollToTop />
           <Analytics />
         </Providers>
       </body>

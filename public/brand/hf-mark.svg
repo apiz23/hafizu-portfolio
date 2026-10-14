@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="HF mark">
+  <!--
+    HF "measured monogram" on a 24-unit grid.
+    H and F share posts; corner ticks echo the site's ring/corner language.
+    One gold tick marks the F terminal.
+  -->
+  <!-- corner frame ticks (hairline) -->
+  <g fill="none" stroke="#2F1664" stroke-width="2" stroke-linejoin="miter" stroke-linecap="butt">
+    <path d="M6 18V6H18"/>
+    <path d="M82 6H94V18"/>
+    <path d="M94 82V94H82"/>
+    <path d="M18 94H6V82"/>
+  </g>
+
+  <!-- H + F drawn as one grid system -->
+  <g fill="none" stroke="#2F1664" stroke-width="5" stroke-linejoin="miter" stroke-linecap="butt">
+    <!-- H: left post, right post, crossbar -->
+    <path d="M22 28V72"/>
+    <path d="M46 28V72"/>
+    <path d="M22 50H46"/>
+    <!-- F: stem, top arm, mid arm (mid arm terminates in gold) -->
+    <path d="M58 28V72"/>
+    <path d="M58 28H82"/>
+    <path d="M58 50H78"/>
+  </g>
+
+  <!-- gold tick on the F mid-arm terminal -->
+  <path d="M78 50H82" fill="none" stroke="#EACB49" stroke-width="5" stroke-linejoin="miter" stroke-linecap="butt"/>
+</svg>

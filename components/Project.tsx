@@ -2,9 +2,7 @@
 
 import Link from "next/link";
 import { motion, AnimatePresence, useInView } from "framer-motion";
-import { Github } from "lucide-react";
 import { useState, useEffect, useRef, useMemo } from "react";
-import { clipReveal, EASE_OUT_EXPO, hoverLift } from "@/lib/animations";
 import { LinkPreview } from "@/components/ui/link-preview";
 import {
   Pagination,
@@ -40,20 +38,16 @@ const ITEMS_PER_PAGE = 5;
 
 function SkeletonRow({ delay }: { delay: number }) {
   return (
-    <div
-      className="flex items-center gap-4 border-t border-edge py-4"
-      style={{ animationDelay: `${delay}ms` }}
-    >
-      <div className="w-6 h-3 bg-edge rounded animate-pulse shrink-0" />
-      <div className="flex-1 h-4 bg-edge rounded animate-pulse" />
-      <div className="hidden sm:block w-20 h-3 bg-edge rounded animate-pulse" />
-      <div className="hidden sm:block w-8 h-3 bg-edge rounded animate-pulse" />
-      <div className="w-4 h-3 bg-edge rounded animate-pulse shrink-0" />
+    <div className="flex items-center gap-4 border-b border-edge-strong/10 py-5" style={{ animationDelay: `${delay}ms` }}>
+      <div className="h-3 w-6 shrink-0 animate-pulse bg-foreground/10" />
+      <div className="h-4 flex-1 animate-pulse bg-foreground/10" />
+      <div className="hidden h-3 w-20 animate-pulse bg-foreground/10 sm:block" />
+      <div className="h-3 w-4 shrink-0 animate-pulse bg-foreground/10" />
     </div>
   );
 }
 
-export default function Project() {
+export default function Project({ showArchiveLink = true }: { showArchiveLink?: boolean }) {
   const sectionRef = useRef<HTMLElement>(null);
   const sectionInView = useInView(sectionRef, { once: true, margin: "-10%" });
 
@@ -69,8 +63,7 @@ export default function Project() {
       setError(null);
       const res = await fetch("/api/projects");
       if (!res.ok) throw new Error("Failed to load projects");
-      const data = await res.json();
-      setProjects(data);
+      setProjects(await res.json());
     } catch (err) {
       console.error(err);
       setError("Failed to load projects");
@@ -116,45 +109,41 @@ export default function Project() {
   };
 
   return (
-    <section ref={sectionRef} id="projects" className="py-24 border-t border-edge">
-      <div className="max-w-5xl mx-auto px-6 sm:px-10">
-        <div className="flex items-center gap-3 mb-2">
-          <span className="h-px w-6 bg-purple-500" />
-          <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-purple-500">
-            Projects
-          </span>
-        </div>
-        <div className="flex justify-between items-baseline">
-          <motion.h2
-            variants={clipReveal}
-            initial="hidden"
-            animate={sectionInView ? "visible" : "hidden"}
-            className="font-display text-foreground tracking-[-0.02em] leading-[0.95]"
-            style={{ fontSize: "clamp(2.8rem, 6vw, 5rem)" }}
-          >
-            PROJECTS
-          </motion.h2>
-          <span className="font-mono text-[13px] text-muted-foreground">
+    <section ref={sectionRef} id="projects" className="relative border-t border-edge-strong/15 py-24 sm:py-28">
+      <div className="mx-auto max-w-[1400px] px-6 sm:px-10">
+        <div className="flex items-baseline justify-between rule-b pb-5">
+          <div className="flex items-baseline gap-4">
+            <span className="eyebrow">04 — Selected work</span>
+            <motion.h2
+              initial={{ opacity: 0, y: 16 }}
+              animate={sectionInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5 }}
+              className="display-md text-foreground"
+            >
+              Projects
+            </motion.h2>
+          </div>
+          <span className="font-mono text-[12px] text-ink-dim">
             {loading ? "—" : `${filteredProjects.length} / ${projects.length}`}
           </span>
         </div>
 
-        {/* Category filter */}
+        {/* Filter */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
-          animate={sectionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+          animate={sectionInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.1 }}
-          className="flex flex-wrap gap-2 mt-4 mb-2"
+          className="mt-6 flex flex-wrap gap-2"
         >
           {categories.map((cat) => (
             <button
               key={cat.id}
               onClick={() => handleFilterChange(cat.id)}
               aria-pressed={filter === cat.id}
-              className={`font-mono text-[11px] uppercase tracking-[0.08em] px-3 py-1.5 transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
+              className={`px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.14em] transition-all duration-200 ${
                 filter === cat.id
-                  ? "bg-purple-500 text-white"
-                  : "bg-background text-muted-foreground border border-edge hover:border-muted-foreground hover:text-foreground"
+                  ? "bg-foreground text-background"
+                  : "text-ink-dim ring-hairline hover:text-foreground"
               }`}
             >
               {cat.label}
@@ -162,23 +151,20 @@ export default function Project() {
           ))}
         </motion.div>
 
-        {/* Project list */}
+        {/* List */}
         {loading ? (
-          <div>
-            {Array.from({ length: 5 }).map((_, i) => (
+          <div className="mt-4">
+            {Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => (
               <SkeletonRow key={i} delay={i * 60} />
             ))}
-            <div className="border-t border-edge" />
           </div>
         ) : error ? (
-          <div className="border-t border-edge py-16 text-center">
-            <p className="font-mono text-[13px] text-muted-foreground mb-3">
-              {error}
-            </p>
+          <div className="mt-4 border-b border-edge-strong/10 py-16 text-center">
+            <p className="mb-3 font-mono text-[13px] text-ink-dim">{error}</p>
             <button
               type="button"
               onClick={fetchProjects}
-              className="font-mono text-[12px] uppercase tracking-[0.08em] text-purple-500 hover:text-purple-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="font-mono text-[11px] uppercase tracking-[0.14em] text-foreground link-underline"
             >
               Try again
             </button>
@@ -190,11 +176,12 @@ export default function Project() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.2 }}
+              className="mt-4"
             >
               {filteredProjects.length === 0 ? (
-                <div className="border-t border-edge py-16 text-center">
-                  <p className="font-mono text-[13px] text-muted-foreground">
+                <div className="border-b border-edge-strong/10 py-16 text-center">
+                  <p className="font-mono text-[13px] text-ink-dim">
                     No projects in this category yet.
                   </p>
                 </div>
@@ -203,32 +190,38 @@ export default function Project() {
                   {paginatedProjects.map((project, index) => {
                     const globalIndex = (currentPage - 1) * ITEMS_PER_PAGE + index;
                     const rowClassName =
-                      "border-t border-edge py-4 flex items-center gap-4 cursor-pointer group hover:bg-surface-alt transition-all duration-200";
+                      "group flex items-center gap-4 border-b border-edge-strong/10 py-5 transition-colors hover:border-accent cursor-pointer";
                     const rowContent = (
                       <>
-                        <span className="font-mono text-[12px] text-muted-foreground/50 w-6 shrink-0 group-hover:text-purple-500 transition-colors duration-200" aria-hidden="true">
+                        <span
+                          className="w-6 shrink-0 font-mono text-[12px] text-ink-dim/60 transition-colors group-hover:text-accent"
+                          aria-hidden="true"
+                        >
                           {String(globalIndex + 1).padStart(2, "0")}
                         </span>
-                        <span className="text-[17px] font-semibold text-foreground flex-1 min-w-0 truncate group-hover:text-purple-500 transition-colors duration-200 font-display tracking-[-0.01em]">
+                        <span className="flex-1 min-w-0 truncate font-display text-2xl leading-none text-foreground link-underline">
                           {project.title}
                         </span>
-                        <span className="hidden lg:inline text-[14px] text-muted-foreground truncate max-w-[28ch] shrink-0">
+                        <span className="hidden max-w-[30ch] shrink-0 truncate text-[14px] text-ink-dim lg:inline">
                           {project.description}
                         </span>
-                        <span className="hidden sm:flex items-center gap-1.5 shrink-0">
+                        <span className="hidden shrink-0 items-center gap-1.5 sm:flex">
                           {project.badges.slice(0, 2).map((badge) => (
-                            <span key={badge} className="font-mono text-[12px] px-1.5 py-0.5 bg-surface-alt text-muted-foreground">
+                            <span
+                              key={badge}
+                              className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-dim ring-hairline px-2 py-0.5"
+                            >
                               {badge}
                             </span>
                           ))}
                         </span>
                         {project.year && (
-                          <span className="hidden sm:inline font-mono text-[11px] text-muted-foreground/50 shrink-0">
+                          <span className="hidden shrink-0 font-mono text-[11px] text-ink-dim/70 sm:inline">
                             {project.year}
                           </span>
                         )}
                         <span
-                          className="font-mono text-sm text-muted-foreground/30 group-hover:text-purple-500 transition-colors duration-200 shrink-0"
+                          className="shrink-0 font-mono text-sm text-foreground/30 transition-all duration-300 group-hover:translate-x-1 group-hover:text-accent"
                           aria-hidden="true"
                         >
                           →
@@ -241,24 +234,14 @@ export default function Project() {
                     return (
                       <motion.div
                         key={project.id}
-                        initial={{ opacity: 0, y: 16 }}
+                        initial={{ opacity: 0, y: 14 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{
-                          delay: index * 0.05,
-                          duration: 0.4,
-                          ease: EASE_OUT_EXPO,
-                        }}
-                        {...hoverLift}
+                        transition={{ delay: index * 0.05, duration: 0.4 }}
                       >
                         {!previewUrl ? (
                           <div className={rowClassName}>{rowContent}</div>
                         ) : (
-                          <LinkPreview
-                            url={previewUrl}
-                            width={240}
-                            height={150}
-                            className={rowClassName}
-                          >
+                          <LinkPreview url={previewUrl} width={240} height={150} className={rowClassName}>
                             {rowContent}
                           </LinkPreview>
                         )}
@@ -266,11 +249,9 @@ export default function Project() {
                     );
                   })}
 
-                  <div className="border-t border-edge" />
-
                   {/* Pagination */}
                   {totalPages > 1 && (
-                    <div className="mt-4">
+                    <div className="mt-8">
                       <Pagination>
                         <PaginationContent>
                           <PaginationItem>
@@ -280,13 +261,12 @@ export default function Project() {
                                 e.preventDefault();
                                 if (currentPage > 1) setCurrentPage(currentPage - 1);
                               }}
-                              className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
+                              className={currentPage === 1 ? "pointer-events-none opacity-40" : ""}
                             />
                           </PaginationItem>
-
                           {getPageNumbers().map((page, i) =>
                             page === "..." ? (
-                              <PaginationItem key={`ellipsis-${i}`}>
+                              <PaginationItem key={`e-${i}`}>
                                 <PaginationEllipsis />
                               </PaginationItem>
                             ) : (
@@ -304,7 +284,6 @@ export default function Project() {
                               </PaginationItem>
                             )
                           )}
-
                           <PaginationItem>
                             <PaginationNext
                               href="#"
@@ -312,7 +291,7 @@ export default function Project() {
                                 e.preventDefault();
                                 if (currentPage < totalPages) setCurrentPage(currentPage + 1);
                               }}
-                              className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
+                              className={currentPage === totalPages ? "pointer-events-none opacity-40" : ""}
                             />
                           </PaginationItem>
                         </PaginationContent>
@@ -325,20 +304,30 @@ export default function Project() {
           </AnimatePresence>
         )}
 
-        {/* GitHub link */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
-          animate={sectionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+          animate={sectionInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.3 }}
-          className="mt-6"
+          className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3"
         >
+          {showArchiveLink && (
+            <Link
+              href="/projects"
+              className="group inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-foreground link-underline"
+            >
+              View all projects
+              <span className="transition-transform duration-300 group-hover:translate-x-0.5">
+                →
+              </span>
+            </Link>
+          )}
           <Link
             href="https://github.com/apiz23"
             target="_blank"
-            className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1.5 group"
+            className="group inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-dim link-underline"
           >
-            <Github className="h-3 w-3 group-hover:text-purple-500 transition-colors" />
-            <span>View all on GitHub</span>
+            View all on GitHub
+            <span className="transition-transform duration-300 group-hover:translate-x-0.5">↗</span>
           </Link>
         </motion.div>
       </div>

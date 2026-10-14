@@ -1,5 +1,6 @@
 import supabase from "@/lib/supabase";
 import { NextResponse } from "next/server";
+import { isAuthorized } from "@/lib/admin-auth";
 
 export async function GET() {
   try {
@@ -20,8 +21,7 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const secret = req.headers.get("x-admin-secret");
-  if (!secret || secret !== process.env.ADMIN_UPLOAD_SECRET) {
+  if (!(await isAuthorized(req))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

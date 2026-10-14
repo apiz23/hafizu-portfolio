@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Muhd Hafizuddin">
+  <rect width="100" height="100" fill="#2F1664"/>
+  <g fill="none" stroke="#F9F4F2" stroke-width="8" stroke-linejoin="miter" stroke-linecap="butt">
+    <path d="M20 26V74"/>
+    <path d="M48 26V74"/>
+    <path d="M20 50H48"/>
+    <path d="M62 26V74"/>
+    <path d="M62 26H86"/>
+    <path d="M62 50H80"/>
+  </g>
+  <path d="M80 50H86" fill="none" stroke="#EACB49" stroke-width="8" stroke-linejoin="miter" stroke-linecap="butt"/>
+</svg>

@@ -1,117 +1,109 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { clipReveal, EASE_OUT_EXPO, hoverGlow } from "@/lib/animations";
 import Image from "next/image";
+import GridRuler from "@/components/grid-ruler";
 
-const levelWidth = { Advanced: "w-[85%]", Intermediate: "w-[65%]", Familiar: "w-[40%]" };
+type Skill = {
+  name: string;
+  level: string;
+  /** Image icon path (when the tool has a real logo). */
+  src?: string;
+  /** Fallback short glyph shown in the badge when there's no logo. */
+  glyph?: string;
+};
 
-const skills = [
-  { src: "/svg/nextjs.svg", alt: "Next.js", name: "Next.js", level: "Advanced" as const },
-  { src: "/svg/react.svg", alt: "React", name: "React", level: "Advanced" as const },
-  { src: "/svg/typescript.svg", alt: "TypeScript", name: "TypeScript", level: "Advanced" as const },
-  { src: "/svg/tailwindcss.svg", alt: "Tailwind CSS", name: "Tailwind CSS", level: "Advanced" as const },
-  { src: "/svg/nodejs.svg", alt: "Node.js", name: "Node.js", level: "Intermediate" as const },
-  { src: "/svg/postgresql.svg", alt: "PostgreSQL", name: "PostgreSQL", level: "Intermediate" as const },
-  { src: "/svg/supabase.svg", alt: "Supabase", name: "Supabase", level: "Intermediate" as const },
-  { src: "/svg/git.svg", alt: "Git", name: "Git", level: "Advanced" as const },
-  { src: "/svg/docker.svg", alt: "Docker", name: "Docker", level: "Familiar" as const },
-  { src: "/svg/figma.svg", alt: "Figma", name: "Figma", level: "Familiar" as const },
+const skills: Skill[] = [
+  { name: "Next.js", level: "Advanced", src: "/svg/nextjs.svg" },
+  { name: "React", level: "Advanced", src: "/svg/react.svg" },
+  { name: "TypeScript", level: "Advanced", src: "/svg/typescript.svg" },
+  { name: "Tailwind CSS", level: "Advanced", src: "/svg/tailwindcss.svg" },
+  { name: "Node.js", level: "Intermediate", src: "/svg/nodejs.svg" },
+  { name: "PostgreSQL", level: "Intermediate", src: "/svg/postgresql.svg" },
+  { name: "Supabase", level: "Intermediate", src: "/svg/supabase.svg" },
+  { name: "Git", level: "Advanced", src: "/svg/git.svg" },
+  { name: "Docker", level: "Familiar", src: "/svg/docker.svg" },
+  { name: "Figma", level: "Familiar", src: "/svg/figma.svg" },
+  { name: "Hermes", level: "Intermediate", src: "/svg/hermes.svg" },
+  // Quality assurance — practice-based, no vendor logo (glyph badges)
+  { name: "Manual Testing", level: "Intermediate", glyph: "MT" },
+  { name: "Test Cases", level: "Intermediate", glyph: "TC" },
+  { name: "Bug Reporting", level: "Intermediate", glyph: "BR" },
+  { name: "UI / Functional QA", level: "Intermediate", glyph: "QA" },
+  { name: "Technical Documentation", level: "Intermediate", glyph: "TD" },
 ];
-
-function SkillIcon({ src, alt, isHovered }: { src: string; alt: string; isHovered: boolean }) {
-  return (
-    <Image
-      src={src}
-      alt={alt}
-      width={24}
-      height={24}
-      className={`transition-all duration-300 ${
-        isHovered ? "grayscale hue-rotate-[260deg] saturate-[3] brightness-125" : ""
-      }`}
-    />
-  );
-}
 
 export default function Skills() {
   const sectionRef = useRef<HTMLElement>(null);
-  const sectionInView = useInView(sectionRef, { once: true, margin: "-10%" });
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const inView = useInView(sectionRef, { once: true, margin: "-12%" });
 
   return (
     <section
       ref={sectionRef}
       id="skills"
-      className="section-alt py-24 border-t border-edge"
+      className="section-alt relative border-t border-edge-strong/15 py-24 sm:py-28"
     >
-      <div className="max-w-5xl mx-auto px-6 sm:px-10">
-        <div className="flex items-center gap-3 mb-2">
-          <span className="h-px w-6 bg-purple-500" />
-          <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-purple-500">
-            Skills & Tools
+      <GridRuler columns={6} />
+
+      <div className="relative z-10 mx-auto max-w-[1400px] px-6 sm:px-10">
+        {/* Distinct header: label left, index right, rule underneath */}
+        <div className="flex items-baseline justify-between rule-b pb-5">
+          <div className="flex items-baseline gap-4">
+            <span className="eyebrow">01 — Toolkit</span>
+            <motion.h2
+              initial={{ opacity: 0, y: 16 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5 }}
+              className="display-md text-foreground"
+            >
+              Skills &amp; tools
+            </motion.h2>
+          </div>
+          <span className="hidden font-mono text-[11px] text-ink-dim sm:block">
+            {skills.length} technologies
           </span>
         </div>
-        <motion.h2
-          variants={clipReveal}
-          initial="hidden"
-          animate={sectionInView ? "visible" : "hidden"}
-          className="font-display text-foreground tracking-[-0.02em] leading-[0.95] mb-12"
-          style={{ fontSize: "clamp(2.8rem, 6vw, 5rem)" }}
-        >
-          SKILLS
-        </motion.h2>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-px bg-edge border border-edge">
-          {skills.map((skill, index) => (
-            <motion.div
+        {/* Rule-based two-column index */}
+        <ul className="mt-2 grid grid-cols-1 gap-x-16 md:grid-cols-2">
+          {skills.map((skill, i) => (
+            <motion.li
               key={skill.name}
-              initial={{ opacity: 0, y: 20, scale: 0.95 }}
-              animate={sectionInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 20, scale: 0.95 }}
-              transition={{ delay: index * 0.04, duration: 0.4, ease: EASE_OUT_EXPO }}
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-              {...hoverGlow}
-              className="bg-background p-5 flex flex-col gap-2.5 relative group cursor-default transition-all duration-300"
+              initial={{ opacity: 0, y: 12 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: i * 0.03, duration: 0.4 }}
+              className="group flex items-center gap-4 border-b border-edge-strong/10 py-4 transition-colors hover:border-accent"
             >
-              <motion.div
-                initial={false}
-                animate={{
-                  opacity: hoveredIndex === index ? 1 : 0,
-                }}
-                className="absolute inset-0 bg-purple-500/5 pointer-events-none"
+              <span className="grid h-9 w-9 shrink-0 place-items-center ring-hairline transition-transform duration-300 group-hover:-translate-y-0.5">
+                {skill.src ? (
+                  <Image
+                    src={skill.src}
+                    alt=""
+                    width={20}
+                    height={20}
+                    className="opacity-80"
+                  />
+                ) : (
+                  <span className="font-mono text-[11px] font-bold tracking-tight text-ink-dim">
+                    {skill.glyph}
+                  </span>
+                )}
+              </span>
+              <span className="font-display text-xl text-foreground">{skill.name}</span>
+
+              {/* dotted leader */}
+              <span
+                aria-hidden="true"
+                className="mx-2 hidden h-px flex-1 border-t border-dotted border-foreground/20 sm:block"
               />
 
-              {/* Icon with glow on hover */}
-              <span className={`text-2xl transition-all duration-300 relative z-10 ${
-                hoveredIndex === index ? "text-purple-500 drop-shadow-[0_0_8px_hsl(var(--purple)/0.4)]" : "text-muted-foreground"
-              }`}>
-                <SkillIcon src={skill.src} alt={skill.alt} isHovered={hoveredIndex === index} />
-              </span>
-
-              <span className="font-display text-[17px] text-foreground tracking-[-0.01em] relative z-10">
-                {skill.name}
-              </span>
-
-              <span className={`font-mono text-[10px] uppercase tracking-[0.1em] relative z-10 transition-colors duration-300 ${
-                hoveredIndex === index ? "text-purple-500" : "text-muted-foreground"
-              }`}>
+              <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-dim transition-colors group-hover:text-foreground">
                 {skill.level}
               </span>
-
-              {/* Skill level bar */}
-              <div className="h-px w-full bg-edge relative z-10 mt-1 overflow-hidden">
-                <motion.div
-                  initial={{ scaleX: 0 }}
-                  animate={sectionInView ? { scaleX: 1 } : { scaleX: 0 }}
-                  transition={{ delay: 0.3 + index * 0.04, duration: 0.6, ease: EASE_OUT_EXPO }}
-                  style={{ transformOrigin: "left" }}
-                  className={`h-full bg-purple-500 ${levelWidth[skill.level]}`}
-                />
-              </div>
-            </motion.div>
+            </motion.li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );

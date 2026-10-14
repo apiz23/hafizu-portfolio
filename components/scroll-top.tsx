@@ -31,12 +31,12 @@ export default function ScrollToTop() {
 					<Button
 						size="icon"
 						onClick={scrollToTop}
-						className="relative w-10 h-10 rounded-[2px] bg-foreground hover:bg-[hsl(var(--redline))] text-background shadow-none transition-colors duration-200 group"
+						className="group relative h-10 w-10 rounded-none bg-foreground text-background shadow-none transition-colors duration-200 hover:bg-accent hover:text-accent-foreground border-0"
 						aria-label="Back to top"
 					>
 						<ArrowUp className="h-4 w-4" />
 
-						<span className="absolute bottom-full left-0 mb-2 bg-foreground text-background font-mono text-[11px] uppercase tracking-[0.08em] py-1 px-2 rounded-[2px] opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+						<span className="absolute bottom-full left-0 mb-2 whitespace-nowrap rounded-none bg-foreground px-2 py-1 font-mono text-[11px] uppercase tracking-[0.08em] text-background opacity-0 transition-opacity group-hover:opacity-100">
 							Back to top
 						</span>
 					</Button>

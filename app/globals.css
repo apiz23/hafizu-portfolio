@@ -2,125 +2,196 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --surface: 0 0% 4%;
-  --surface-alt: 0 0% 7%;
-  --ink: 0 0% 95%;
-  --ink-dim: 0 0% 55%;
-  --edge: 0 0% 14%;
-  --purple: 263 70% 50%;
-  --purple-alpha: 263 70% 50% / 0.1;
-  --cyan: 187 80% 55%;
-  --orange: 25 90% 55%;
-  --magenta: 330 65% 52%;
-
-  --background: var(--surface);
-  --foreground: var(--ink);
-  --card: var(--surface-alt);
-  --card-foreground: var(--ink);
-  --popover: var(--surface-alt);
-  --popover-foreground: var(--ink);
-  --primary: var(--purple);
-  --primary-foreground: var(--surface);
-  --secondary: var(--surface-alt);
-  --secondary-foreground: var(--ink);
-  --muted: var(--surface-alt);
-  --muted-foreground: var(--ink-dim);
-  --accent: var(--purple);
-  --accent-foreground: var(--surface);
-  --destructive: var(--orange);
-  --destructive-foreground: var(--surface);
-  --border: var(--edge);
-  --input: var(--edge);
-  --ring: var(--purple);
-  --chart-1: var(--purple);
-  --chart-2: var(--cyan);
-  --chart-3: var(--ink-dim);
-  --chart-4: var(--orange);
-  --chart-5: var(--magenta);
-  --sidebar: var(--surface-alt);
-  --sidebar-foreground: var(--ink);
-  --sidebar-primary: var(--purple);
-  --sidebar-primary-foreground: var(--surface);
-  --sidebar-accent: var(--surface);
-  --sidebar-accent-foreground: var(--ink);
-  --sidebar-border: var(--edge);
-  --sidebar-ring: var(--purple);
-  --font-sans: var(--font-jakarta), 'Plus Jakarta Sans', sans-serif;
-  --font-display: var(--font-jakarta), 'Plus Jakarta Sans', sans-serif;
-  --font-mono: var(--font-mono), 'Space Mono', monospace;
-  --radius: 0px;
-}
-
-.section-alt {
-  --background: var(--surface-alt);
-  --foreground: var(--ink);
-  --muted-foreground: var(--ink-dim);
-  --border: var(--edge);
-}
+/*
+  VIOLET INK — minimal / futuristic design system
+  -------------------------------------------------
+  One ink (deep violet) on cream. Gold is the only accent, used sparingly.
+  Shape language is hairlines + ring borders, never shadows or glow.
+*/
 
 @layer base {
-  html {
-    font-size: 18px;
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
+  :root {
+    /* Core palette */
+    --bg: 40 33% 96%;          /* #F9F4F2 cream */
+    --surface: 0 0% 100%;      /* pure white for raised rules/cards */
+    --surface-alt: 40 28% 93%; /* subtle warm step */
+    --ink: 260 65% 24%;        /* #2F1664 deep violet */
+    --ink-dim: 260 22% 46%;    /* muted violet-grey */
+    --edge: 260 40% 86%;       /* hairline rules */
+    --edge-strong: 260 60% 24%;/* full-strength ink rules */
+    --accent: 46 82% 60%;      /* #EACB49 gold */
+    --accent-ink: 260 65% 18%; /* text on gold */
+    --hover: 258 48% 51%;      /* #6942BB */
+    --pressed: 258 68% 66%;    /* #8D5CF5 */
+
+    /* shadcn mapping */
+    --background: var(--bg);
+    --foreground: var(--ink);
+    --card: var(--surface);
+    --card-foreground: var(--ink);
+    --popover: var(--surface);
+    --popover-foreground: var(--ink);
+    --primary: var(--ink);
+    --primary-foreground: var(--bg);
+    --secondary: var(--surface-alt);
+    --secondary-foreground: var(--ink);
+    --muted: var(--surface-alt);
+    --muted-foreground: var(--ink-dim);
+    --accent-hsl: var(--accent);
+    --accent-foreground: var(--accent-ink);
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: var(--edge);
+    --input: var(--edge);
+    --ring: var(--hover);
+    --chart-1: var(--ink);
+    --chart-2: var(--hover);
+    --chart-3: var(--accent);
+    --chart-4: var(--ink-dim);
+    --chart-5: var(--pressed);
+
+    /* Type */
+    --font-sans: var(--font-inter), 'Inter', system-ui, sans-serif;
+    --font-display: var(--font-instrument), 'Instrument Serif', Georgia, serif;
+    --font-mono: var(--font-mono), 'Space Mono', ui-monospace, monospace;
+
+    --radius: 0px;
   }
 
-  html.lenis {
-    scroll-behavior: auto;
+  /* Section variant: alternate warm step, still cream family */
+  .section-alt {
+    --background: var(--surface-alt);
+    --card: var(--surface);
   }
+
+  html {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  html.lenis,
   .lenis.lenis-smooth {
     scroll-behavior: auto;
   }
 
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
   }
 
   body {
     background: hsl(var(--background));
     color: hsl(var(--foreground));
+    font-family: var(--font-sans);
+    font-weight: 400;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
   ::selection {
-    background: hsl(var(--purple) / 0.25);
-    color: hsl(var(--ink));
+    background: hsl(var(--accent));
+    color: hsl(var(--accent-ink));
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--hover));
+    outline-offset: 3px;
   }
 }
 
 @layer utilities {
-  .purple-glow {
-    box-shadow: 0 0 24px hsl(var(--purple) / 0.12), 0 0 60px hsl(var(--purple) / 0.04);
+  /* Ink hairline rules — the shape language of this system */
+  .rule-t { border-top: 1px solid hsl(var(--edge-strong) / 0.18); }
+  .rule-b { border-bottom: 1px solid hsl(var(--edge-strong) / 0.18); }
+  .rule-y {
+    border-top: 1px solid hsl(var(--edge-strong) / 0.18);
+    border-bottom: 1px solid hsl(var(--edge-strong) / 0.18);
   }
 
-  .border-purple {
-    border-color: hsl(var(--purple));
+  /* Ring card — 2px ink ring, the reference's signature card */
+  .ring-ink { box-shadow: 0 0 0 2px hsl(var(--ink)); }
+  .ring-hairline { box-shadow: 0 0 0 1px hsl(var(--edge-strong) / 0.2); }
+
+  /* Display headline sizing */
+  .display-xl { font-size: clamp(3rem, 10vw, 8rem); line-height: 0.92; }
+  .display-lg { font-size: clamp(2.5rem, 7vw, 5.5rem); line-height: 0.95; }
+  .display-md { font-size: clamp(1.75rem, 4vw, 2.75rem); line-height: 1.02; }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: hsl(var(--ink-dim));
   }
 
-  .text-balance {
-    text-wrap: balance;
-  }
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
 
-  .debug {
-    outline: 1px solid red;
+  /* Gold underline reveal on ink text */
+  .link-underline {
+    background-image: linear-gradient(hsl(var(--accent)), hsl(var(--accent)));
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    transition: background-size 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .link-underline:hover,
+  .link-underline[data-active='true'] {
+    background-size: 100% 1px;
   }
 }
 
-::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
+/* Vertical grid ruler behind sections */
+.grid-ruler {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  z-index: 0;
 }
-::-webkit-scrollbar-track {
-  background: transparent;
+.grid-ruler > span {
+  flex: 1;
+  max-width: 1600px;
+  border-right: 1px solid hsl(var(--edge-strong) / 0.06);
 }
+.grid-ruler > span:first-child {
+  border-left: 1px solid hsl(var(--edge-strong) / 0.06);
+}
+
+/* Marquee */
+@keyframes marquee-l {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes marquee-r {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+.animate-marquee-l { animation: marquee-l var(--marquee-duration, 60s) linear infinite; }
+.animate-marquee-r { animation: marquee-r var(--marquee-duration, 60s) linear infinite; }
+
+/* Slow orbit drift for decorative props */
+@keyframes orbit { to { transform: rotate(360deg); } }
+.animate-orbit { animation: orbit var(--orbit-duration, 80s) linear infinite; }
+
+/* Custom scrollbar in ink */
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-track { background: hsl(var(--bg)); }
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--edge));
+  background: hsl(var(--bg));
+  border: 1px solid hsl(var(--ink));
+  border-radius: 999px;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--ink-dim));
-}
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--surface-alt)); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -129,4 +200,7 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+  .animate-marquee-l,
+  .animate-marquee-r,
+  .animate-orbit { animation: none !important; }
 }

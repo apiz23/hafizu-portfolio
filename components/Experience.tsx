@@ -2,25 +2,32 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { EASE_OUT_EXPO, clipReveal, hoverLift, staggerContainer, staggerItem } from "@/lib/animations";
 
 const experiences = [
   {
     company: "OC Global Technology Sdn Bhd",
-    period: "Aug 2026 - Present",
-    position: "Software Support Intern",
+    period: "Aug 2026 — Present",
+    position: "Software Tester Intern (QA)",
     location: "Johor Bahru, Malaysia · On-site",
     periodPill: "1 mo",
     achievements: [
-      "Assist in data testing for existing projects and prepare datasets using test cases",
-      "Conduct basic UI checks and quality assurance validations",
-      "Prepare and assist with user manuals, technical documentation, and project reporting",
+      "Execute manual test cases and data-driven testing across the company's digital platforms",
+      "Perform UI checks and functional validation to catch defects before release",
+      "Log, reproduce, and document bugs with clear steps for the development team",
+      "Prepare and maintain test documentation, user manuals, and QA reports",
     ],
-    technologies: ["Software Testing", "Quality Assurance", "Technical Documentation"],
+    technologies: [
+      "Software Testing",
+      "Quality Assurance",
+      "Manual Testing",
+      "Test Cases",
+      "Bug Reporting",
+      "Technical Documentation",
+    ],
   },
   {
     company: "Xeersoft",
-    period: "2023 - 2024",
+    period: "2023 — 2024",
     position: "Software Developer Intern",
     location: "Bukit Indah, Johor Bahru",
     periodPill: "1 yr",
@@ -42,80 +49,77 @@ export default function Experience() {
     <section
       ref={sectionRef}
       id="experience"
-      className="section-alt py-24 border-t border-edge"
+      className="section-alt relative border-t border-edge-strong/15 py-24 sm:py-28"
     >
-      <div className="max-w-5xl mx-auto px-6 sm:px-10">
-        <div className="flex items-center gap-3 mb-2">
-          <span className="h-px w-6 bg-purple-500" />
-          <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-purple-500">
-            Experience
-          </span>
-        </div>
-        <motion.h2
-          variants={clipReveal}
-          initial="hidden"
-          animate={sectionInView ? "visible" : "hidden"}
-          className="font-display text-foreground tracking-[-0.02em] leading-[0.95] mb-12"
-          style={{ fontSize: "clamp(2.8rem, 6vw, 5rem)" }}
-        >
-          EXPERIENCE
-        </motion.h2>
-
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          animate={sectionInView ? "visible" : "hidden"}
-          className="space-y-0 relative"
-        >
-          {/* Vertical timeline line */}
-          <div className="absolute left-[99px] top-3 bottom-3 w-px bg-edge hidden md:block" />
-
-          {experiences.map((exp, index) => (
-            <motion.div
-              key={exp.company}
-              variants={staggerItem}
-              {...hoverLift}
-              className="grid grid-cols-1 md:grid-cols-[100px_1fr] gap-4 border-t border-edge py-5 relative group transition-all duration-300"
+      <div className="mx-auto max-w-[1400px] px-6 sm:px-10">
+        <div className="flex items-baseline justify-between rule-b pb-5">
+          <div className="flex items-baseline gap-4">
+            <span className="eyebrow">03 — Track record</span>
+            <motion.h2
+              initial={{ opacity: 0, y: 16 }}
+              animate={sectionInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5 }}
+              className="display-md text-foreground"
             >
-              {/* Timeline dot */}
-              <div className={`hidden md:block absolute left-[94px] top-[1.65rem] w-[11px] h-[11px] rounded-full border-2 border-edge ${index === 0 ? 'bg-purple-500' : 'bg-muted-foreground/40'} -translate-x-1/2 z-10 group-hover:scale-125 transition-transform duration-300`} />
+              Experience
+            </motion.h2>
+          </div>
+        </div>
 
-              <div className="pt-0.5">
-                <span className="inline-block font-mono text-[10px] uppercase tracking-[0.08em] text-purple-500 border border-edge px-2 py-0.5 mb-2">
+        <div className="mt-4">
+          {experiences.map((exp, index) => (
+            <motion.article
+              key={exp.company}
+              initial={{ opacity: 0, y: 18 }}
+              animate={sectionInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: index * 0.1, duration: 0.5 }}
+              className="group grid grid-cols-1 gap-6 border-b border-edge-strong/10 py-8 md:grid-cols-[260px_1fr] md:gap-12"
+            >
+              {/* Meta column */}
+              <div>
+                <span className="inline-block bg-accent px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.14em] text-accent-foreground">
                   {exp.periodPill}
                 </span>
-                <p className="font-mono text-[13px] text-foreground">{exp.company}</p>
-                <p className="font-mono text-[12px] text-muted-foreground mt-0.5">{exp.location}</p>
-                <p className="font-mono text-[12px] text-muted-foreground mt-1">{exp.period}</p>
+                <p className="mt-3 font-display text-xl leading-tight text-foreground">
+                  {exp.company}
+                </p>
+                <p className="mt-1 font-mono text-[12px] text-ink-dim">{exp.location}</p>
+                <p className="mt-0.5 font-mono text-[12px] text-ink-dim">{exp.period}</p>
               </div>
+
+              {/* Body column */}
               <div>
-                <h3 className="font-display text-[17px] tracking-[-0.01em] text-foreground mb-4">{exp.position}</h3>
-                <ul className="space-y-2.5 mb-5">
-                  {exp.achievements.map((achievement) => (
-                    <li key={achievement} className="flex items-start gap-3 text-[15px] text-muted-foreground leading-[1.6]">
+                <h3 className="font-display text-2xl leading-tight text-foreground">
+                  {exp.position}
+                </h3>
+                <ul className="mt-5 space-y-3">
+                  {exp.achievements.map((a) => (
+                    <li
+                      key={a}
+                      className="flex items-start gap-3 text-[15px] leading-relaxed text-ink-dim"
+                    >
                       <span
                         aria-hidden="true"
-                        className="inline-block w-1.5 h-1.5 rounded-full bg-muted-foreground/40 mt-[0.6em] shrink-0"
+                        className="mt-[0.6em] inline-block h-1 w-1 shrink-0 rounded-full bg-foreground/40 transition-colors group-hover:bg-accent"
                       />
-                      {achievement}
+                      {a}
                     </li>
                   ))}
                 </ul>
-                <div className="flex flex-wrap gap-1.5">
+                <div className="mt-6 flex flex-wrap gap-2">
                   {exp.technologies.map((tech) => (
                     <span
                       key={tech}
-                      className="font-mono text-[12px] text-muted-foreground border border-edge px-2 py-0.5"
+                      className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink-dim ring-hairline px-2.5 py-1"
                     >
                       {tech}
                     </span>
                   ))}
                 </div>
               </div>
-            </motion.div>
+            </motion.article>
           ))}
-          <div className="border-t border-edge" />
-        </motion.div>
+        </div>
       </div>
     </section>
   );
