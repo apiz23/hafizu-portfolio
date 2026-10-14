@@ -32,10 +32,49 @@ function headers(): Record<string, string> {
   };
   // Optional: works without a token for public repos, but raises rate limits
   // (60/hr -> 5000/hr) and is required if you ever include private repos.
-  if (process.env.GITHUB_TOKEN) {
-    h.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
+  const token = process.env.GITHUB_TOKEN?.trim();
+  if (token) {
+    h.Authorization = `Bearer ${token}`;
   }
   return h;
+}
+
+/**
+ * A repo is rendered with a preview thumbnail. Public repos always have a
+ * GitHub-generated social preview image (renders name/owner/stars/description),
+ * so we use that as the default preview — no upload or storage needed.
+ */
+export function repoPreviewImage(fullName: string): string {
+  return `https://opengraph.githubassets.com/1/${fullName}`;
+}
+
+/**
+ * The repo owner's avatar. Always available and cached — used as a reliable
+ * fallback when the GitHub social-preview image is rate-limited (429) or
+ * otherwise unavailable.
+ */
+export function repoOwnerAvatar(fullName: string): string {
+  const owner = fullName.split("/")[0];
+  return `https://github.com/${owner}.png?size=80`;
+}
+
+/** Bare repo shape for the admin picker (preview metadata included). */
+export function toRepoOption(r: GitHubRepo) {
+  return {
+    full_name: r.full_name,
+    name: r.name,
+    html_url: r.html_url,
+    description: r.description,
+    language: r.language,
+    topics: r.topics.slice(0, 5),
+    stars: r.stargazers_count,
+    forks: r.forks_count,
+    homepage: r.homepage,
+    pushed_at: r.pushed_at,
+    // Preview metadata — used by the admin picker and as the project thumbnail.
+    preview_image: repoPreviewImage(r.full_name),
+    owner_avatar: repoOwnerAvatar(r.full_name),
+  };
 }
 
 /**
@@ -63,7 +102,16 @@ export async function fetchUserRepos(
       username
     )}/repos?per_page=${perPage}&page=${page}&sort=pushed&type=owner`;
 
-    const res = await fetch(url, { headers: headers(), cache: "no-store" });
+    let res = await fetch(url, { headers: headers(), cache: "no-store" });
+
+    // A bad/expired GITHUB_TOKEN returns 401 "Bad credentials". Rather than
+    // failing the whole sync, retry unauthenticated so public repos still work
+    // (rate-limited, but functional).
+    if (res.status === 401 && process.env.GITHUB_TOKEN) {
+      const h = headers();
+      delete h.Authorization;
+      res = await fetch(url, { headers: h, cache: "no-store" });
+    }
 
     if (!res.ok) {
       const body = await res.text();

@@ -73,9 +73,128 @@ type RepoOption = {
   language: string | null;
   topics: string[];
   stars: number;
+  forks: number;
+  homepage: string | null;
   pushed_at: string;
+  preview_image: string;
+  owner_avatar: string;
   alreadyAdded: boolean;
 };
+
+/**
+ * Repo preview thumbnail. Tries the GitHub social-preview image first and
+ * falls back to the owner avatar (always available) if it fails to load —
+ * GitHub's OG service rate-limits (429) when many are requested at once.
+ */
+function RepoThumb({ repo }: { repo: RepoOption }) {
+  // Prefer the server-proxied share card, then the raw OG image, then avatar.
+  const proxy = `/api/projects/preview?repo=${encodeURIComponent(repo.full_name)}`;
+  const candidates = [proxy, repo.preview_image, repo.owner_avatar].filter(
+    (s): s is string => !!s
+  );
+  const [index, setIndex] = useState(0);
+  const [failed, setFailed] = useState(false);
+
+  if (failed) {
+    return (
+      <span className="relative grid h-12 w-20 shrink-0 place-items-center overflow-hidden border border-edge bg-background font-mono text-[9px] uppercase tracking-[0.08em] text-muted-foreground">
+        {repo.language ?? "repo"}
+      </span>
+    );
+  }
+
+  return (
+    <span className="relative h-12 w-20 shrink-0 overflow-hidden border border-edge bg-background">
+      <Image
+        key={candidates[index]}
+        src={candidates[index]}
+        alt=""
+        fill
+        sizes="80px"
+        className="object-cover"
+        unoptimized
+        onError={() => {
+          if (index < candidates.length - 1) setIndex((i) => i + 1);
+          else setFailed(true);
+        }}
+      />
+    </span>
+  );
+}
+
+/** Extract "owner/repo" from a GitHub URL (strips .git and trailing junk). */
+function repoFullNameFromUrl(url: string): string | null {
+  const m = url?.match(/github\.com\/([^/]+)\/([^/#?]+)/i);
+  if (!m) return null;
+  return `${m[1]}/${m[2].replace(/\.git$/, "")}`;
+}
+
+/**
+ * GitHub's social-preview (OpenGraph) image — what you see when sharing a repo.
+ * Routed through our server proxy so bursts of browser requests don't get
+ * rate-limited (429) by GitHub; the proxy caches the image for 24h.
+ */
+function repoOgImageFromGithubUrl(url: string): string | null {
+  const fullName = repoFullNameFromUrl(url);
+  return fullName
+    ? `/api/projects/preview?repo=${encodeURIComponent(fullName)}`
+    : null;
+}
+
+/** The repo owner's avatar (last-resort fallback). */
+function ownerAvatarFromGithubUrl(url: string): string | null {
+  const fullName = repoFullNameFromUrl(url);
+  return fullName ? `https://github.com/${fullName.split("/")[0]}.png?size=160` : null;
+}
+
+/**
+ * Card thumbnail for an existing project. Preference order:
+ *   1. the stored image (custom upload), if any
+ *   2. the GitHub repo metadata preview (share card) from `github_link`
+ *   3. the repo owner's avatar
+ *   4. a "no image" placeholder
+ */
+function ProjectThumb({ project }: { project: EditableProject }) {
+  const ogImage = repoOgImageFromGithubUrl(project.github_link);
+  const avatar = ownerAvatarFromGithubUrl(project.github_link);
+
+  // Candidate sources in priority order.
+  const candidates = [project.image_src, ogImage, avatar].filter(
+    (s): s is string => !!s
+  );
+  const [index, setIndex] = useState(0);
+  const [failed, setFailed] = useState(false);
+
+  // Reset when the project changes (e.g. after an edit).
+  useEffect(() => {
+    setIndex(0);
+    setFailed(false);
+  }, [project.image_src, project.github_link]);
+
+  if (candidates.length === 0 || failed) {
+    return (
+      <span className="grid h-full place-items-center font-mono text-[11px] uppercase tracking-[0.1em] text-muted-foreground">
+        no image
+      </span>
+    );
+  }
+
+  return (
+    <Image
+      key={candidates[index]}
+      src={candidates[index]}
+      alt=""
+      fill
+      sizes="(max-width: 640px) 100vw, 33vw"
+      className="object-cover"
+      unoptimized
+      onError={() => {
+        if (index < candidates.length - 1) setIndex((i) => i + 1);
+        else setFailed(true);
+      }}
+    />
+  );
+}
 
 function AdminInner({ token }: { token: string }) {
   const router = useRouter();
@@ -290,7 +409,7 @@ function AdminInner({ token }: { token: string }) {
   };
 
   return (
-    <div className="min-h-screen bg-background py-8 sm:py-12">
+    <div className="min-h-screen bg-background pb-8 pt-24 sm:pb-12 sm:pt-28">
       <div className="container mx-auto max-w-5xl px-4 sm:px-6">
         {/* Header */}
         <div className="mb-10">
@@ -355,22 +474,7 @@ function AdminInner({ token }: { token: string }) {
                 >
                   {/* Thumbnail */}
                   <div className="relative aspect-video w-full overflow-hidden border-b border-edge bg-background">
-                    {p.image_src ? (
-                      <Image
-                        src={p.image_src}
-                        alt=""
-                        fill
-                        sizes="(max-width: 640px) 100vw, 33vw"
-                        className="object-cover"
-                        unoptimized={
-                          p.image_src.includes("opengraph.githubassets.com")
-                        }
-                      />
-                    ) : (
-                      <span className="grid h-full place-items-center font-mono text-[11px] uppercase tracking-[0.1em] text-muted-foreground">
-                        no image
-                      </span>
-                    )}
+                    <ProjectThumb project={p} />
                     {p.featured && (
                       <span className="absolute left-2 top-2 inline-flex items-center gap-1 bg-accent px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.1em] text-accent-foreground">
                         <Star className="h-3 w-3 fill-current" />
@@ -634,8 +738,8 @@ function AdminInner({ token }: { token: string }) {
 
       {/* GitHub repo picker */}
       <Dialog open={pickerOpen} onOpenChange={setPickerOpen}>
-        <DialogContent className="max-w-2xl rounded-none border-edge bg-background p-0">
-          <DialogHeader className="border-b border-edge px-6 py-4">
+        <DialogContent className="flex max-h-[85vh] max-w-2xl flex-col gap-0 overflow-hidden rounded-none border-edge bg-background p-0">
+          <DialogHeader className="shrink-0 border-b border-edge px-6 py-4">
             <DialogTitle className="font-mono text-[13px] font-normal uppercase tracking-[0.1em] text-muted-foreground">
               Sync from GitHub
             </DialogTitle>
@@ -644,8 +748,8 @@ function AdminInner({ token }: { token: string }) {
             </DialogDescription>
           </DialogHeader>
 
-          <div className="px-6 py-4">
-            <div className="relative mb-4">
+          <div className="flex min-h-0 flex-1 flex-col px-6 py-4">
+            <div className="relative mb-4 shrink-0">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 value={repoQuery}
@@ -656,25 +760,32 @@ function AdminInner({ token }: { token: string }) {
             </div>
 
             {reposLoading ? (
-              <div className="flex items-center justify-center py-16">
+              <div className="flex flex-1 items-center justify-center py-16">
                 <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
               </div>
             ) : filteredRepos.length === 0 ? (
-              <p className="py-16 text-center font-mono text-[13px] text-muted-foreground">
+              <p className="flex-1 py-16 text-center font-mono text-[13px] text-muted-foreground">
                 {repos.length === 0
                   ? "No public repositories found."
                   : "No repositories match your filter."}
               </p>
             ) : (
-              <div className="max-h-[52vh] overflow-y-auto border border-edge">
+              <div className="min-h-0 flex-1 overflow-y-auto border border-edge">
                 {filteredRepos.map((repo) => {
                   const checked = selectedRepos.has(repo.full_name);
                   return (
-                    <button
-                      type="button"
+                    <div
+                      role="button"
+                      tabIndex={0}
                       key={repo.full_name}
                       onClick={() => toggleRepo(repo.full_name)}
-                      className={`flex w-full items-start gap-3 border-b border-edge px-4 py-3 text-left transition-colors last:border-b-0 ${
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          toggleRepo(repo.full_name);
+                        }
+                      }}
+                      className={`flex w-full cursor-pointer items-start gap-3 border-b border-edge px-4 py-3 text-left transition-colors last:border-b-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring ${
                         checked ? "bg-hover/[0.06]" : "hover:bg-surface-alt"
                       }`}
                     >
@@ -683,6 +794,8 @@ function AdminInner({ token }: { token: string }) {
                         className="pointer-events-none mt-0.5"
                         tabIndex={-1}
                       />
+                      {/* Repo preview thumbnail (falls back to owner avatar) */}
+                      <RepoThumb repo={repo} />
                       <span className="min-w-0 flex-1">
                         <span className="flex items-center gap-2">
                           <span className="truncate font-mono text-[13px] text-foreground">
@@ -721,14 +834,14 @@ function AdminInner({ token }: { token: string }) {
                           ))}
                         </span>
                       </span>
-                    </button>
+                    </div>
                   );
                 })}
               </div>
             )}
           </div>
 
-          <DialogFooter className="flex items-center justify-between border-t border-edge px-6 py-4 sm:justify-between">
+          <DialogFooter className="flex shrink-0 items-center justify-between border-t border-edge px-6 py-4 sm:justify-between">
             <span className="font-mono text-[12px] text-muted-foreground">
               {selectedRepos.size} selected
             </span>

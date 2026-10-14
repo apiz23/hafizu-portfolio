@@ -1,6 +1,12 @@
 import { NextResponse } from "next/server";
 import supabase from "@/lib/supabase";
-import { fetchUserRepos, humanizeRepoName, repoOgImage, type GitHubRepo } from "@/lib/github";
+import {
+  fetchUserRepos,
+  humanizeRepoName,
+  repoOgImage,
+  toRepoOption,
+  type GitHubRepo,
+} from "@/lib/github";
 import { isAuthorized } from "@/lib/admin-auth";
 
 /** Guard shared by both handlers. Returns an error response or null. */
@@ -40,15 +46,7 @@ export async function GET(req: Request) {
     const added = new Set((existing ?? []).map((r: any) => r.github_link));
 
     const list = repos.map((r) => ({
-      full_name: r.full_name,
-      name: r.name,
-      html_url: r.html_url,
-      description: r.description,
-      language: r.language,
-      topics: r.topics.slice(0, 5),
-      stars: r.stargazers_count,
-      pushed_at: r.pushed_at,
-      homepage: r.homepage,
+      ...toRepoOption(r),
       alreadyAdded: added.has(r.html_url),
     }));
 
