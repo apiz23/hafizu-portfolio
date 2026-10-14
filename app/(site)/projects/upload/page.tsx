@@ -54,14 +54,7 @@ import {
 } from "@/components/ui/select";
 import { Progress } from "@/components/ui/progress";
 import { adminHeaders } from "@/lib/use-admin-secret";
-
-const categories = [
-  { value: "webapp", label: "Web App" },
-  { value: "fullstack", label: "Full Stack" },
-  { value: "frontend", label: "Frontend" },
-  { value: "backend", label: "Backend" },
-  { value: "mobile", label: "Mobile App" },
-];
+import { PROJECT_CATEGORIES } from "@/lib/utils";
 
 const fieldClass = "bg-background border-edge focus-visible:border-hover rounded-[2px]";
 
@@ -325,7 +318,7 @@ function AdminInner({ token }: { token: string }) {
   const [description, setDescription] = useState("");
   const [githubLink, setGithubLink] = useState("");
   const [visitLink, setVisitLink] = useState("");
-  const [category, setCategory] = useState("webapp");
+  const [category, setCategory] = useState("engineering");
   const [year, setYear] = useState(new Date().getFullYear().toString());
   const [featured, setFeatured] = useState(false);
   const [badges, setBadges] = useState("");
@@ -591,7 +584,7 @@ function AdminInner({ token }: { token: string }) {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        {categories.map((c) => (
+                        {PROJECT_CATEGORIES.map((c) => (
                           <SelectItem key={c.value} value={c.value}>
                             {c.label}
                           </SelectItem>

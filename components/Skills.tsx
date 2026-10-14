@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import GridRuler from "@/components/grid-ruler";
+import SectionHeader from "@/components/section-header";
 
 type Skill = {
   name: string;
@@ -47,23 +48,17 @@ export default function Skills() {
       <GridRuler columns={6} />
 
       <div className="relative z-10 mx-auto max-w-[1400px] px-6 sm:px-10">
-        {/* Distinct header: label left, index right, rule underneath */}
-        <div className="flex items-baseline justify-between rule-b pb-5">
-          <div className="flex items-baseline gap-4">
-            <span className="eyebrow">01 — Toolkit</span>
-            <motion.h2
-              initial={{ opacity: 0, y: 16 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5 }}
-              className="display-md text-foreground"
-            >
-              Skills &amp; tools
-            </motion.h2>
-          </div>
-          <span className="hidden font-mono text-[11px] text-ink-dim sm:block">
-            {skills.length} technologies
-          </span>
-        </div>
+        {/* Header — index rhythm: label + title left, count right */}
+        <SectionHeader
+          index="01"
+          label="Toolkit"
+          title="Skills & tools"
+          meta={
+            <span className="hidden font-mono text-[11px] text-ink-dim sm:block">
+              {skills.length} technologies
+            </span>
+          }
+        />
 
         {/* Rule-based two-column index */}
         <ul className="mt-2 grid grid-cols-1 gap-x-16 md:grid-cols-2">

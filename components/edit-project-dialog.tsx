@@ -25,6 +25,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { adminHeaders } from "@/lib/use-admin-secret";
+import { normalizeCategory, PROJECT_CATEGORIES } from "@/lib/utils";
 
 export type EditableProject = {
   id: string;
@@ -38,14 +39,6 @@ export type EditableProject = {
   visit_link: string;
   badges: string[];
 };
-
-const categories = [
-  { value: "webapp", label: "Web App" },
-  { value: "fullstack", label: "Full Stack" },
-  { value: "frontend", label: "Frontend" },
-  { value: "backend", label: "Backend" },
-  { value: "mobile", label: "Mobile App" },
-];
 
 const fieldClass =
   "bg-background border-edge focus-visible:border-hover rounded-[2px]";
@@ -69,7 +62,7 @@ export default function EditProjectDialog({
   const [description, setDescription] = useState("");
   const [githubLink, setGithubLink] = useState("");
   const [visitLink, setVisitLink] = useState("");
-  const [category, setCategory] = useState("fullstack");
+  const [category, setCategory] = useState("engineering");
   const [year, setYear] = useState("");
   const [featured, setFeatured] = useState(false);
   const [badges, setBadges] = useState("");
@@ -84,7 +77,7 @@ export default function EditProjectDialog({
     setDescription(project.description ?? "");
     setGithubLink(project.github_link ?? "");
     setVisitLink(project.visit_link ?? "");
-    setCategory(project.category ?? "fullstack");
+    setCategory(normalizeCategory(project.category));
     setYear(project.year ?? "");
     setFeatured(!!project.featured);
     setBadges(Array.isArray(project.badges) ? project.badges.join(", ") : "");
@@ -208,7 +201,7 @@ export default function EditProjectDialog({
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {categories.map((c) => (
+                    {PROJECT_CATEGORIES.map((c) => (
                       <SelectItem key={c.value} value={c.value}>
                         {c.label}
                       </SelectItem>

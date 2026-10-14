@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import SectionHeader from "@/components/section-header";
 
 const experiences = [
   {
@@ -52,18 +53,12 @@ export default function Experience() {
       className="section-alt relative border-t border-edge-strong/15 py-24 sm:py-28"
     >
       <div className="mx-auto max-w-[1400px] px-6 sm:px-10">
-        <div className="flex items-baseline justify-between rule-b pb-5">
-          <div className="flex items-baseline gap-4">
-            <span className="eyebrow">03 — Track record</span>
-            <motion.h2
-              initial={{ opacity: 0, y: 16 }}
-              animate={sectionInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5 }}
-              className="display-md text-foreground"
-            >
-              Experience
-            </motion.h2>
-          </div>
+        <SectionHeader
+          index="03"
+          label="Track record"
+          title="Experience"
+          variant="reversed"
+        />
         </div>
 
         <div className="mt-4">

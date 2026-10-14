@@ -1,5 +1,3 @@
-"use client";
-
 import Project from "@/components/Project";
 import Experience from "@/components/Experience";
 import Education from "@/components/Education";
@@ -7,8 +5,13 @@ import Contact from "@/components/Contact";
 import Intro from "@/components/Intro";
 import Skills from "@/components/Skills";
 import Marquee from "@/components/Marquee";
+import { getEducationData, type EducationData } from "@/lib/education";
 
-const marqueeItems = [
+// Education data comes from the database. Revalidate periodically so the page
+// is served statically (CDN-cached) while the chart still refreshes.
+export const revalidate = 300;
+
+const stackItems = [
   "Next.js",
   "TypeScript",
   "React",
@@ -20,16 +23,36 @@ const marqueeItems = [
   "Software Testing",
 ];
 
-export default function Home() {
+const practiceItems = [
+  "Debugging",
+  "Test Cases",
+  "Bug Reporting",
+  "Automation",
+  "AI Agents",
+  "Documentation",
+  "Code Review",
+  "Refactoring",
+  "Reliability",
+];
+
+export default async function Home() {
+	let education: EducationData | null = null;
+	try {
+		education = await getEducationData("bachelor");
+	} catch {
+		// Fall back to client-side fetch if the database is unreachable.
+		education = null;
+	}
+
 	return (
 		<main>
 			<Intro />
-			<Marquee items={marqueeItems} duration={70} />
+			<Marquee items={stackItems} duration={70} />
 			<Skills />
-			<Education />
+			<Education initialData={education} />
 			<Experience />
 			<Project />
-			<Marquee items={marqueeItems} duration={70} reverse />
+			<Marquee items={practiceItems} duration={70} reverse />
 			<Contact />
 		</main>
 	);

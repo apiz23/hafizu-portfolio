@@ -150,7 +150,7 @@ export async function POST(req: Request) {
         toInsert.push({
           ...synced,
           github_link: repo.html_url,
-          category: "fullstack",
+          category: "engineering",
           featured: false,
         });
       }

@@ -4,6 +4,8 @@ import Link from "next/link";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { useState, useEffect, useRef, useMemo } from "react";
 import { LinkPreview } from "@/components/ui/link-preview";
+import { normalizeCategory, PROJECT_CATEGORIES } from "@/lib/utils";
+import SectionHeader from "@/components/section-header";
 import {
   Pagination,
   PaginationContent,
@@ -29,9 +31,7 @@ type ProjectType = {
 
 const categories = [
   { id: "all", label: "All" },
-  { id: "fullstack", label: "Full Stack" },
-  { id: "webapp", label: "Web Apps" },
-  { id: "frontend", label: "Frontend" },
+  ...PROJECT_CATEGORIES.map((c) => ({ id: c.value, label: c.label })),
 ];
 
 const ITEMS_PER_PAGE = 5;
@@ -77,7 +77,10 @@ export default function Project({ showArchiveLink = true }: { showArchiveLink?: 
   }, []);
 
   const filteredProjects = useMemo(
-    () => (filter === "all" ? projects : projects.filter((p) => p.category === filter)),
+    () =>
+      filter === "all"
+        ? projects
+        : projects.filter((p) => normalizeCategory(p.category) === filter),
     [projects, filter]
   );
 
@@ -111,18 +114,17 @@ export default function Project({ showArchiveLink = true }: { showArchiveLink?: 
   return (
     <section ref={sectionRef} id="projects" className="relative border-t border-edge-strong/15 py-24 sm:py-28">
       <div className="mx-auto max-w-[1400px] px-6 sm:px-10">
-        <div className="flex items-baseline justify-between rule-b pb-5">
-          <div className="flex items-baseline gap-4">
-            <span className="eyebrow">04 — Selected work</span>
-            <motion.h2
-              initial={{ opacity: 0, y: 16 }}
-              animate={sectionInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5 }}
-              className="display-md text-foreground"
-            >
-              Projects
-            </motion.h2>
-          </div>
+        <SectionHeader
+          index="04"
+          label="Selected work"
+          title="Projects"
+          variant="feature"
+          meta={
+            <span className="font-mono text-[12px] text-ink-dim">
+              {loading ? "—" : `${filteredProjects.length} / ${projects.length}`}
+            </span>
+          }
+        />
           <span className="font-mono text-[12px] text-ink-dim">
             {loading ? "—" : `${filteredProjects.length} / ${projects.length}`}
           </span>
@@ -199,13 +201,30 @@ export default function Project({ showArchiveLink = true }: { showArchiveLink?: 
                         >
                           {String(globalIndex + 1).padStart(2, "0")}
                         </span>
-                        <span className="flex-1 min-w-0 truncate font-display text-2xl leading-none text-foreground link-underline">
-                          {project.title}
+                        <span className="flex min-w-0 flex-1 flex-col gap-1.5">
+                          <span className="truncate font-display text-xl leading-tight text-foreground link-underline sm:text-2xl">
+                            {project.title}
+                          </span>
+                          <span className="line-clamp-2 text-[13px] leading-snug text-ink-dim lg:hidden">
+                            {project.description}
+                          </span>
+                          {project.badges.length > 0 && (
+                            <span className="flex flex-wrap gap-1.5 lg:hidden">
+                              {project.badges.slice(0, 3).map((badge) => (
+                                <span
+                                  key={badge}
+                                  className="font-mono text-[10px] uppercase tracking-[0.08em] text-ink-dim ring-hairline px-2 py-0.5"
+                                >
+                                  {badge}
+                                </span>
+                              ))}
+                            </span>
+                          )}
                         </span>
                         <span className="hidden max-w-[30ch] shrink-0 truncate text-[14px] text-ink-dim lg:inline">
                           {project.description}
                         </span>
-                        <span className="hidden shrink-0 items-center gap-1.5 sm:flex">
+                        <span className="hidden shrink-0 items-center gap-1.5 lg:flex">
                           {project.badges.slice(0, 2).map((badge) => (
                             <span
                               key={badge}

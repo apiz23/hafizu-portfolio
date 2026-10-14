@@ -24,14 +24,16 @@ import {
 	SelectItem,
 	SelectValue,
 } from "./ui/select";
+import SectionHeader from "@/components/section-header";
 
-type Pointer = { sem: number; GPA: number; CPA: number };
+import type { EducationData, EducationPointer } from "@/lib/education";
+
+type Pointer = EducationPointer;
 type EducationLevel = "diploma" | "bachelor" | "secondary";
-type EducationResponse = { chart: Pointer[]; latestCGPA: number | null };
 
 const fetchData = async (
 	selectedValue: EducationLevel,
-): Promise<EducationResponse> => {
+): Promise<EducationData> => {
 	const res = await fetch(`/api/education?level=${selectedValue}`);
 	if (!res.ok) throw new Error("Failed to fetch data");
 	return res.json();
@@ -64,14 +66,20 @@ const educationDetails = [
 	},
 ];
 
-export default function Education() {
+export default function Education({
+	initialData,
+}: {
+	initialData?: EducationData | null;
+}) {
 	const sectionRef = useRef<HTMLElement>(null);
-	const sectionInView = useInView(sectionRef, { once: true, margin: "-10%" });
+	const sectionInView = useInView(sectionRef, { once:true, margin: "-10%" });
 
 	const [selectedValue, setSelectedValue] = useState<EducationLevel>("bachelor");
-	const [chartData, setChartData] = useState<Pointer[]>([]);
-	const [isLoading, setIsLoading] = useState(true);
+	const [chartData, setChartData] = useState<Pointer[]>(initialData?.chart ?? []);
+	const [isLoading, setIsLoading] = useState(!initialData);
 	const [error, setError] = useState<string | null>(null);
+
+	const loadedRef = useRef(false);
 
 	const loadData = async () => {
 		try {
@@ -87,6 +95,13 @@ export default function Education() {
 		}
 	};
 	useEffect(() => {
+		// The default level is already server-rendered; only fetch when the
+		// visitor switches level (or when no initial data was provided).
+		if (!loadedRef.current && initialData) {
+			loadedRef.current =true;
+			return;
+		}
+		loadedRef.current =true;
 		loadData();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedValue]);
@@ -107,19 +122,7 @@ export default function Education() {
 			className="relative border-t border-edge-strong/15 py-24 sm:py-28"
 		>
 			<div className="mx-auto max-w-[1400px] px-6 sm:px-10">
-				<div className="flex items-baseline justify-between rule-b pb-5">
-					<div className="flex items-baseline gap-4">
-						<span className="eyebrow">02 — Academic</span>
-						<motion.h2
-							initial={{ opacity: 0, y: 16 }}
-							animate={sectionInView ? { opacity: 1, y: 0 } : {}}
-							transition={{ duration: 0.5 }}
-							className="display-md text-foreground"
-						>
-							Education
-						</motion.h2>
-					</div>
-				</div>
+				<SectionHeader index="02" label="Academic" title="Education" variant="stacked" />
 
 				{/* Timeline: left rule with ink dots, no boxes */}
 				<ol className="mt-4">
@@ -214,6 +217,13 @@ export default function Education() {
 							>
 								Try again
 							</button>
+						</div>
+					) : chartData.length === 0 ? (
+						<div className="flex h-[280px] flex-col items-center justify-center gap-3 ring-hairline">
+							<BookOpen className="h-7 w-7 text-ink-dim" />
+							<p className="font-mono text-[12px] text-ink-dim">
+								No academic results recorded yet.
+							</p>
 						</div>
 					) : (
 						<div className="h-[300px] w-full p-4 ring-hairline sm:p-6">

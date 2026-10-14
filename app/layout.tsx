@@ -65,6 +65,12 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {/* Framer Motion ships entrance states as inline `opacity:0`. Without
+            JS those never animate in, so the page would render blank. Force
+            them visible when scripting is unavailable. */}
+        <noscript>
+          <style>{`[style*="opacity:0"],[style*="opacity: 0"]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
       </head>
       <body
         className={`${inter.variable} ${instrument.variable} ${spaceMono.variable} font-sans bg-background antialiased`}

@@ -6,7 +6,7 @@ import GridRuler from "@/components/grid-ruler";
 export const metadata = {
   title: "Projects — Muhd Hafizuddin",
   description:
-    "Selected software projects by Muhd Hafizuddin — full-stack apps, web apps, and frontend work.",
+    "Selected software projects by Muhd Hafizuddin — engineering work, AI and automation experiments, and quality tooling.",
 };
 
 export default function ProjectsPage() {
@@ -31,9 +31,9 @@ export default function ProjectsPage() {
             <span className="italic text-ink-dim">projects.</span>
           </h1>
           <p className="mt-5 max-w-[52ch] text-pretty text-[15px] leading-relaxed text-ink-dim">
-            A running list of the software I&apos;ve built — full-stack systems,
-            web apps, and frontend work. Filter by category or reach out about any
-            of them.
+            A running list of the software I&apos;ve built — engineering work,
+            AI and automation experiments, and quality tooling. Filter by theme
+            or reach out about any of them.
           </p>
         </div>
       </header>

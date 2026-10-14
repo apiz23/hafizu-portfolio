@@ -65,31 +65,59 @@ export default function Intro() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: EASE_OUT_EXPO }}
-          className="mx-auto flex max-w-3xl items-center justify-center gap-3"
+          className="mx-auto flex max-w-3xl flex-wrap items-center justify-center gap-3"
         >
           <span className="h-1 w-1 rounded-full bg-accent" aria-hidden="true" />
           <span className="eyebrow">Software Engineering Student · UTHM Malaysia</span>
+          <span
+            aria-hidden="true"
+            className="hidden h-3 w-px bg-edge-strong/20 sm:block"
+          />
+          <span className="bg-accent px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.14em] text-accent-foreground">
+            Open to work
+          </span>
         </motion.div>
 
-        {/* Headline */}
-        <h1 className="mx-auto mt-8 max-w-[16ch] text-center display-xl text-foreground">
-          <motion.span
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.08, ease: EASE_OUT_EXPO }}
-            className="block"
+        {/* Headline — GitHub avatar sits behind it as a faded ink watermark */}
+        <div className="relative mx-auto mt-8 max-w-[16ch]">
+          <motion.div
+            aria-hidden="true"
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.2, ease: EASE_OUT_EXPO }}
+            className="pointer-events-none absolute left-1/2 top-1/2 h-[min(64vw,540px)] w-[min(64vw,540px)] -translate-x-1/2 -translate-y-1/2"
           >
-            Building the web
-          </motion.span>
-          <motion.span
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.18, ease: EASE_OUT_EXPO }}
-            className="block italic text-ink-dim"
-          >
-            with precision.
-          </motion.span>
-        </h1>
+            <div className="relative h-full w-full [mask-image:radial-gradient(circle,black_28%,transparent_70%)]">
+              <Image
+                src="/img/github-avatar.jpg"
+                alt=""
+                fill
+                priority
+                sizes="(max-width: 640px) 64vw, 540px"
+                className="object-cover object-top grayscale opacity-[0.15] mix-blend-multiply sm:opacity-[0.2]"
+              />
+            </div>
+          </motion.div>
+
+          <h1 className="relative z-10 text-center display-xl text-foreground">
+            <motion.span
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.08, ease: EASE_OUT_EXPO }}
+              className="block"
+            >
+              I build software,
+            </motion.span>
+            <motion.span
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.18, ease: EASE_OUT_EXPO }}
+              className="block italic text-ink-dim"
+            >
+              automate workflows.
+            </motion.span>
+          </h1>
+        </div>
 
         {/* Sub-copy + CTAs */}
         <div className="mx-auto mt-12 grid max-w-4xl grid-cols-1 gap-10 md:grid-cols-[1fr_auto] md:items-end">
@@ -99,9 +127,10 @@ export default function Intro() {
             transition={{ duration: 0.5, delay: 0.28, ease: EASE_OUT_EXPO }}
             className="max-w-[46ch] text-pretty text-[15px] leading-relaxed text-ink-dim"
           >
-            Final-year Software Engineering student and full-stack developer building
-            production-grade systems with Next.js, TypeScript, and PostgreSQL. I&apos;m
-            Muhd Hafizuddin — nice to meet you.
+            I&apos;m Muhd Hafizuddin — a final-year Software Engineering student at
+            UTHM building production-grade web systems with Next.js, TypeScript
+            and PostgreSQL, and exploring what&apos;s next with AI-powered
+            developer tools.
           </motion.p>
 
           <motion.div
@@ -171,28 +200,6 @@ export default function Intro() {
       >
         <span className="eyebrow">Scroll</span>
         <span className="block h-8 w-px bg-gradient-to-b from-foreground/40 to-transparent" />
-      </motion.div>
-
-      {/* Portrait — small, offset, ring-framed */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.96 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.7, delay: 0.4, ease: EASE_OUT_EXPO }}
-        className="pointer-events-none absolute right-8 bottom-24 hidden xl:block"
-      >
-        <div className="relative h-[220px] w-[160px] ring-ink">
-          <Image
-            src="/img/github-avatar.jpg"
-            alt="Muhd Hafizuddin"
-            fill
-            priority
-            sizes="160px"
-            className="object-cover object-top grayscale"
-          />
-          <span className="absolute -bottom-px -right-px bg-accent px-2 py-1 font-mono text-[9px] uppercase tracking-[0.14em] text-accent-foreground">
-            Open to work
-          </span>
-        </div>
       </motion.div>
     </section>
   );

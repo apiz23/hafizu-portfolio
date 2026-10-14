@@ -4,6 +4,7 @@ import { useRef } from "react";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import { LinkPreview } from "@/components/ui/link-preview";
+import SectionHeader from "@/components/section-header";
 
 const links = [
   { label: "Email", value: "piz230601@gmail.com", href: "mailto:piz230601@gmail.com", preview: false },
@@ -18,9 +19,7 @@ export default function Contact() {
   return (
     <section id="contact" className="section-alt relative border-t border-edge-strong/15 pt-24 sm:pt-28">
       <div ref={sectionRef} className="mx-auto max-w-[1400px] px-6 sm:px-10">
-        <div className="flex items-baseline justify-between rule-b pb-5">
-          <span className="eyebrow">05 — Contact</span>
-        </div>
+        <SectionHeader index="05" label="Contact" variant="bare" />
 
         {/* Headline block */}
         <div className="grid grid-cols-1 gap-10 py-16 md:grid-cols-[1.2fr_1fr] md:gap-16">
